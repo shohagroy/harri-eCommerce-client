@@ -4,6 +4,7 @@ import React from "react";
 import { FiUser } from "react-icons/fi";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
@@ -17,9 +18,9 @@ const Header = () => {
   ];
 
   return (
-    <section className="border-b py-3 shadow-sm bg-blue-200/30">
+    <section className="w-full border-b py-3 shadow-sm bg-white">
       <CommonLayout>
-        <div className="flex justify-between items-center">
+        <div className="hidden lg:flex justify-between items-center">
           <div className="flex items-center">
             <img
               src="https://hamart-shop.vercel.app/_next/static/media/logo-black.de19b08e.svg"
@@ -82,7 +83,43 @@ const Header = () => {
       </CommonLayout>
 
       {/* mobile menu  */}
-      <div className=""></div>
+      <div className=" lg:hidden fixed w-full ">
+        <div className="">
+          <div className="flex h-[7vh] px-3 bg-white items-center justify-between">
+            <img
+              src="https://hamart-shop.vercel.app/_next/static/media/logo-black.de19b08e.svg"
+              alt="logo"
+            />
+
+            <button
+              onClick={() => setOpen(!open)}
+              className="w-10 h-10 flex justify-center items-center rounded-full border shadow-md"
+            >
+              <HiOutlineXMark size={25} />
+            </button>
+          </div>
+
+          <div
+            className={`absolute  w-full ${
+              open ? "left-0" : "left-[100%] duration-300"
+            } bg-white`}
+          >
+            <div className="h-[93vh] w-full">
+              <div className="m-3">
+                <ul>
+                  {Links.map((menu) => (
+                    <li key={menu.name} className="border-b py-2">
+                      <Link className="mx-2" href={menu.link}>
+                        {menu.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
