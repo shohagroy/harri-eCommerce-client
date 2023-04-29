@@ -5,7 +5,7 @@ const CustomerLayout = ({ children }) => {
   return (
     <div>
       <Header />
-      <div className="mt-10 lg:mt-0">{children}</div>
+      <div className=" lg:mt-0">{children}</div>
     </div>
   );
 };
