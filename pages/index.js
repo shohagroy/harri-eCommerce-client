@@ -1,3 +1,4 @@
+import CategoryContainer from "@/components/CategoryContainer";
 import HomeBanar from "@/components/HomeBanar";
 import CustomerLayout from "@/layouts/customerLayout";
 import Head from "next/head";
@@ -11,6 +12,7 @@ function Home() {
       <main>
         <div>
           <HomeBanar />
+          <CategoryContainer />
         </div>
       </main>
     </>
