@@ -14,7 +14,7 @@ const Subscribe = () => {
       <CommonLayout>
         <div className="bg-white lg:p-5  p-3 m-5 flex items-center flex-col lg:flex-row justify-between">
           <div className="w-full">
-            <p className="text-2xl lg:text-4xl font-bold lg:p-4">
+            <p className="text-2xl lg:text-4xl font-bold lg:p-6">
               Subscribe for <br /> Latest Trends & Offers
             </p>
           </div>

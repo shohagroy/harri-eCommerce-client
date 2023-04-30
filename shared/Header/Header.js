@@ -20,8 +20,8 @@ const Header = () => {
   const Links = [
     { name: "Home", link: "/" },
     { name: "Shops", link: "/shop" },
-    { name: "Contact Us", link: "/" },
-    { name: "About Us", link: "/" },
+    { name: "Contact Us", link: "/contact-us" },
+    { name: "About Us", link: "/about-us" },
   ];
 
   return (
@@ -29,11 +29,12 @@ const Header = () => {
       <CommonLayout>
         <div className="hidden p-3 lg:flex justify-between items-center">
           <div className="flex items-center">
-            <img
-              src="https://hamart-shop.vercel.app/_next/static/media/logo-black.de19b08e.svg"
-              alt="logo"
-            />
-
+            <Link href={"/"}>
+              <img
+                src="https://hamart-shop.vercel.app/_next/static/media/logo-black.de19b08e.svg"
+                alt="logo"
+              />
+            </Link>
             <div className="ml-8">
               {Links.map((menu) => (
                 <Link key={menu.name} className="mx-2" href={menu.link}>

@@ -135,8 +135,8 @@ const ProductDetails = () => {
 
           <div className="mt-4">
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-              {[...Array(6)].map((Number, i) => (
-                <ProductCard key={i} />
+              {[...Array(5)].map((Number, i) => (
+                <ProductCard info={i} key={i} />
               ))}
             </div>
           </div>
