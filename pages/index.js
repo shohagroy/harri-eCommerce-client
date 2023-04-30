@@ -1,5 +1,6 @@
 import CategoryContainer from "@/components/CategoryContainer";
 import HomeBanar from "@/components/HomeBanar";
+import OfferBanar from "@/components/OfferBanar";
 import PopularProducts from "@/components/PopularProducts";
 import CustomerLayout from "@/layouts/customerLayout";
 import Head from "next/head";
@@ -15,6 +16,7 @@ function Home() {
           <HomeBanar />
           <CategoryContainer />
           <PopularProducts />
+          <OfferBanar />
         </div>
       </main>
     </>
