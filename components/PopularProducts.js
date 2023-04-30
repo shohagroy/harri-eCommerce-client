@@ -22,7 +22,7 @@ const PopularProducts = () => {
         </div>
 
         <div className="my-6 grid grid-cols-1 lg:grid-cols-4 gap-4">
-          {[...Array(20)].map((Number, i) => (
+          {[...Array(8)].map((Number, i) => (
             <ProductCard key={i} info={i + 1} />
           ))}
         </div>
