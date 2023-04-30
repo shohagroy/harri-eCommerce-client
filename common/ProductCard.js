@@ -1,5 +1,11 @@
+import Link from "next/link";
 import React from "react";
-import { AiOutlineHeart, AiFillEye, AiOutlineLink } from "react-icons/ai";
+import {
+  AiOutlineHeart,
+  AiFillEye,
+  AiOutlineLink,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
 
 const ProductCard = ({ info }) => {
   const [mouseHover, setMouseHover] = React.useState("");
@@ -11,13 +17,15 @@ const ProductCard = ({ info }) => {
         onMouseOut={() => setMouseHover("")}
         className="relative overflow-hidden"
       >
-        <img
-          className={`${
-            mouseHover === info ? "scale-125" : "scale-100"
-          } duration-300`}
-          src="https://hamart-shop.vercel.app/_next/image?url=https%3A%2F%2Fi.ibb.co%2FFhzmCxJ%2Fproduct-3.jpg&w=1920&q=75"
-          alt=""
-        />
+        <Link href={`${info}`}>
+          <img
+            className={`${
+              mouseHover === info ? "scale-125" : "scale-100"
+            } duration-300`}
+            src="https://hamart-shop.vercel.app/_next/image?url=https%3A%2F%2Fi.ibb.co%2FFhzmCxJ%2Fproduct-3.jpg&w=1920&q=75"
+            alt=""
+          />
+        </Link>
         <div className="absolute top-3 left-0">
           <p className="px-3 py-1.5 mt-3 bg-red-600 text-white">Sale</p>
           <p className="px-3 py-1.5 mt-2 bg-black text-white">-12%</p>
@@ -28,7 +36,10 @@ const ProductCard = ({ info }) => {
             mouseHover === info ? "bottom-0" : " -bottom-12"
           } duration-300`}
         >
-          <button className="w-full p-2 bg-black text-white">
+          <button className="w-full py-2 text-white bg-black flex justify-center items-center">
+            <span>
+              <AiOutlineShoppingCart size={20} />
+            </span>{" "}
             Add to Cart
           </button>
         </div>
