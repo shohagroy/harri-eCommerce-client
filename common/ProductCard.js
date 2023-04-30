@@ -5,7 +5,7 @@ const ProductCard = ({ info }) => {
   const [mouseHover, setMouseHover] = React.useState("");
 
   return (
-    <div className="">
+    <div className="mt-4">
       <div
         onMouseOver={() => setMouseHover(info)}
         onMouseOut={() => setMouseHover("")}

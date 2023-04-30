@@ -100,8 +100,8 @@ const Footer = () => {
 
         <div className="mt-12">
           <div className="border-t py-4">
-            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
-              <p>
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center ">
+              <p className="text-sm lg:text-md py-2">
                 Copyright © 2023 by{" "}
                 <span className="text-red-600">Shohag Roy </span> rights
                 reserved.
