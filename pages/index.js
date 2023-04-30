@@ -1,5 +1,6 @@
 import CategoryContainer from "@/components/CategoryContainer";
 import HomeBanar from "@/components/HomeBanar";
+import PopularProducts from "@/components/PopularProducts";
 import CustomerLayout from "@/layouts/customerLayout";
 import Head from "next/head";
 
@@ -13,6 +14,7 @@ function Home() {
         <div>
           <HomeBanar />
           <CategoryContainer />
+          <PopularProducts />
         </div>
       </main>
     </>
