@@ -13,9 +13,11 @@ import {
 } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import { HiOutlineXMark } from "react-icons/hi2";
+import CartDrawer from "@/components/CartDrawer";
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
+  const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const Links = [
     { name: "Home", link: "/" },
@@ -65,21 +67,27 @@ const Header = () => {
                 <FiUser size={25} />
               </button>
 
-              <div className="relative">
-                <button className="mx-1">
-                  <AiOutlineHeart size={30} />
-                </button>
-                <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
+              <div className="relative cursor-pointer">
+                <Link href={"/myWishlist"}>
+                  <button className="mx-1">
+                    <AiOutlineHeart size={30} />
+                  </button>
+                </Link>
+
+                <small className="absolute cursor-pointer top-0 right-0 w-5 h-5 flex justify-center items-center  bg-red-600 text-white font-bold rounded-full">
                   1
                 </small>
               </div>
 
-              <div className="relative">
+              <div
+                className="relative "
+                onClick={() => setOpenDrawer(!openDrawer)}
+              >
                 <button className="mx-2">
                   <AiOutlineShoppingCart size={30} />
                 </button>
 
-                <div>
+                <div className="cursor-pointer">
                   <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
                     1
                   </small>
@@ -123,7 +131,11 @@ const Header = () => {
                 <div className="m-3">
                   <ul>
                     {Links.map((menu) => (
-                      <li key={menu.name} className="border-b py-2">
+                      <li
+                        key={menu.name}
+                        className="border-b py-2"
+                        onClick={() => setOpen(!open)}
+                      >
                         <Link className="mx-2" href={menu.link}>
                           {menu.name}
                         </Link>
@@ -150,21 +162,29 @@ const Header = () => {
                 </div>
 
                 <div className="flex items-center justify-center w-full">
-                  <button className="m-2">
+                  <button className="m-2" onClick={() => setOpen(!open)}>
                     <FiUser size={25} />
                   </button>
 
-                  <div className="relative ">
-                    <button className="m-1">
-                      <AiOutlineHeart size={30} />
-                    </button>
+                  <div className="relative  " onClick={() => setOpen(!open)}>
+                    <Link href={"/myWishlist"}>
+                      <button className="m-1">
+                        <AiOutlineHeart size={30} />
+                      </button>
+                    </Link>
                     <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
                       1
                     </small>
                   </div>
 
-                  <div className="relative">
-                    <button className="m-2">
+                  <div
+                    className="relative cursor-pointer "
+                    onClick={() => setOpen(!open)}
+                  >
+                    <button
+                      className="m-2"
+                      onClick={() => setOpenDrawer(!openDrawer)}
+                    >
                       <AiOutlineShoppingCart size={30} />
                     </button>
 
@@ -215,6 +235,11 @@ const Header = () => {
           </div>
         </div>
       </CommonLayout>
+
+      <CartDrawer
+        openDrawer={openDrawer}
+        setOpenDrawer={setOpenDrawer}
+      ></CartDrawer>
     </section>
   );
 };

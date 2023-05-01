@@ -9,7 +9,7 @@ import {
 
 const Footer = () => {
   return (
-    <section className="mt-8 p-3 lg:p-0">
+    <section className="mt-8 p-3 lg:p-0 ">
       <CommonLayout>
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           <div>
