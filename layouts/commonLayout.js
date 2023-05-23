@@ -1,7 +1,11 @@
 import React from "react";
 
 const CommonLayout = ({ children }) => {
-  return <div className="max-w-[1460px] mx-auto h-full">{children}</div>;
+  return (
+    <div className="lg:max-w-[1024px] xl:max-w-[1240px] mx-auto">
+      {children}
+    </div>
+  );
 };
 
 export default CommonLayout;
