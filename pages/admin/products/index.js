@@ -72,31 +72,7 @@ const Products = () => {
             </div>
           </div>
 
-          {/* products upload section  */}
-          <div className="my-3 grid grid-cols-1 lg:grid-cols-6 py-6 px-4 gap-6 rounded-md shadow-sm bg-white">
-            <div className="lg:col-span-4">
-              <input
-                className="p-2 w-full border border-dashed rounded-md dark:border-gray-700 dark:text-gray-400 bg-white"
-                type="file"
-                placeholder="Drop SVG file"
-              />
-            </div>
-
-            <div>
-              <button className="w-full p-3 lg:p-0 h-full bg-gray-200 rounded-md hover:bg-gray-300 duration-300">
-                Uplaod
-              </button>
-            </div>
-
-            <div>
-              <button className="w-full h-full p-3 lg:p-0 bg-[#0E9F6E] rounded-md text-white hover:bg-[#07895e] duration-300">
-                Download
-              </button>
-            </div>
-          </div>
-
           {/* products table  */}
-
           <ProductsTable />
         </div>
 
