@@ -1,36 +1,45 @@
 import React, { useState } from "react";
 import { FaMoon, FaBell } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
-import { AiOutlineLogout, AiFillSetting } from "react-icons/ai";
+import { AiOutlineLogout, AiFillSetting, AiFillHome } from "react-icons/ai";
 import { GoThreeBars } from "react-icons/go";
 import Link from "next/link";
+import SideBar from "./SideBar";
+import MobileSidebar from "./MobileSideBar";
+import { Drawer } from "antd";
 
 const Header = () => {
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openSideNav, setOpenSideNav] = useState(false);
 
   return (
-    <nav className="shadow-md  w-full bg-white">
-      <div className="lg:max-w-[1240px] xl:max-w-[1440px] w-full mx-auto p-3 flex items-center justify-between  text-xl text-[#0E9F6E]">
-        <div>
+    <nav className="border-b shadow-sm bg-[#F0F2EE]">
+      <div className="lg:max-w-[1240px] xl:max-w-[1440px] w-full mx-auto p-3 flex items-center justify-between lg:justify-end  text-xl text-red-600">
+        <div className=" lg:hidden flex items-center ">
           {/* hambarger  */}
-          <button
-            onClick={() => setOpenSideNav(!openSideNav)}
-            className="block lg:hidden"
-          >
+          <button onClick={() => setOpenSideNav(!openSideNav)}>
             <GoThreeBars />
           </button>
+
+          <Link href={"/"}>
+            <img
+              className="ml-20"
+              src="https://hamart-shop.vercel.app/_next/static/media/logo-black.de19b08e.svg"
+              alt="logo"
+            />
+          </Link>
         </div>
+
         <div className="flex items-center  ">
           {/* button  */}
           <div className="mr-5">
-            <button className="p-3 md:mx-2">
-              <FaMoon />
+            <button className="p-3 md:mx-1">
+              <AiFillHome />
             </button>
             <button className="p-3 relative">
               <FaBell />
-              <div className="absolute -top-0 left-1 ">
-                <p className="flex justify-center text-sm items-center text-white bg-red-600 rounded-full h-5 w-5">
+              <div className="absolute top-0 left-1 ">
+                <p className="flex justify-center text-sm items-center text-red-600 bg-white rounded-full h-5 w-5">
                   7
                 </p>
               </div>
@@ -79,6 +88,14 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <Drawer
+        placement="left"
+        open={openSideNav}
+        width={250}
+        onClose={() => setOpenSideNav(false)}
+      >
+        <MobileSidebar />
+      </Drawer>
     </nav>
   );
 };

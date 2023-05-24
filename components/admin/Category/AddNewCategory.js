@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { TiDeleteOutline } from "react-icons/ti";
-import { useDispatch } from "react-redux";
 
 const AddNewCategory = ({ setCategoryDeawer }) => {
   const [preview, setPreview] = useState();
@@ -56,13 +54,13 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
           <div className="flex">
             <p className="py-2">Publish</p>
             <label
-              htmlFor="publish"
+              htmlFor="publish1"
               className="inline-flex lg:hidden ml-5 items-center space-x-4 cursor-pointer text-gray-100"
             >
               <span className="relative">
                 <input
-                  id="publish"
-                  name="publish"
+                  id="publish1"
+                  name="publish1"
                   type="checkbox"
                   className="hidden peer"
                 />
@@ -101,8 +99,8 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
 
           <button
             type="submit"
-            className="py-3 px-6 bg-[#108a61] rounded-md 
-        hover:bg-[#078057] text-white  duration-300 w-full"
+            className="py-3 px-6 bg-red-600/40 rounded-md 
+        hover:bg-red-600 text-white  duration-300 w-full"
           >
             {creating ? "Creating..." : "Add Category"}
           </button>

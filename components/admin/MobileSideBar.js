@@ -13,7 +13,7 @@ import { BiUser } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { useRouter } from "next/router";
 
-const SideBar = () => {
+const MobileSidebar = () => {
   const router = useRouter();
   const [isActive, setIsActive] = useState("dashbord");
 
@@ -66,7 +66,7 @@ const SideBar = () => {
     }, 500);
   };
   return (
-    <div className="hidden lg:block w-[250px] min-h-screen">
+    <div className=" w-[250px] min-h-screen">
       {/* nav menu  */}
       <div className="  fixed  top-0 bg-[#F0F2EE] shadow-md left-0 w-[250px] h-screen">
         <div className=" flex p-5 items-center">
@@ -119,4 +119,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default MobileSidebar;
