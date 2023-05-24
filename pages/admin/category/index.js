@@ -1,11 +1,18 @@
 import AddNewCategory from "@/components/admin/Category/AddNewCategory";
+import CategoryTable from "@/components/admin/Category/CategoryTable";
 import AdminLayout from "@/Layouts/AdminLayout";
 import CommonLayout from "@/layouts/commonLayout";
 import { Drawer } from "antd";
 import { useState } from "react";
 
+import { useGetCategorysQuery } from "@/features/category/categoryApi";
+
 const Category = () => {
   const [categoryDrawer, setCategoryDeawer] = useState(false);
+
+  const { data } = useGetCategorysQuery();
+
+  // console.log(data);
 
   return (
     <section className=" bg-gray-100 min-h-screen">
@@ -33,7 +40,7 @@ const Category = () => {
             </div>
           </div>
 
-          {/* <CategoryTable /> */}
+          <CategoryTable />
         </div>
       </CommonLayout>
 

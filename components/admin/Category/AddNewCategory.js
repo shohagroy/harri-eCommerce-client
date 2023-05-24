@@ -2,7 +2,14 @@ import { useState } from "react";
 
 const AddNewCategory = ({ setCategoryDeawer }) => {
   const [preview, setPreview] = useState();
-  const [creating, setCreating] = useState(false);
+
+  const categoryInfo = {
+    name: "",
+    icon: "",
+    publish: false,
+  };
+
+  const [newCategory, setNewCategory] = useState(categoryInfo);
 
   const showPreview = (e) => {
     const img = e.target.files[0];
@@ -11,11 +18,14 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
     reader.onload = () => {
       setPreview(() => reader.result);
     };
+
+    setNewCategory({ ...newCategory, icon: img });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+
+    console.log(newCategory);
   };
 
   return (
@@ -26,7 +36,11 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
           <div className="col-span-2 ">
             <input
               type="text"
-              name="name"
+              onChange={(e) =>
+                setNewCategory({ ...newCategory, name: e.target.value })
+              }
+              required
+              value={newCategory.name}
               placeholder="type category name"
               className="w-full p-3 my-2 lg:m-0 rounded-md border bg-gray-100 active:bg-white"
             />
@@ -36,6 +50,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
             <fieldset className="w-full space-y-1 text-gray-100">
               <div className="flex my-2 lg:my-0">
                 <input
+                  required
                   type="file"
                   name="file"
                   id="file"
@@ -60,7 +75,13 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
               <span className="relative">
                 <input
                   id="publish1"
-                  name="publish1"
+                  onChange={(e) =>
+                    setNewCategory({
+                      ...newCategory,
+                      publish: e.target.checked,
+                    })
+                  }
+                  defaultChecked={newCategory.publish}
                   type="checkbox"
                   className="hidden peer"
                 />
@@ -78,7 +99,13 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
               <span className="relative">
                 <input
                   id="publish"
-                  name="publish"
+                  onChange={(e) =>
+                    setNewCategory({
+                      ...newCategory,
+                      publish: e.target.checked,
+                    })
+                  }
+                  defaultChecked={newCategory.publish}
                   type="checkbox"
                   className="hidden peer"
                 />
@@ -90,19 +117,19 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
         </div>
 
         <div className="col-span-3 border-t py-3 px-3 my-10 flex items-center gap-6">
-          <button
+          <input
+            type="button"
+            value={"Cancel"}
             onClick={() => setCategoryDeawer(false)}
             className="py-3 px-6 bg-gray-100 rounded-md hover:bg-red-100 text-red-300 hover:text-red-600 duration-300 w-full"
-          >
-            Cancel
-          </button>
+          />
 
           <button
             type="submit"
             className="py-3 px-6 bg-red-600/40 rounded-md 
         hover:bg-red-600 text-white  duration-300 w-full"
           >
-            {creating ? "Creating..." : "Add Category"}
+            Add Category
           </button>
         </div>
       </form>
