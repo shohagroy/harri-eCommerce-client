@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { usePostNewCategoryMutation } from "@/features/category/categoryApi";
+import uploadImageToCloudinary from "@/utils/cloudinary";
+import { useEffect, useState } from "react";
 
 const AddNewCategory = ({ setCategoryDeawer }) => {
   const [preview, setPreview] = useState();
 
-  const categoryInfo = {
+  const [newCategory, setNewCategory] = useState({
     name: "",
     icon: "",
     publish: false,
-  };
+  });
 
-  const [newCategory, setNewCategory] = useState(categoryInfo);
+  const [postNewCategory, { data, isLoading, isError, isSuccess }] =
+    usePostNewCategoryMutation();
 
   const showPreview = (e) => {
     const img = e.target.files[0];
@@ -19,14 +22,23 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
       setPreview(() => reader.result);
     };
 
-    setNewCategory({ ...newCategory, icon: img });
+    const fromData = new FormData();
+
+    // fromData.append("image", img);
+    uploadImageToCloudinary();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
 
-    console.log(newCategory);
+    // console.log(newCategory);
+    postNewCategory({ name: "shohag", data: "category" });
   };
+
+  useEffect(() => {
+    console.log(isLoading, isError);
+  }, [isLoading, isError]);
 
   return (
     <div className="w-full bg-white ">
@@ -36,6 +48,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
           <div className="col-span-2 ">
             <input
               type="text"
+              name="category"
               onChange={(e) =>
                 setNewCategory({ ...newCategory, name: e.target.value })
               }
@@ -84,6 +97,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
                   defaultChecked={newCategory.publish}
                   type="checkbox"
                   className="hidden peer"
+                  name="publish"
                 />
                 <div className="w-10 h-6 rounded-full shadow-inner bg-gray-200  peer-checked:bg-[#07895e]"></div>
                 <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto bg-white"></div>
@@ -107,6 +121,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
                   }
                   defaultChecked={newCategory.publish}
                   type="checkbox"
+                  name="publish"
                   className="hidden peer"
                 />
                 <div className="w-10 h-6 rounded-full shadow-inner bg-gray-200  peer-checked:bg-[#07895e]"></div>

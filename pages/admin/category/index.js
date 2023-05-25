@@ -10,9 +10,11 @@ import { useGetCategorysQuery } from "@/features/category/categoryApi";
 const Category = () => {
   const [categoryDrawer, setCategoryDeawer] = useState(false);
 
-  const { data } = useGetCategorysQuery();
+  const { data, isLoading, isError, error } = useGetCategorysQuery();
 
-  // console.log(data);
+  console.log(data, isLoading);
+
+  // console.log(process.env.NEXT_APP_API_URL);
 
   return (
     <section className=" bg-gray-100 min-h-screen">

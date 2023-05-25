@@ -4,11 +4,22 @@ export const categoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCategorys: builder.query({
       query: () => ({
-        url: `/products/running-sneaker`,
+        url: `/categorys`,
         method: "GET",
+      }),
+    }),
+
+    postNewCategory: builder.mutation({
+      query: (data) => ({
+        url: `/categorys`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
       }),
     }),
   }),
 });
 
-export const { useGetCategorysQuery } = categoryApi;
+export const { useGetCategorysQuery, usePostNewCategoryMutation } = categoryApi;
