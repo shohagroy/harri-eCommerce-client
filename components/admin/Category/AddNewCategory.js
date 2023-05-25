@@ -1,5 +1,4 @@
 import { usePostNewCategoryMutation } from "@/features/category/categoryApi";
-import uploadImageToCloudinary from "@/utils/cloudinary";
 import { useEffect, useState } from "react";
 
 const AddNewCategory = ({ setCategoryDeawer }) => {
@@ -20,20 +19,20 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
     reader.readAsDataURL(img);
     reader.onload = () => {
       setPreview(() => reader.result);
+      setNewCategory(() => {
+        return { ...newCategory, icon: reader.result };
+      });
     };
-
-    const fromData = new FormData();
-
-    // fromData.append("image", img);
-    uploadImageToCloudinary();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    // const formData = new FormData(e.target);
 
-    // console.log(newCategory);
-    postNewCategory({ name: "shohag", data: "category" });
+    // console.log(process.env.NEXT_PUBLIC_BACKEND_BASE_URL);
+
+    console.log(newCategory);
+    postNewCategory(newCategory);
   };
 
   useEffect(() => {
