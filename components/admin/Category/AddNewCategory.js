@@ -10,7 +10,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
     publish: false,
   });
 
-  const [postNewCategory, { data, isLoading, isError, isSuccess }] =
+  const [postNewCategory, { isLoading, isError, isSuccess, error }] =
     usePostNewCategoryMutation();
 
   const showPreview = (e) => {
@@ -27,17 +27,18 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const formData = new FormData(e.target);
-
-    // console.log(process.env.NEXT_PUBLIC_BACKEND_BASE_URL);
-
-    console.log(newCategory);
     postNewCategory(newCategory);
   };
 
   useEffect(() => {
-    console.log(isLoading, isError);
-  }, [isLoading, isError]);
+    if (!isLoading && isSuccess) {
+      setNewCategory({ name: "", icon: "", publish: false });
+      setPreview();
+      setCategoryDeawer(false);
+    }
+
+    console.log(error?.data.error.message);
+  }, [isLoading, isSuccess]);
 
   return (
     <div className="w-full bg-white ">
@@ -93,7 +94,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
                       publish: e.target.checked,
                     })
                   }
-                  defaultChecked={newCategory.publish}
+                  checked={newCategory.publish}
                   type="checkbox"
                   className="hidden peer"
                   name="publish"
@@ -118,7 +119,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
                       publish: e.target.checked,
                     })
                   }
-                  defaultChecked={newCategory.publish}
+                  checked={newCategory.publish}
                   type="checkbox"
                   name="publish"
                   className="hidden peer"
@@ -128,6 +129,10 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
               </span>
             </label>
           </div>
+        </div>
+
+        <div className="text-center p-3 text-2xl text-red-600 w-full">
+          {isError && error.message && error.message}
         </div>
 
         <div className="col-span-3 border-t py-3 px-3 my-10 flex items-center gap-6">
@@ -143,7 +148,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
             className="py-3 px-6 bg-red-600/40 rounded-md 
         hover:bg-red-600 text-white  duration-300 w-full"
           >
-            Add Category
+            {isLoading ? "Loading..." : "Add Category"}
           </button>
         </div>
       </form>

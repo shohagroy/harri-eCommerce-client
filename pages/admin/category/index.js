@@ -5,14 +5,8 @@ import CommonLayout from "@/layouts/commonLayout";
 import { Drawer } from "antd";
 import { useState } from "react";
 
-import { useGetCategorysQuery } from "@/features/category/categoryApi";
-
 const Category = () => {
   const [categoryDrawer, setCategoryDeawer] = useState(false);
-
-  const { data, isLoading, isError, error } = useGetCategorysQuery();
-
-  console.log(data, isLoading);
 
   // console.log(process.env.NEXT_APP_API_URL);
 

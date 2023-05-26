@@ -2,41 +2,23 @@ import { useState, useEffect } from "react";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 // import UpdateCategory from "./UpdateCategory";
 import { toast } from "react-hot-toast";
+import { useGetCategorysQuery } from "@/features/category/categoryApi";
 
 const CategoryTable = () => {
   const [updatePP, showUpdate] = useState(false);
   const [CategoryToUpdate, setCTU] = useState({});
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const categories = [];
 
-  // = useSelector((state) => state.admin.categories);
+  const { data, isLoading, isError } = useGetCategorysQuery();
+  const categories = data?.data;
 
-  useEffect(() => {
-    getCategories(page);
-  }, [page]);
+  // const { _id, name, icon, publish } = data.data || {};
 
-  const getCategories = async (page) => {
-    try {
-      setLoading(true);
-      //   const response = await axios.get(
-      //     process.env.NEXT_PUBLIC_BACKEND_BASE_URL +
-      //       `/categories?page=${page}&limit=10`
-      //   );
-      //   dispatch({
-      //     type: "ADD_CATEGORIES",
-      //     categories: response.data.data,
-      //   });
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  console.log(data, isLoading, isError);
 
   const deleteCategory = (id, name, index) => {
     console.log(id);
@@ -102,7 +84,7 @@ const CategoryTable = () => {
                   className="text-left bg-white border-b border-opacity-20 border-gray-700 "
                 >
                   <td className="px-3 py-2 text-left">
-                    <span>{category?.id.toUpperCase()}</span>
+                    <span>{i + 1}</span>
                   </td>
                   <td className="px-3 py-2 text-left">
                     <div className="flex items-center">
@@ -129,7 +111,7 @@ const CategoryTable = () => {
                           id={"publish" + i}
                           type="checkbox"
                           readOnly
-                          checked={category?.published ? true : false}
+                          checked={category?.publish ? true : false}
                           className="hidden peer"
                         />
                         <div className="w-10 h-6 rounded-full shadow-inner bg-gray-200  peer-checked:bg-[#07895e]"></div>
@@ -141,7 +123,7 @@ const CategoryTable = () => {
                     <div className="flex justify-center items-center">
                       <button
                         className="text-lg mr-2 font-normal text-gray-400 hover:text-[#07895e] duration-300"
-                        onClick={() => categoryToUpdate(category?.id)}
+                        onClick={() => categoryToUpdate(category?._id)}
                       >
                         <FaRegEdit />
                       </button>
