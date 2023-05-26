@@ -3,8 +3,6 @@ import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import swal from "sweetalert";
-// import UpdateCategory from "./UpdateCategory";
-import { toast } from "react-hot-toast";
 import { useGetCategorysQuery } from "@/features/category/categoryApi";
 
 const CategoryTable = () => {

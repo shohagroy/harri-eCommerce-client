@@ -18,6 +18,25 @@ export const categoryApi = apiSlice.injectEndpoints({
         },
         body: data,
       }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+
+          if (result.data.data._id) {
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getCategorys",
+                undefined,
+                (draft) => {
+                  draft.data.push(result.data.data);
+                }
+              )
+            );
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      },
     }),
   }),
 });

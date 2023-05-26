@@ -1,5 +1,6 @@
 import { usePostNewCategoryMutation } from "@/features/category/categoryApi";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const AddNewCategory = ({ setCategoryDeawer }) => {
   const [preview, setPreview] = useState();
@@ -35,9 +36,10 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
       setNewCategory({ name: "", icon: "", publish: false });
       setPreview();
       setCategoryDeawer(false);
+      toast.success("New Category Added successfully!");
     }
 
-    console.log(error?.data.error.message);
+    console.log(error);
   }, [isLoading, isSuccess]);
 
   return (
