@@ -38,7 +38,37 @@ export const categoryApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+    deleteCategoryById: builder.mutation({
+      query: (id, img_id) => ({
+        url: `/categorys/${id}`,
+        method: "DELETE",
+      }),
+      // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      //   try {
+      //     const result = await queryFulfilled;
+
+      //     if (result.data.data._id) {
+      //       dispatch(
+      //         apiSlice.util.updateQueryData(
+      //           "getCategorys",
+      //           undefined,
+      //           (draft) => {
+      //             draft.data.push(result.data.data);
+      //           }
+      //         )
+      //       );
+      //     }
+      //   } catch (err) {
+      //     console.log(err);
+      //   }
+      // },
+    }),
   }),
 });
 
-export const { useGetCategorysQuery, usePostNewCategoryMutation } = categoryApi;
+export const {
+  useGetCategorysQuery,
+  usePostNewCategoryMutation,
+  useDeleteCategoryByIdMutation,
+} = categoryApi;

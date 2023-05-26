@@ -3,7 +3,10 @@ import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import swal from "sweetalert";
-import { useGetCategorysQuery } from "@/features/category/categoryApi";
+import {
+  useDeleteCategoryByIdMutation,
+  useGetCategorysQuery,
+} from "@/features/category/categoryApi";
 
 const CategoryTable = () => {
   const [updatePP, showUpdate] = useState(false);
@@ -11,23 +14,31 @@ const CategoryTable = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  // category data gate RTQ function
   const { data, isLoading, isError } = useGetCategorysQuery();
   const categories = data?.data;
 
-  // const { _id, name, icon, publish } = data.data || {};
+  // category delete RTQ functin
+  const [
+    deleteCategoryById,
+    {
+      isLoading: deleteLoading,
+      isError: deleteError,
+      isSuccess: deleteSuccess,
+    },
+  ] = useDeleteCategoryByIdMutation();
 
-  console.log(data, isLoading, isError);
-
-  const deleteCategory = (id, name, index) => {
-    console.log(id);
+  const deleteCategory = (deleteData) => {
     swal({
       title: "Are you sure?",
-      text: `Delete "${name}" Category!`,
+      text: `Delete "${deleteData?.name}" Category!`,
       icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
+        console.log(deleteData);
+        deleteCategoryById(deleteData?._id);
         // try {
         //   const response = await axios.delete(
         //     process.env.NEXT_PUBLIC_BACKEND_BASE_URL + `/categories/${id}`
@@ -45,6 +56,10 @@ const CategoryTable = () => {
       }
     });
   };
+
+  useEffect(() => {
+    console.log(deleteLoading, deleteError, deleteSuccess);
+  }, [deleteLoading, deleteError, deleteSuccess]);
 
   const categoryToUpdate = (id) => {
     const category = categories.find((c) => c.id === id);
@@ -88,7 +103,7 @@ const CategoryTable = () => {
                     <div className="flex items-center">
                       <img
                         className="w-8 h-8 p-1 rounded-full bg-gray-100"
-                        src={category?.icon}
+                        src={category?.icon[0]?.url}
                         alt="product"
                       />
                     </div>
@@ -128,9 +143,7 @@ const CategoryTable = () => {
 
                       <button
                         className="text-lg mr-2 font-normal text-gray-400 hover:text-red-600 duration-300"
-                        onClick={() =>
-                          deleteCategory(category?.id, category?.name, i)
-                        }
+                        onClick={() => deleteCategory(category)}
                       >
                         <RiDeleteBin6Line />
                       </button>

@@ -38,8 +38,6 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
       setCategoryDeawer(false);
       toast.success("New Category Added successfully!");
     }
-
-    console.log(error);
   }, [isLoading, isSuccess]);
 
   return (
