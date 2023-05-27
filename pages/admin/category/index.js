@@ -1,5 +1,6 @@
 import AddNewCategory from "@/components/admin/Category/AddNewCategory";
 import CategoryTable from "@/components/admin/Category/CategoryTable";
+import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import AdminLayout from "@/Layouts/AdminLayout";
 import CommonLayout from "@/layouts/commonLayout";
 import { Drawer } from "antd";
@@ -7,8 +8,20 @@ import { useState } from "react";
 
 const Category = () => {
   const [categoryDrawer, setCategoryDeawer] = useState(false);
+  const [searchCategory, setSearchCategory] = useState("");
+  const [showPage, setShowPage] = useState(1);
 
-  // console.log(process.env.NEXT_APP_API_URL);
+  const query = {
+    search: searchCategory,
+    skip: showPage === 1 ? 0 : (showPage - 1) * 10,
+  };
+
+  const {
+    data: categories,
+    isLoading,
+    isError,
+    error,
+  } = useGetCategorysQuery(query);
 
   return (
     <section className=" bg-gray-100 min-h-screen">
@@ -22,6 +35,7 @@ const Category = () => {
               <input
                 className="w-full p-3 focus:outline-none rounded-md border bg-gray-100"
                 type="text"
+                onChange={(e) => setSearchCategory(e.target.value)}
                 placeholder="search by category name"
               />
             </div>
@@ -36,7 +50,19 @@ const Category = () => {
             </div>
           </div>
 
-          <CategoryTable />
+          {isLoading ? (
+            <div className="text-center text-xl font-bold">Loading...</div>
+          ) : isError ? (
+            <div className="text-center text-xl font-bold text-red-600">
+              {error.message}
+            </div>
+          ) : (
+            <CategoryTable
+              categories={categories}
+              showPage={showPage}
+              setShowPage={setShowPage}
+            />
+          )}
         </div>
       </CommonLayout>
 

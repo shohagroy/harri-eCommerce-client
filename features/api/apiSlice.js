@@ -18,6 +18,8 @@ export const apiSlice = createApi({
     //   headers.set("Content-Type", "application/json");
     //   return headers;
     // },
+
+    tagTypes: ["categorys"],
   }),
 
   endpoints: (builder) => ({}),
