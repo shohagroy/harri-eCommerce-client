@@ -4,6 +4,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/v1",
+    tagTypes: ["categorys"],
 
     // "Content-Type": "multipart/form-data",
     // prepareHeaders: async (headers, { getState, endpoint }) => {
@@ -18,8 +19,6 @@ export const apiSlice = createApi({
     //   headers.set("Content-Type", "application/json");
     //   return headers;
     // },
-
-    tagTypes: ["categorys"],
   }),
 
   endpoints: (builder) => ({}),

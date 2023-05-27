@@ -5,9 +5,13 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import swal from "sweetalert";
 import toast from "react-hot-toast";
 
-import { useDeleteCategoryByIdMutation } from "@/features/category/categoryApi";
+import {
+  useDeleteCategoryByIdMutation,
+  useUpdateCategoryByIdMutation,
+} from "@/features/category/categoryApi";
 
 const CategoryTable = ({ categories, showPage, setShowPage }) => {
+  // category delete function
   const [
     deleteCategoryById,
     {
@@ -18,6 +22,18 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
       error,
     },
   ] = useDeleteCategoryByIdMutation();
+
+  // category update function
+  const [
+    updateCategoryById,
+    {
+      data: updatedData,
+      isLoading: updateLoading,
+      isError: isUpdateError,
+      error: updateError,
+      isSuccess: updateSuccess,
+    },
+  ] = useUpdateCategoryByIdMutation();
 
   const deleteCategory = (deleteData) => {
     swal({
@@ -33,6 +49,11 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
     });
   };
 
+  const handleCategoryPublishChange = (data) => {
+    const updateData = { ...data, publish: !data.publish };
+    updateCategoryById(updateData);
+  };
+
   useEffect(() => {
     if (!deleteLoading && deleteSuccess) {
       toast.success(confatmation.message);
@@ -41,6 +62,15 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
       toast.error(error.message);
     }
   }, [deleteLoading, deleteError, deleteSuccess]);
+
+  useEffect(() => {
+    if (!updateLoading && updateSuccess) {
+      toast.success(updatedData.message);
+    }
+    if (!updateLoading && isUpdateError) {
+      toast.error(updateError.message);
+    }
+  }, [updateLoading, updateError, updateSuccess]);
 
   return (
     <div className="container pb-8 mx-auto rounded-md  bg-gray-100">
@@ -95,6 +125,7 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
                         readOnly
                         checked={category?.publish ? true : false}
                         className="hidden peer"
+                        onChange={() => handleCategoryPublishChange(category)}
                       />
                       <div className="w-10 h-6 rounded-full shadow-inner bg-gray-200  peer-checked:bg-[#07895e]"></div>
                       <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto bg-white"></div>

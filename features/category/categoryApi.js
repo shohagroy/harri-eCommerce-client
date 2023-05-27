@@ -62,6 +62,18 @@ export const categoryApi = apiSlice.injectEndpoints({
       //   }
       // },
     }),
+
+    updateCategoryById: builder.mutation({
+      query: (data) => ({
+        url: `/categorys/${data._id}`,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["categorys"],
+    }),
   }),
 });
 
@@ -69,4 +81,5 @@ export const {
   useGetCategorysQuery,
   usePostNewCategoryMutation,
   useDeleteCategoryByIdMutation,
+  useUpdateCategoryByIdMutation,
 } = categoryApi;
