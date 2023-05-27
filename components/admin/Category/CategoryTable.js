@@ -3,6 +3,8 @@ import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import swal from "sweetalert";
+import toast from "react-hot-toast";
+
 import {
   useDeleteCategoryByIdMutation,
   useGetCategorysQuery,
@@ -22,9 +24,11 @@ const CategoryTable = () => {
   const [
     deleteCategoryById,
     {
+      data: confatmation,
       isLoading: deleteLoading,
       isError: deleteError,
       isSuccess: deleteSuccess,
+      error,
     },
   ] = useDeleteCategoryByIdMutation();
 
@@ -39,26 +43,19 @@ const CategoryTable = () => {
       if (willDelete) {
         console.log(deleteData);
         deleteCategoryById(deleteData?._id);
-        // try {
-        //   const response = await axios.delete(
-        //     process.env.NEXT_PUBLIC_BACKEND_BASE_URL + `/categories/${id}`
-        //   );
-        //   console.log(response.data);
-        //   dispatch({
-        //     type: "REMOVE_CATEGORY",
-        //     index,
-        //   });
-        //   toast.success("Category Deleted");
-        // } catch (err) {
-        //   console.log(err);
-        //   toast.error("Something went wrong");
-        // }
       }
     });
   };
 
   useEffect(() => {
     console.log(deleteLoading, deleteError, deleteSuccess);
+
+    if (!isLoading && deleteSuccess) {
+      toast.success(confatmation.message);
+    }
+    if (!isLoading && deleteError) {
+      toast.error(error.message);
+    }
   }, [deleteLoading, deleteError, deleteSuccess]);
 
   const categoryToUpdate = (id) => {
