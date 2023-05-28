@@ -56,12 +56,16 @@ const Category = () => {
             <div className="text-center text-xl font-bold text-red-600">
               {error.message}
             </div>
-          ) : (
+          ) : categories.data.length > 0 ? (
             <CategoryTable
               categories={categories}
               showPage={showPage}
               setShowPage={setShowPage}
             />
+          ) : (
+            <div className="text-center text-xl font-bold">
+              No Categories Found!
+            </div>
           )}
         </div>
       </CommonLayout>
@@ -73,10 +77,7 @@ const Category = () => {
         onClose={() => setCategoryDeawer(false)}
         open={categoryDrawer}
       >
-        <AddNewCategory
-          categoryDrawer={categoryDrawer}
-          setCategoryDeawer={setCategoryDeawer}
-        />
+        <AddNewCategory data={{}} setCategoryDeawer={setCategoryDeawer} />
       </Drawer>
     </section>
   );

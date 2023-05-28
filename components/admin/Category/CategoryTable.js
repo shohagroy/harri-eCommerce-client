@@ -9,9 +9,15 @@ import {
   useDeleteCategoryByIdMutation,
   useUpdateCategoryByIdMutation,
 } from "@/features/category/categoryApi";
+import { Drawer } from "antd";
+import UpdateCategory from "./UpdateCategory";
 
 const CategoryTable = ({ categories, showPage, setShowPage }) => {
-  // category delete function
+  const [openDrawer, setOpenDrawer] = useState({
+    open: false,
+    updatedCategory: {},
+  });
+
   const [
     deleteCategoryById,
     {
@@ -136,7 +142,9 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
                   <div className="flex justify-center items-center">
                     <button
                       className="text-lg mr-2 font-normal text-gray-400 hover:text-[#07895e] duration-300"
-                      onClick={() => console.log("hello world")}
+                      onClick={() =>
+                        setOpenDrawer({ open: true, updatedCategory: category })
+                      }
                     >
                       <FaRegEdit />
                     </button>
@@ -187,24 +195,28 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
                 {showPage === 1 ? 1 : showPage - 1}
               </button>
 
-              <button
-                className={`p-2 ${
-                  showPage > 1
-                    ? "bg-red-600 text-white"
-                    : "bg-gray-200 text-black"
-                }  duration-300 rounded-md mx-1 hover:bg-red-600 hover:text-white`}
-                onClick={() => setShowPage(showPage === 1 ? 2 : showPage)}
-              >
-                {showPage === 1 ? 2 : showPage}
-              </button>
+              {showPage > 1 && (
+                <button
+                  className={`p-2 ${
+                    showPage > 1
+                      ? "bg-red-600 text-white"
+                      : "bg-gray-200 text-black"
+                  }  duration-300 rounded-md mx-1 hover:bg-red-600 hover:text-white`}
+                  onClick={() => setShowPage(showPage === 1 ? 2 : showPage)}
+                >
+                  {showPage === 1 ? 2 : showPage}
+                </button>
+              )}
 
-              <button
-                className={`p-2 bg-gray-200 text-black duration-300 rounded-md mx-1 hover:bg-red-600/40 hover:text-white`}
-                onClick={() => setShowPage(showPage === 1 ? 3 : showPage + 1)}
-                disabled={showPage === Math.ceil(categories.count / 10)}
-              >
-                {showPage === 1 ? 3 : showPage + 1}
-              </button>
+              {showPage > 2 && (
+                <button
+                  className={`p-2 bg-gray-200 text-black duration-300 rounded-md mx-1 hover:bg-red-600/40 hover:text-white`}
+                  onClick={() => setShowPage(showPage === 1 ? 3 : showPage + 1)}
+                  disabled={showPage === Math.ceil(categories.count / 10)}
+                >
+                  {showPage === 1 ? 3 : showPage + 1}
+                </button>
+              )}
 
               <span>-</span>
 
@@ -223,6 +235,20 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
           </div>
         </div>
       </div>
+
+      <Drawer
+        title={"Update Category"}
+        placement="right"
+        // width={300}
+
+        onClose={() => setOpenDrawer({ open: false, updatedCategory: {} })}
+        open={openDrawer.open}
+      >
+        <UpdateCategory
+          setCategoryDeawer={setOpenDrawer}
+          data={openDrawer.updatedCategory}
+        />
+      </Drawer>
     </div>
   );
 };
