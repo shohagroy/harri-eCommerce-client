@@ -52,116 +52,115 @@ const SignUp = () => {
             {/* <=======left portion End======> */}
             {/* <=======Right portion End======> */}
 
-            <div className="mx-auto my-4 p-4 flex flex-col gap-4">
-              <div className="space-y-2 mb-2 sm:mb-8">
-                <div className="bg-primary px-4 py-2 rounded-md lg:hidden w-full">
-                  <Link href={"/"}>
-                    <Image
-                      src="https://kachabazar-store.vercel.app/logo/logo-light.svg"
-                      alt="logo"
-                      width={110}
-                      height={40}
-                    />
-                  </Link>
+            <div className="w-full flex justify-center mt-10">
+              <div className="bg-gradient-to-r from-red-500 to-red-300">
+                <div className="flex h-screen text-gray-900">
+                  <div className="w-11/12 p-8 m-auto bg-white rounded-lg sm:w-96 bg-opacity-80 bg-clip-padding">
+                    <div className="space-y-2">
+                      <div>
+                        <h1 className="text-2xl font-medium text-center md:text-4xl font-roboto">
+                          Welcome Back!
+                        </h1>
+                      </div>
+                      <div>
+                        <div className="space-x-1 text-sm text-center md:text-base font-nunito">
+                          <span>New to SimpleForm?</span>
+                          <a
+                            className="font-semibold text-blue-500"
+                            href="signup.html"
+                          >
+                            Sign Up
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-10">
+                      <form className="text-base font-nunito">
+                        <div className="space-y-4">
+                          <div className="relative flex items-center">
+                            <svg
+                              className="absolute w-5 h-5 ml-3 text-gray-400"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                              />
+                            </svg>
+                            <input
+                              className="w-full p-2 pl-10 text-gray-800 placeholder-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                              type="email"
+                              name="email"
+                              placeholder="Email"
+                              required
+                            />
+                          </div>
+                          <div className="relative flex items-center">
+                            <svg
+                              className="absolute w-5 h-5 ml-3 text-gray-400"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                              />
+                            </svg>
+                            <input
+                              className="w-full p-2 pl-10 text-gray-800 placeholder-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                              type="password"
+                              name="password"
+                              placeholder="Password"
+                              required
+                            />
+                          </div>
+                          <div className="flex items-start space-x-2 md:items-center">
+                            <input
+                              className="focus:outline-none"
+                              type="checkbox"
+                              name="terms"
+                              id="serviceTerms"
+                            />
+                            <label
+                              className="-mt-1 text-sm sm:mt-0"
+                              htmlFor="serviceTerms"
+                            >
+                              <span>Remember Me</span>
+                            </label>
+                          </div>
+                          <div>
+                            <button className="w-full p-2 text-sm font-semibold text-center text-white transition duration-100 rounded-md md:text-lg font-nunito bg-gradient-to-r from-blue-600 to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:shadow-lg">
+                              Sign In
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                      <div className="mt-4">
+                        <button className="w-full p-2 text-sm font-normal text-center transition duration-100 bg-white rounded-md md:text-lg font-roboto focus:outline-none hover:shadow-lg">
+                          <span className="flex items-center justify-center gap-4">
+                            <img
+                              className="w-5 h-5 text-xs"
+                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png"
+                              alt="google_logo"
+                            />
+                            <span>Continue with Google</span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h2 className="font-semibold">Get's Started.</h2>
-                <p className="text-sm text-gray-primary">
-                  Already have an account?{" "}
-                  <Link href="/login" className="text-red font-semibold">
-                    Log in
-                  </Link>
-                </p>
               </div>
-              {/* ========Input Section Start ========  */}
-              <form
-                onSubmit={handleSubmit(onValid)}
-                className="flex flex-col  w-full space-y-4 "
-              >
-                {/* <Controller
-                  name="email"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      label={"Email"}
-                      id={"email"}
-                      type={"email"}
-                      {...field}
-                    />
-                  )}
-                /> */}
-
-                <input type="email" name="" id="" />
-                <input type="password" name="" id="" />
-                {/* <Controller
-                  name="password"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      label={"Password"}
-                      id={"password"}
-                      type={"password"}
-                      {...field}
-                    />
-                  )}
-                /> */}
-
-                <div className="flex items-center justify-center">
-                  {/* <Controller
-                    name="checkbox"
-                    control={control}
-                    render={({ field }) => (
-                      <Input
-                        type={"checkbox"}
-                        className={"border-none"}
-                        {...field}
-                      />
-                    )}
-                  /> */}
-                  <input type="checkbox" name="" id="" />
-                  <label className="text-xs text-gray-primary">
-                    I agree to Platform's{" "}
-                    <Link
-                      href={"/terms-and-condition"}
-                      className="text- text-primary font-semibold"
-                    >
-                      Terms of Service
-                    </Link>{" "}
-                    and{" "}
-                    <Link
-                      href={"/privacy-policy"}
-                      className="text- text-primary font-semibold"
-                    >
-                      Privacy Policy
-                    </Link>
-                  </label>
-                </div>
-                {/* <Button text="SIGN UP" type="submit" varientColor="primary" /> */}
-                <button>Sign Up</button>
-              </form>
-              {/* ========Input Section End ========  */}
-
-              <div className="text-center sm:m-4 text-gray-primary">or</div>
-
-              {/* ========OAuth Section Start ========  */}
-              <div className="lg:flex lg:space-x-2 space-y-2 lg:space-y-0">
-                <a
-                  href={
-                    process.env.NEXT_PUBLIC_BACKEND_BASE_URL +
-                    "/auth/user/google"
-                  }
-                  className="flex items-center justify-center gap-2 border border-gray-200 px-2 py-1 rounded-md cursor-pointer hover:bg-primary-light duration-200 "
-                >
-                  <BsGoogle color="red" />
-                  <p>Sign up with Google</p>
-                </a>
-                <div className="flex items-center justify-center gap-2 border border-gray-200 px-2 py-1 rounded-md cursor-pointer hover:bg-primary-light duration-200">
-                  <BsFacebook className="w-8 h-6" color="blue" />
-                  <p>Sign up with Facebook</p>
-                </div>
-              </div>
-              {/* ========OAuth Section Start ========  */}
             </div>
-            {/* <=======Right portion End======> */}
           </div>
         </div>
       </main>
