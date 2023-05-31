@@ -3,9 +3,22 @@ import AdminLayout from "@/layouts/AdminLayout";
 import AddNewProduct from "@/components/admin/Products/AddNewProduct";
 import ProductsTable from "@/components/admin/Products/ProductsTable";
 import CommonLayout from "@/layouts/commonLayout";
+import { useGetCategorysQuery } from "@/features/category/categoryApi";
 
 const Products = () => {
   const [newProduct, setNewProduct] = useState(false);
+
+  const query = {
+    search: "",
+    skip: 0,
+  };
+  const {
+    data: categories,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetCategorysQuery(query);
+
   const prices = [
     {
       _id: 1,
@@ -35,17 +48,17 @@ const Products = () => {
               <select
                 name="category"
                 id=""
-                className="w-full p-3 rounded-md border bg-gray-100 active:bg-white"
+                className="w-full p-3 rounded-md border bg-gray-100 active:bg-white capitalize"
               >
                 <option value={""} className="hidden">
-                  category
+                  Category
                 </option>
 
-                {/* {items?.map((item, i) => (
-                <option key={i} value={item.id}>
-                  {item.name}
-                </option>
-              ))} */}
+                {categories?.data?.map((item, i) => (
+                  <option className="" key={i} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -54,15 +67,11 @@ const Products = () => {
                 id=""
                 className="w-full p-3 rounded-md border bg-gray-100 active:bg-white"
               >
-                <option value={""} className="hidden">
-                  category
-                </option>
-
-                {/* {items?.map((item, i) => (
-                <option key={i} value={item.id}>
-                  {item.name}
-                </option>
-              ))} */}
+                {prices?.map((item, i) => (
+                  <option key={i} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div onClick={() => setNewProduct(!newProduct)}>

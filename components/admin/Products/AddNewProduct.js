@@ -9,11 +9,10 @@ const AddNewProduct = ({ newProduct, setNewProduct }) => {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [creating, setCreating] = useState(false);
-  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    getCategories();
-  }, []);
+  // useEffect(() => {
+  //   getCategories();
+  // }, []);
 
   const getCategories = async () => {
     try {
@@ -25,7 +24,6 @@ const AddNewProduct = ({ newProduct, setNewProduct }) => {
       console.log(err);
     }
   };
-
   const getSubcategories = (e) => {
     const sc = categories?.find(
       (category) => category?.id === e.target.value
@@ -36,32 +34,32 @@ const AddNewProduct = ({ newProduct, setNewProduct }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    // const formData = new FormData(e.target);
 
-    for (let i = 0; i < images.length; i++) {
-      formData.append("files", images[i]);
-    }
+    // for (let i = 0; i < images.length; i++) {
+    //   formData.append("files", images[i]);
+    // }
 
-    try {
-      setCreating(!creating);
-      const response = await axios.post(
-        process.env.NEXT_PUBLIC_BACKEND_BASE_URL + "/products",
-        formData
-      );
-      // dispatch({
-      //   type: "ADD_PRODUCT",
-      //   product: response?.data?.data,
-      // });
-      toast.success("New Product Added Successfully!");
-    } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
-    } finally {
-      e.target.reset();
-      setImages([]);
-      setCreating(!creating);
-      setNewProduct(false);
-    }
+    // try {
+    //   setCreating(!creating);
+    //   const response = await axios.post(
+    //     process.env.NEXT_PUBLIC_BACKEND_BASE_URL + "/products",
+    //     formData
+    //   );
+    //   // dispatch({
+    //   //   type: "ADD_PRODUCT",
+    //   //   product: response?.data?.data,
+    //   // });
+    //   toast.success("New Product Added Successfully!");
+    // } catch (err) {
+    //   console.log(err);
+    //   toast.error("Something went wrong");
+    // } finally {
+    //   e.target.reset();
+    //   setImages([]);
+    //   setCreating(!creating);
+    //   setNewProduct(false);
+    // }
   };
 
   return (
