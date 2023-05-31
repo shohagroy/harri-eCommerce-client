@@ -1,9 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-import { Controller, useForm } from "react-hook-form";
-import { BsFacebook, BsGoogle } from "react-icons/bs";
-import { CgKey } from "react-icons/cg";
+import { useForm } from "react-hook-form";
 import CustomerLayout from "../../layouts/customerLayout";
 
 const SignUp = () => {
@@ -27,50 +24,32 @@ const SignUp = () => {
         <title>Sign Up</title>
       </Head>
       <main>
-        <div className="custom-container h-screen flex items-center justify-center">
-          <div className="bg-white h-4/5 lg:w-4/5 w-full md:flex rounded-md overflow-hidden ">
-            {/* <=======left portion Start======> */}
-            <div className="bg-primary w-1/2 hidden lg:inline p-6">
-              <Link href={"/"}>
-                <Image
-                  src="https://kachabazar-store.vercel.app/logo/logo-light.svg"
-                  alt="logo"
-                  width={110}
-                  height={40}
+        <div className="h-screen w-full flex border-b-2 bg-gray-100">
+          <div className="flex justify-center items-center w-full">
+            <div className=" w-full lg:w-1/2 lg:p-6 p-2">
+              <div className="grid lg:grid-cols-2 lg:gap-2">
+                <img
+                  className="hidden lg:block"
+                  src="https://cdni.iconscout.com/illustration/premium/thumb/login-page-4468581-3783954.png?f=webp"
+                  alt=""
                 />
-              </Link>
-              <Image
-                src={"/images/contact-us.webp"}
-                width={"300"}
-                height={"300"}
-                className="mx-auto"
-              />
-              <h2 className="max-w-xs text-center  font-bold mx-auto text-white mt-8">
-                Started for free and get attractive offer
-              </h2>
-            </div>
-            {/* <=======left portion End======> */}
-            {/* <=======Right portion End======> */}
 
-            <div className="w-full flex justify-center mt-10">
-              <div className="bg-gradient-to-r from-red-500 to-red-300">
-                <div className="flex h-screen text-gray-900">
-                  <div className="w-11/12 p-8 m-auto bg-white rounded-lg sm:w-96 bg-opacity-80 bg-clip-padding">
+                <div className="flex  text-gray-900">
+                  <div className="w-11/12 p-8 m-auto bg-white rounded-lg sm:w-96 bg-opacity-80 bg-clip-padding shadow-lg">
                     <div className="space-y-2">
                       <div>
-                        <h1 className="text-2xl font-medium text-center md:text-4xl font-roboto">
-                          Welcome Back!
+                        <h1 className="text-xl font-medium text-center md:text-2xl font-roboto">
+                          Welcome to HarriShop!
                         </h1>
                       </div>
                       <div>
                         <div className="space-x-1 text-sm text-center md:text-base font-nunito">
-                          <span>New to SimpleForm?</span>
-                          <a
-                            className="font-semibold text-blue-500"
-                            href="signup.html"
-                          >
-                            Sign Up
-                          </a>
+                          <span>Already have and Account?</span>
+                          <Link href="/login">
+                            <button className="font-semibold text-blue-500">
+                              Login
+                            </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -93,7 +72,7 @@ const SignUp = () => {
                               />
                             </svg>
                             <input
-                              className="w-full p-2 pl-10 text-gray-800 placeholder-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                              className="w-full p-2 pl-10 text-gray-800 placeholder-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 border"
                               type="email"
                               name="email"
                               placeholder="Email"
@@ -102,7 +81,7 @@ const SignUp = () => {
                           </div>
                           <div className="relative flex items-center">
                             <svg
-                              className="absolute w-5 h-5 ml-3 text-gray-400"
+                              className="absolute w-5 h-5 ml-3 text-gray-400 "
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
@@ -116,7 +95,7 @@ const SignUp = () => {
                               />
                             </svg>
                             <input
-                              className="w-full p-2 pl-10 text-gray-800 placeholder-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                              className="w-full p-2 pl-10 text-gray-800 placeholder-gray-600 rounded-md  border focus:outline-none focus:ring-2 focus:ring-blue-300"
                               type="password"
                               name="password"
                               placeholder="Password"
@@ -145,7 +124,7 @@ const SignUp = () => {
                         </div>
                       </form>
                       <div className="mt-4">
-                        <button className="w-full p-2 text-sm font-normal text-center transition duration-100 bg-white rounded-md md:text-lg font-roboto focus:outline-none hover:shadow-lg">
+                        <button className="w-full p-2 text-sm font-normal text-center transition duration-100 bg-red-200 rounded-md md:text-lg font-roboto focus:outline-none hover:shadow-lg">
                           <span className="flex items-center justify-center gap-4">
                             <img
                               className="w-5 h-5 text-xs"
@@ -160,6 +139,10 @@ const SignUp = () => {
                   </div>
                 </div>
               </div>
+
+              <h2 className="max-w-xs text-center  font-bold mx-auto text-gray-400 mt-8">
+                Started for free and get attractive offer
+              </h2>
             </div>
           </div>
         </div>
