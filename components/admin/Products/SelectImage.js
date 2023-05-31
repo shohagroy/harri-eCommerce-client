@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 
-const SelectImage = ({ images, setImages }) => {
+const SelectImage = ({ images, setImages, imgPreview }) => {
   const [previews, setPreviews] = useState([]);
 
   useEffect(() => {
     setPreviews([...previews, ...images]);
   }, []);
+
+  useEffect(() => {
+    if (!imgPreview) {
+      setPreviews([]);
+    }
+  }, [imgPreview]);
 
   const handleChange = (e) => {
     const newImage = e.target.files[0];

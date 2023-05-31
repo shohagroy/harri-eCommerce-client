@@ -1,7 +1,6 @@
 const FormInput = ({
   title,
   number,
-  name,
   placeholder,
   value,
   setProductInfo,
@@ -18,9 +17,8 @@ const FormInput = ({
           required
           className="w-full p-3 focus:outline-none rounded-md border bg-gray-100"
           type={number ? "number" : "text"}
-          name={name || title?.toLowerCase() || "name"}
           placeholder={placeholder || title || "placeholder"}
-          defaultValue={value}
+          value={productInfo.title}
         />
       </div>
     </>

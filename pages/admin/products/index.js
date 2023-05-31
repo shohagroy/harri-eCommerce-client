@@ -1,13 +1,11 @@
 import { useState } from "react";
 import AdminLayout from "@/layouts/AdminLayout";
-import AddNewProduct from "@/components/admin/Products/AddNewProduct";
 import ProductsTable from "@/components/admin/Products/ProductsTable";
 import CommonLayout from "@/layouts/commonLayout";
 import { useGetCategorysQuery } from "@/features/category/categoryApi";
+import Link from "next/link";
 
 const Products = () => {
-  const [newProduct, setNewProduct] = useState(false);
-
   const query = {
     search: "",
     skip: 0,
@@ -74,18 +72,18 @@ const Products = () => {
                 ))}
               </select>
             </div>
-            <div onClick={() => setNewProduct(!newProduct)}>
-              <button className="w-full h-full p-3 lg:p-0 bg-[#0E9F6E] rounded-md text-white hover:bg-[#07895e] duration-300">
-                + Add Product
-              </button>
+            <div>
+              <Link href={"/admin/addNewProduct"}>
+                <button className="w-full h-full p-3 lg:p-0 bg-[#0E9F6E] rounded-md text-white hover:bg-[#07895e] duration-300">
+                  + Add Product
+                </button>
+              </Link>
             </div>
           </div>
 
           {/* products table  */}
           <ProductsTable />
         </div>
-
-        <AddNewProduct newProduct={newProduct} setNewProduct={setNewProduct} />
       </CommonLayout>
     </section>
   );
