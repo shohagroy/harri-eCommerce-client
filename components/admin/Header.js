@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { FaMoon, FaBell } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { AiOutlineLogout, AiFillSetting, AiFillHome } from "react-icons/ai";
 import { GoThreeBars } from "react-icons/go";
 import Link from "next/link";
-import SideBar from "./SideBar";
 import MobileSidebar from "./MobileSideBar";
 import { Drawer } from "antd";
 

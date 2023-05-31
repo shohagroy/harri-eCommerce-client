@@ -2,6 +2,7 @@ import CommonLayout from "@/layouts/commonLayout";
 import Link from "next/link";
 import React from "react";
 import { FiUser } from "react-icons/fi";
+import { RxDashboard } from "react-icons/rx";
 import { RiFacebookFill } from "react-icons/ri";
 import {
   AiOutlineHeart,
@@ -10,6 +11,8 @@ import {
   AiOutlineTwitter,
   AiFillLinkedin,
   AiFillYoutube,
+  AiFillSetting,
+  AiOutlineLogout,
 } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import { HiOutlineXMark } from "react-icons/hi2";
@@ -18,6 +21,7 @@ import CartDrawer from "@/components/CartDrawer";
 const Header = () => {
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const [userMenu, setUserMenu] = React.useState(false);
 
   const Links = [
     { name: "Home", link: "/" },
@@ -25,6 +29,8 @@ const Header = () => {
     { name: "Contact Us", link: "/contact-us" },
     { name: "About Us", link: "/about-us" },
   ];
+
+  const user = null;
 
   return (
     <section className="w-full border-b shadow-sm bg-[#F0F2EE]">
@@ -63,9 +69,56 @@ const Header = () => {
             </div>
 
             <div className="ml-4 flex items-center">
-              <button className="mx-2">
-                <FiUser size={25} />
-              </button>
+              <div className="relative">
+                <button onClick={() => setUserMenu(!userMenu)} className="mx-2">
+                  <FiUser size={25} />
+                </button>
+
+                {/* user modal menu  */}
+                {userMenu && (
+                  <div
+                    className="absolute z-50 bottom-100 rounded-lg shadow-lg -left-12
+               text-gray-600 text-sm font-semibold  bg-white w-[250px]"
+                  >
+                    <div>
+                      {user ? (
+                        <>
+                          <Link
+                            href={"/admin/dashboard"}
+                            className="w-full flex items-center p-3 duration-300 hover:bg-gray-200 "
+                          >
+                            <RxDashboard className="mr-2" />
+                            <span className="">Dashbord</span>
+                          </Link>
+
+                          <Link
+                            href={"/admin/setting"}
+                            className="w-full flex font-sm p-3 duration-300 hover:bg-gray-200 items-center"
+                          >
+                            <AiFillSetting className="mr-2" />
+                            <span className="">Edit Profile</span>
+                          </Link>
+
+                          <button className="w-full rounded-lg rounded-t-none flex font-sm p-3 duration-300 hover:bg-gray-200 items-center">
+                            <AiOutlineLogout className="mr-2" />
+                            <span className="">Log Out</span>
+                          </button>
+                        </>
+                      ) : (
+                        <Link href="/login">
+                          <button
+                            onClick={() => setUserMenu(false)}
+                            className="w-full rounded-lg rounded-t-none flex font-sm p-3 duration-300 hover:bg-gray-200 items-center"
+                          >
+                            <AiOutlineLogout className="mr-2" />
+                            <span className="">Log in</span>
+                          </button>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
 
               <div className="relative cursor-pointer">
                 <Link href={"/myWishlist"}>
