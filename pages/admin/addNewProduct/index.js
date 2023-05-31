@@ -7,6 +7,7 @@ import FormInput from "@/components/admin/Products/FormInput";
 import SelectImage from "@/components/admin/Products/SelectImage";
 import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import EditTools from "@/common/editTools";
+import { usePostNewProductMutation } from "@/features/products/productApi";
 
 const AddNewProduct = () => {
   const [images, setImages] = useState([]);
@@ -15,49 +16,29 @@ const AddNewProduct = () => {
 
   const [productInfo, setProductInfo] = useState({});
 
-  console.log(productInfo);
-
   const query = {
     search: "",
     skip: 0,
   };
   const { data, isLoading, isError, isSuccess } = useGetCategorysQuery(query);
-
   const categories = data?.data || [];
+
+  const [
+    postNewProduct,
+    {
+      isLoading: productLoading,
+      isError: productError,
+      isSuccess: productSuccess,
+    },
+  ] = usePostNewProductMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(images);
+    productInfo.images = images;
+    productInfo.description = description;
 
-    // console.log(e.target);
-
-    // const formData = new FormData(e.target);
-
-    // for (let i = 0; i < images.length; i++) {
-    //   formData.append("files", images[i]);
-    // }
-
-    // try {
-    //   setCreating(!creating);
-    //   const response = await axios.post(
-    //     process.env.NEXT_PUBLIC_BACKEND_BASE_URL + "/products",
-    //     formData
-    //   );
-    //   // dispatch({
-    //   //   type: "ADD_PRODUCT",
-    //   //   product: response?.data?.data,
-    //   // });
-    //   toast.success("New Product Added Successfully!");
-    // } catch (err) {
-    //   console.log(err);
-    //   toast.error("Something went wrong");
-    // } finally {
-    //   e.target.reset();
-    //   setImages([]);
-    //   setCreating(!creating);
-    //   setNewProduct(false);
-    // }
+    postNewProduct(productInfo);
   };
 
   return (
@@ -97,13 +78,27 @@ const AddNewProduct = () => {
 
                 <p className="py-2">Category</p>
                 <div className="col-span-3 ">
-                  <select className="w-full p-2 rounded-md border bg-gray-100 active:bg-white capitalize">
+                  <select
+                    onChange={(e) =>
+                      setProductInfo({
+                        ...productInfo,
+                        category: JSON.parse(e.target.value),
+                      })
+                    }
+                    className="w-full p-2 rounded-md border bg-gray-100 active:bg-white capitalize"
+                  >
                     <option value={""} className="hidden">
                       Select Category
                     </option>
 
                     {categories?.map((category) => (
-                      <option key={category.id} value={category.id}>
+                      <option
+                        key={category.id}
+                        value={JSON.stringify({
+                          name: category.name,
+                          id: category._id,
+                        })}
+                      >
                         {category.name}
                       </option>
                     ))}
@@ -159,6 +154,12 @@ const AddNewProduct = () => {
                   >
                     <span className="relative">
                       <input
+                        onChange={(e) =>
+                          setProductInfo({
+                            ...productInfo,
+                            publish: e.target.checked,
+                          })
+                        }
                         id="publish"
                         name="publish"
                         type="checkbox"
@@ -182,7 +183,7 @@ const AddNewProduct = () => {
                   <button
                     type="submit"
                     className="py-3 px-6 m-1 bg-blue-600 rounded-md 
-            hover:bg-blue-700 text-white  duration-300 w-full"
+                    hover:bg-blue-700 text-white  duration-300 w-full"
                   >
                     {creating ? "Creating..." : "Add Product"}
                   </button>
