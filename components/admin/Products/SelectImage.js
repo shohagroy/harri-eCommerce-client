@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 
 const SelectImage = ({ images, setImages }) => {
@@ -10,12 +10,11 @@ const SelectImage = ({ images, setImages }) => {
 
   const handleChange = (e) => {
     const newImage = e.target.files[0];
+
     if (newImage) {
-      setImages([...images, newImage]);
-
       const reader = new FileReader();
-
       reader.onload = () => {
+        setImages([...images, reader.result]);
         setPreviews([...previews, reader.result]);
       };
       reader.readAsDataURL(newImage);

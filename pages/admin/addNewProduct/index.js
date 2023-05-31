@@ -13,6 +13,10 @@ const AddNewProduct = () => {
   const [creating, setCreating] = useState(false);
   const [description, setDescription] = useState("");
 
+  const [productInfo, setProductInfo] = useState({});
+
+  console.log(productInfo);
+
   const query = {
     search: "",
     skip: 0,
@@ -23,6 +27,10 @@ const AddNewProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(images);
+
+    // console.log(e.target);
 
     // const formData = new FormData(e.target);
 
@@ -77,7 +85,11 @@ const AddNewProduct = () => {
 
             <form onSubmit={handleSubmit}>
               <div className=" lg:my-2 lg:grid grid-cols-1 lg:grid-cols-4 p-6  gap-5 rounded-md shadow-sm  bg-white text-xs">
-                <FormInput title="Title" />
+                <FormInput
+                  productInfo={productInfo}
+                  setProductInfo={setProductInfo}
+                  title="title"
+                />
                 <p className="my-1">Images</p>
                 <div className="col-span-3 ">
                   <SelectImage images={images} setImages={setImages} />
@@ -98,18 +110,45 @@ const AddNewProduct = () => {
                   </select>
                 </div>
 
-                <FormInput title="Unit" placeholder="(kg/pc/lb/ml/g...etc)" />
-                <FormInput title="Quantity" number />
-                <FormInput title="Orginal Price" name="originalPrice" number />
-                <FormInput title="Discount" number />
                 <FormInput
-                  title="Tags"
+                  title="unit"
+                  placeholder="(kg/pc/lb/ml/g...etc)"
+                  productInfo={productInfo}
+                  setProductInfo={setProductInfo}
+                />
+                <FormInput
+                  title="quantity"
+                  number
+                  productInfo={productInfo}
+                  setProductInfo={setProductInfo}
+                />
+                <FormInput
+                  title="price"
+                  name="originalPrice"
+                  number
+                  productInfo={productInfo}
+                  setProductInfo={setProductInfo}
+                />
+                <FormInput
+                  productInfo={productInfo}
+                  setProductInfo={setProductInfo}
+                  title="discount"
+                  number
+                />
+                <FormInput
+                  productInfo={productInfo}
+                  setProductInfo={setProductInfo}
+                  title="tags"
                   placeholder="write tags (comma separated)"
                 />
 
                 <p className="py-2">Description</p>
                 <div className="col-span-3 ">
-                  <EditTools value={description} setValue={setDescription} />
+                  <EditTools
+                    name={"description"}
+                    value={description}
+                    setValue={setDescription}
+                  />
                 </div>
 
                 <p className="py-2">Publish</p>
