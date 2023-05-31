@@ -2,13 +2,13 @@ import { apiSlice } from "../api/apiSlice";
 
 export const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // getCategorys: builder.query({
-    //   query: ({ search, skip }) => ({
-    //     url: `/categorys?search=${search}&skip=${skip}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["categorys"],
-    // }),
+    getProducts: builder.query({
+      query: ({ search, skip }) => ({
+        url: `/products?search=${search}&skip=${skip}`,
+        method: "GET",
+      }),
+      providesTags: ["products"],
+    }),
 
     postNewProduct: builder.mutation({
       query: (data) => ({
@@ -77,4 +77,4 @@ export const productApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { usePostNewProductMutation } = productApi;
+export const { usePostNewProductMutation, useGetProductsQuery } = productApi;

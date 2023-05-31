@@ -4,6 +4,7 @@ import ProductsTable from "@/components/admin/Products/ProductsTable";
 import CommonLayout from "@/layouts/commonLayout";
 import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import Link from "next/link";
+import { useGetProductsQuery } from "@/features/products/productApi";
 
 const Products = () => {
   const query = {
@@ -27,6 +28,13 @@ const Products = () => {
       name: "High to Low",
     },
   ];
+
+  const {
+    data: products,
+    isLoading: productLoading,
+    isError: isProductError,
+    error: productError,
+  } = useGetProductsQuery(query);
 
   return (
     <section className="  bg-gray-100 min-h-screen">
@@ -82,7 +90,7 @@ const Products = () => {
           </div>
 
           {/* products table  */}
-          <ProductsTable />
+          <ProductsTable products={products?.data} />
         </div>
       </CommonLayout>
     </section>
