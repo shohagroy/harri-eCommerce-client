@@ -10,6 +10,13 @@ export const productApi = apiSlice.injectEndpoints({
       providesTags: ["products"],
     }),
 
+    getSingleProduct: builder.query({
+      query: (id) => ({
+        url: `/products/${id}`,
+        method: "GET",
+      }),
+    }),
+
     postNewProduct: builder.mutation({
       query: (data) => ({
         url: `/products`,
@@ -77,4 +84,8 @@ export const productApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { usePostNewProductMutation, useGetProductsQuery } = productApi;
+export const {
+  usePostNewProductMutation,
+  useGetProductsQuery,
+  useGetSingleProductQuery,
+} = productApi;

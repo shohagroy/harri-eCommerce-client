@@ -115,12 +115,11 @@ const ProductsTable = ({ products }) => {
                 </td>
                 <td className="px-3 py-2">
                   <div className="flex justify-center items-center">
-                    <button
-                      onClick={() => productUpdateHandelar(product)}
-                      className="text-lg mr-2 font-normal text-gray-400 hover:text-[#07895e] duration-300"
-                    >
-                      <FaRegEdit />
-                    </button>
+                    <Link href={`/admin/${product?._id}`}>
+                      <button className="text-lg mr-2 font-normal text-gray-400 hover:text-[#07895e] duration-300">
+                        <FaRegEdit />
+                      </button>
+                    </Link>
 
                     <button
                       onClick={() =>
