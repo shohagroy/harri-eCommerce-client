@@ -6,9 +6,23 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import swal from "sweetalert";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import { useUpdateProductByIdMutation } from "@/features/products/productApi";
+import {
+  useDeleteProductByIdMutation,
+  useUpdateProductByIdMutation,
+} from "@/features/products/productApi";
 
 const ProductsTable = ({ products }) => {
+  const [
+    deleteProductById,
+    {
+      data: confarmation,
+      isLoading: isDeleteLoading,
+      isError: isDeleteError,
+      error: deleteError,
+      isSuccess: deleteSuccess,
+    },
+  ] = useDeleteProductByIdMutation();
+
   const [
     updateProductById,
     {
@@ -20,29 +34,19 @@ const ProductsTable = ({ products }) => {
     },
   ] = useUpdateProductByIdMutation();
 
-  const productDeleteHandelar = (id, name, index) => {
-    // swal({
-    //   title: "Are you sure?",
-    //   text: `Delete "${name}" Product!`,
-    //   icon: "warning",
-    //   buttons: true,
-    //   dangerMode: true,
-    // }).then(async (willDelete) => {
-    //   if (willDelete) {
-    //     try {
-    //       // await axios.delete(
-    //       //   process.env.NEXT_PUBLIC_BACKEND_BASE_URL + `/products/${id}`
-    //       // );
-    //       // dispatch({
-    //       //   type: "REMOVE_PRODUCT",
-    //       //   index,
-    //       // });
-    //       toast.success("Product Deleted Successfully!");
-    //     } catch (err) {
-    //       toast.error("Something went wrong");
-    //     }
-    //   }
-    // });
+  const productDeleteHandelar = (id, name) => {
+    console.log(id);
+    swal({
+      title: "Are you sure?",
+      text: `Delete "${name}" Product!`,
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        deleteProductById(id);
+      }
+    });
   };
 
   const handleProductPublishChange = (data) => {
@@ -51,21 +55,22 @@ const ProductsTable = ({ products }) => {
     updateProductById(updateData);
   };
 
-  // useEffect(() => {
-  //   if (!deleteLoading && deleteSuccess) {
-  //     toast.success(confatmation.message);
-  //   }
-  //   if (!deleteLoading && deleteError) {
-  //     toast.error(error.message);
-  //   }
-  // }, [deleteLoading, deleteError, deleteSuccess]);
+  useEffect(() => {
+    if (!isDeleteLoading && deleteSuccess) {
+      toast.success(confarmation.message);
+    }
+    if (!isDeleteLoading && isDeleteError) {
+      console.log(deleteError);
+      toast.error(deleteError.status);
+    }
+  }, [isDeleteLoading, isDeleteError, deleteSuccess]);
 
   useEffect(() => {
     if (!updateLoading && updateSuccess) {
       toast.success(updatedData.message);
     }
     if (!updateLoading && isUpdateError) {
-      toast.error(updateError.message);
+      toast.error(updateError.status);
     }
   }, [updateLoading, updateError, updateSuccess]);
 
@@ -157,7 +162,7 @@ const ProductsTable = ({ products }) => {
 
                     <button
                       onClick={() =>
-                        productDeleteHandelar(product.id, product.title, i)
+                        productDeleteHandelar(product._id, product.title)
                       }
                       className="text-lg mr-2 font-normal text-gray-400 hover:text-red-600 duration-300"
                     >

@@ -30,27 +30,13 @@ export const productApi = apiSlice.injectEndpoints({
       invalidatesTags: ["products"],
     }),
 
-    // deleteCategoryById: builder.mutation({
-    //   query: (id) => ({
-    //     url: `/categorys/${id}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["categorys"],
-    //   // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-    //   //   const pathResult = dispatch(
-    //   //     apiSlice.util.updateQueryData("getCategorys", undefined, (draft) => {
-    //   //       const data = draft.data.filter((category) => category._id != arg);
-    //   //       return { ...draft, data };
-    //   //     })
-    //   //   );
-
-    //   //   try {
-    //   //     await queryFulfilled;
-    //   //   } catch (err) {
-    //   //     pathResult.undo();
-    //   //   }
-    //   // },
-    // }),
+    deleteProductById: builder.mutation({
+      query: (id) => ({
+        url: `/products/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["products"],
+    }),
 
     updateProductById: builder.mutation({
       query: (data) => ({
@@ -71,4 +57,5 @@ export const {
   useGetProductsQuery,
   useGetSingleProductQuery,
   useUpdateProductByIdMutation,
+  useDeleteProductByIdMutation,
 } = productApi;
