@@ -6,8 +6,20 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import swal from "sweetalert";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import { useUpdateProductByIdMutation } from "@/features/products/productApi";
 
 const ProductsTable = ({ products }) => {
+  const [
+    updateProductById,
+    {
+      data: updatedData,
+      isLoading: updateLoading,
+      isError: isUpdateError,
+      error: updateError,
+      isSuccess: updateSuccess,
+    },
+  ] = useUpdateProductByIdMutation();
+
   const productDeleteHandelar = (id, name, index) => {
     // swal({
     //   title: "Are you sure?",
@@ -33,7 +45,29 @@ const ProductsTable = ({ products }) => {
     // });
   };
 
-  console.log(products);
+  const handleProductPublishChange = (data) => {
+    const updateData = { ...data, publish: !data.publish };
+
+    updateProductById(updateData);
+  };
+
+  // useEffect(() => {
+  //   if (!deleteLoading && deleteSuccess) {
+  //     toast.success(confatmation.message);
+  //   }
+  //   if (!deleteLoading && deleteError) {
+  //     toast.error(error.message);
+  //   }
+  // }, [deleteLoading, deleteError, deleteSuccess]);
+
+  useEffect(() => {
+    if (!updateLoading && updateSuccess) {
+      toast.success(updatedData.message);
+    }
+    if (!updateLoading && isUpdateError) {
+      toast.error(updateError.message);
+    }
+  }, [updateLoading, updateError, updateSuccess]);
 
   return (
     <div className="container pb-8 mx-auto rounded-md  bg-gray-100">
@@ -102,8 +136,8 @@ const ProductsTable = ({ products }) => {
                   >
                     <span className="relative">
                       <input
-                        readOnly
-                        checked={product?.published || false}
+                        onChange={() => handleProductPublishChange(product)}
+                        checked={product?.publish}
                         id={"publish" + i}
                         type="checkbox"
                         className="hidden peer"

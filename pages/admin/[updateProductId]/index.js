@@ -284,7 +284,6 @@ const UpdateProduct = () => {
                     setValue={setDescription}
                   />
                 </div>
-
                 <p className="py-2">Publish</p>
                 <div className="col-span-3 ">
                   <label
