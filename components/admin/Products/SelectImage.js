@@ -3,6 +3,7 @@ import { FaTimes } from "react-icons/fa";
 
 const SelectImage = ({ images, setImages, imgPreview }) => {
   const [previews, setPreviews] = useState([]);
+  const [updatedPreviews, setUpdatedPreviews] = useState([]);
 
   useEffect(() => {
     setPreviews([...previews, ...images]);

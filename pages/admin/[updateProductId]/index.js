@@ -8,7 +8,7 @@ import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import EditTools from "@/common/editTools";
 import {
   useGetSingleProductQuery,
-  usePostNewProductMutation,
+  useUpdateProductByIdMutation,
 } from "@/features/products/productApi";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -17,15 +17,12 @@ const UpdateProduct = () => {
   const router = useRouter();
   const { updateProductId } = router.query;
 
-  console.log(updateProductId);
-
   const [images, setImages] = useState([]);
   const [description, setDescription] = useState("");
   const [imgPreview, setImgPreview] = useState(false);
+  const [removeOldImages, setRemoveOldImages] = useState(false);
 
   const [productInfo, setProductInfo] = useState({});
-
-  console.log(updateProductId);
 
   const query = {
     search: "",
@@ -35,50 +32,32 @@ const UpdateProduct = () => {
   const { data, isLoading, isError, isSuccess } = useGetCategorysQuery(query);
   const categories = data?.data || [];
 
-  // const (data: product) = useGetSingleProductQuery(updateProductId)
+  const {
+    data: product,
+    isLoading: productLoading,
+    isSuccess: productSuccess,
+  } = useGetSingleProductQuery(updateProductId);
 
+  // update RTK function
   const [
-    postNewProduct,
+    updateProductById,
     {
-      isLoading: productLoading,
-      isError: isProductError,
-      isSuccess: productSuccess,
-      error: productError,
+      isLoading: updateLoding,
+      isError: isUpdateError,
+      error: updateError,
+      isSuccess: updateSuccess,
     },
-  ] = useGetSingleProductQuery();
+  ] = useUpdateProductByIdMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    productInfo.images = images;
-    productInfo.description = description;
-
-    postNewProduct(productInfo);
+    if (removeOldImages && images.length > 0) {
+      updateProductById({ ...productInfo, description, images });
+    } else {
+      updateProductById({ ...productInfo, description });
+    }
   };
-
-  useEffect(() => {
-    if (productSuccess) {
-      setImages([]);
-      setProductInfo({
-        title: "",
-        category: {},
-        unit: "",
-        quantity: "",
-        price: "",
-        discount: "",
-        tags: "",
-        description: "",
-        images: [],
-        publish: false,
-      });
-      setDescription("");
-      toast.success("New Product Added Successfully!");
-    }
-
-    if (isProductError) {
-      toast.error(productError.message);
-    }
-  }, [productSuccess, isProductError]);
 
   useEffect(() => {
     if (images.length > 0) {
@@ -87,6 +66,20 @@ const UpdateProduct = () => {
       setImgPreview(false);
     }
   }, [images]);
+
+  useEffect(() => {
+    if (product?.data?._id && !productLoading && productSuccess) {
+      setProductInfo(product?.data);
+      setDescription(product?.data?.description);
+    }
+  }, [product, productSuccess, productLoading]);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      toast.success("Product updated Successfully!");
+      router.push("/admin/products");
+    }
+  }, [updateSuccess]);
 
   return (
     <>
@@ -131,11 +124,37 @@ const UpdateProduct = () => {
                 </div>
                 <p className="my-1">Images</p>
                 <div className="col-span-3 ">
-                  <SelectImage
-                    imgPreview={imgPreview}
-                    images={images}
-                    setImages={setImages}
-                  />
+                  {removeOldImages ? (
+                    <SelectImage
+                      defaultImages={productInfo?.images}
+                      imgPreview={imgPreview}
+                      images={images}
+                      setImages={setImages}
+                    />
+                  ) : (
+                    <div className="w-full flex bg-gray-100 relative ">
+                      <p
+                        onClick={() => setRemoveOldImages(true)}
+                        className="text-2xl h-10 w-10 bg-white text-red-600
+                    absolute -top-3 -left-3 rounded-full flex justify-center
+                    items-center shadow-md cursor-pointer"
+                        title="Cancel Old
+                    Images"
+                      >
+                        <TiDeleteOutline />
+                      </p>
+
+                      {productInfo?.images?.map((preview, i) => (
+                        <div className="border m-1  my-2 rounded-md" key={i}>
+                          <img
+                            src={preview.url}
+                            alt="product image"
+                            className="h-[100px] w-[100px] rounded-md"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <p className="py-2">Category</p>
@@ -159,7 +178,8 @@ const UpdateProduct = () => {
 
                     {categories?.map((category) => (
                       <option
-                        key={category.id}
+                        selected={productInfo?.categories?.id === category.id}
+                        key={category._id}
                         value={JSON.stringify({
                           name: category.name,
                           id: category._id,
@@ -303,11 +323,11 @@ const UpdateProduct = () => {
 
                   <button
                     type="submit"
-                    disabled={productLoading}
+                    // disabled={productLoading}
                     className="py-3 px-6 m-1 bg-blue-600 rounded-md 
                     hover:bg-blue-700 text-white  duration-300 w-full"
                   >
-                    {productLoading ? "Creating..." : "Update Product"}
+                    {updateLoding ? "Updating..." : "Update Product"}
                   </button>
                 </div>
               </div>

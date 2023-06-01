@@ -15,6 +15,7 @@ export const productApi = apiSlice.injectEndpoints({
         url: `/products/${id}`,
         method: "GET",
       }),
+      providesTags: ["products"],
     }),
 
     postNewProduct: builder.mutation({
@@ -27,25 +28,6 @@ export const productApi = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["products"],
-      // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-      //   try {
-      //     const result = await queryFulfilled;
-
-      //     if (result.data.data._id) {
-      //       dispatch(
-      //         apiSlice.util.updateQueryData(
-      //           "getCategorys",
-      //           undefined,
-      //           (draft) => {
-      //             draft.data.push(result.data.data);
-      //           }
-      //         )
-      //       );
-      //     }
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // },
     }),
 
     // deleteCategoryById: builder.mutation({
@@ -70,17 +52,17 @@ export const productApi = apiSlice.injectEndpoints({
     //   // },
     // }),
 
-    // updateCategoryById: builder.mutation({
-    //   query: (data) => ({
-    //     url: `/categorys/${data._id}`,
-    //     method: "PUT",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["categorys"],
-    // }),
+    updateProductById: builder.mutation({
+      query: (data) => ({
+        url: `/products/${data._id}`,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["products"],
+    }),
   }),
 });
 
@@ -88,4 +70,5 @@ export const {
   usePostNewProductMutation,
   useGetProductsQuery,
   useGetSingleProductQuery,
+  useUpdateProductByIdMutation,
 } = productApi;
