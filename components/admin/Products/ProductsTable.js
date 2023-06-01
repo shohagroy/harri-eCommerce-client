@@ -35,7 +35,6 @@ const ProductsTable = ({ products }) => {
   ] = useUpdateProductByIdMutation();
 
   const productDeleteHandelar = (id, name) => {
-    console.log(id);
     swal({
       title: "Are you sure?",
       text: `Delete "${name}" Product!`,
@@ -60,7 +59,6 @@ const ProductsTable = ({ products }) => {
       toast.success(confarmation.message);
     }
     if (!isDeleteLoading && isDeleteError) {
-      console.log(deleteError);
       toast.error(deleteError.status);
     }
   }, [isDeleteLoading, isDeleteError, deleteSuccess]);

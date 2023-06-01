@@ -8,27 +8,26 @@ import { useGetProductsQuery } from "@/features/products/productApi";
 import Head from "next/head";
 
 const Products = () => {
-  const query = {
-    search: "",
-    skip: 0,
-  };
+  const [searchProducts, setSearchProducts] = useState("");
+  const [showPage, setShowPage] = useState(1);
+  const [sort, setSort] = useState(1);
+  const [searchByCategory, setSearchByCategory] = useState("");
+
   const {
     data: categories,
     isLoading,
     isError,
     isSuccess,
-  } = useGetCategorysQuery(query);
+  } = useGetCategorysQuery({ search: "", skip: 0 });
 
-  const prices = [
-    {
-      _id: 1,
-      name: "Low to High",
-    },
-    {
-      _id: 2,
-      name: "High to Low",
-    },
-  ];
+  console.log(sort);
+
+  const query = {
+    search: searchProducts,
+    skip: showPage === 1 ? 0 : (showPage - 1) * 10,
+    sort,
+    searchByCategory,
+  };
 
   const {
     data: products,
@@ -51,6 +50,7 @@ const Products = () => {
               {/* products search section  */}
               <div className="my-3 grid grid-cols-1 lg:grid-cols-4 py-6 px-4 gap-6 rounded-md shadow-sm bg-white">
                 <input
+                  onChange={(e) => setSearchProducts(e.target.value)}
                   className="w-full p-3 focus:outline-none rounded-md border bg-gray-100"
                   type="text"
                   placeholder={"search by product name"}
@@ -58,16 +58,15 @@ const Products = () => {
 
                 <div>
                   <select
+                    onChange={(e) => setSearchByCategory(e.target.value)}
                     name="category"
                     id=""
                     className="w-full p-3 rounded-md border bg-gray-100 active:bg-white capitalize"
                   >
-                    <option value={""} className="hidden">
-                      Category
-                    </option>
+                    <option value={""}>All Category</option>
 
                     {categories?.data?.map((item, i) => (
-                      <option className="" key={i} value={item.id}>
+                      <option className="" key={i} value={item._id}>
                         {item.name}
                       </option>
                     ))}
@@ -75,15 +74,11 @@ const Products = () => {
                 </div>
                 <div>
                   <select
-                    name="category"
-                    id=""
+                    onChange={(e) => setSort(e.target.value)}
                     className="w-full p-3 rounded-md border bg-gray-100 active:bg-white"
                   >
-                    {prices?.map((item, i) => (
-                      <option key={i} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
+                    <option value={"high"}>High to Low</option>
+                    <option value={"low"}>Low to High</option>
                   </select>
                 </div>
                 <div>
