@@ -28,6 +28,7 @@ const AddNewCategory = ({ setCategoryDeawer }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     postNewCategory(newCategory);
   };
 

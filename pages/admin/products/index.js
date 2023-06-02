@@ -20,8 +20,6 @@ const Products = () => {
     isSuccess,
   } = useGetCategorysQuery({ search: "", skip: 0 });
 
-  console.log(sort);
-
   const query = {
     search: searchProducts,
     skip: showPage === 1 ? 0 : (showPage - 1) * 10,
@@ -91,7 +89,11 @@ const Products = () => {
               </div>
 
               {/* products table  */}
-              <ProductsTable products={products?.data} />
+              <ProductsTable
+                products={products}
+                showPage={showPage}
+                setShowPage={setShowPage}
+              />
             </div>
           </CommonLayout>
         </section>

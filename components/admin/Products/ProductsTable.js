@@ -11,7 +11,7 @@ import {
   useUpdateProductByIdMutation,
 } from "@/features/products/productApi";
 
-const ProductsTable = ({ products }) => {
+const ProductsTable = ({ products, showPage, setShowPage }) => {
   const [
     deleteProductById,
     {
@@ -92,13 +92,15 @@ const ProductsTable = ({ products }) => {
             </tr>
           </thead>
           <tbody className="text-[14px] ">
-            {products?.map((product, i) => (
+            {products?.data?.map((product, i) => (
               <tr
                 key={"product" + i}
                 className="text-left border-b border-opacity-20 border-gray-700 bg-white "
               >
                 <td className="px-3 py-2 text-left">
-                  <span>{i + 1}</span>
+                  <span>
+                    {showPage <= 1 ? i + 1 : (showPage - 1) * 10 + i + 1}
+                  </span>
                 </td>
                 <td className="px-3 py-2 text-left">
                   <div className="flex items-center">
@@ -172,38 +174,78 @@ const ProductsTable = ({ products }) => {
             ))}
           </tbody>
         </table>
+
         <div className="rounded-b-md text-xs bg-white shadow-md border border-t-none font-semibold text-gray-500 ">
           <div className="p-4  flex  justify-between items-center col-span-4">
-            <p>SHOWING 46-60 OF 312</p>
+            <p>
+              Showing {showPage <= 1 ? 1 : (showPage - 1) * 10} -{" "}
+              {showPage <= 1
+                ? 10
+                : showPage * 10 > products?.count
+                ? products?.count
+                : showPage * 10}{" "}
+              of {products?.count}
+            </p>
 
             <div className="flex items-center">
-              <button className="p-2 hover:bg-gray-200 duration-300 rounded-md mx-1">
-                <AiOutlineLeft />
+              <button
+                disabled={showPage === 1}
+                className={`hover:bg-gray-200
+                duration-300 rounded-md mx-1`}
+                onClick={() => setShowPage(showPage - 1)}
+              >
+                <AiOutlineLeft size={20} />
               </button>
 
-              <button className="p-2 bg-[#07895e] text-white duration-300 rounded-md mx-1">
-                1
+              <button
+                className={`p-2 ${
+                  showPage === 1
+                    ? "bg-red-600 text-white"
+                    : "bg-gray-200 text-black"
+                }  duration-300 rounded-md mx-1 hover:bg-red-600/40 hover:text-white`}
+                onClick={() => setShowPage(showPage === 1 ? 1 : showPage - 1)}
+              >
+                {showPage === 1 ? 1 : showPage - 1}
               </button>
-              <button className="p-2 hover:bg-gray-200 duration-300 rounded-md mx-1">
-                2
-              </button>
-              <button className="p-2 hover:bg-gray-200 duration-300 rounded-md mx-1">
-                3
-              </button>
-              <button className="p-2 hover:bg-gray-200 duration-300 rounded-md mx-1">
-                4
-              </button>
-              <button className="p-2 hover:bg-gray-200 duration-300 rounded-md mx-1">
-                5
-              </button>
+
+              {showPage > 1 && (
+                <button
+                  onClick={() => setShowPage(showPage + 1)}
+                  className={`p-2 ${
+                    showPage > 1
+                      ? "bg-red-600 text-white"
+                      : "bg-gray-200 text-black"
+                  }  duration-300 rounded-md mx-1 hover:bg-red-600 hover:text-white`}
+                >
+                  {showPage === 1 ? 2 : showPage}
+                </button>
+              )}
+
+              {showPage > 2 && (
+                <button
+                  className={`p-2 bg-gray-200 text-black duration-300 rounded-md mx-1 hover:bg-red-600/40 hover:text-white`}
+                  onClick={() => setShowPage(showPage === 1 ? 3 : showPage + 1)}
+                  disabled={showPage === Math.ceil(products?.count / 10)}
+                >
+                  {showPage === 1 ? 3 : showPage + 1}
+                </button>
+              )}
 
               <span>-</span>
 
-              <button className="p-2 hover:bg-gray-200 duration-300 rounded-md mx-1">
-                21
+              <button
+                onClick={() => setShowPage(showPage + 1)}
+                className="p-2 hover:bg-gray-200 duration-300 rounded-md mx-1"
+              >
+                {Math.ceil(products?.count / 10)}
               </button>
-              <button className="p-2 hover:bg-gray-200 duration-300 rounded-md mx-1">
-                <AiOutlineRight />
+              <button
+                disabled={showPage === Math.ceil(products?.count / 10)}
+                className={`hover:bg-gray-200
+               duration-300 rounded-md mx-1`}
+                onClick={() => setShowPage(showPage + 1)}
+              >
+                <AiOutlineRight size={20} />
               </button>
             </div>
           </div>
