@@ -178,7 +178,7 @@ const UpdateProduct = () => {
 
                     {categories?.map((category) => (
                       <option
-                        selected={productInfo?.categories?.id === category.id}
+                        selected={productInfo?.categories?._id === category._id}
                         key={category._id}
                         value={JSON.stringify({
                           name: category.name,
@@ -323,8 +323,8 @@ const UpdateProduct = () => {
                   <button
                     type="submit"
                     // disabled={productLoading}
-                    className="py-3 px-6 m-1 bg-blue-600 rounded-md 
-                    hover:bg-blue-700 text-white  duration-300 w-full"
+                    className="py-3 px-6 m-1 bg-red-600/50 rounded-md 
+                    hover:bg-red-600 text-white  duration-300 w-full"
                   >
                     {updateLoding ? "Updating..." : "Update Product"}
                   </button>

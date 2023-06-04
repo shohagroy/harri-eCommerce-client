@@ -60,7 +60,7 @@ const Category = () => {
                 <div className="text-center text-xl font-bold">Loading...</div>
               ) : isError ? (
                 <div className="text-center text-xl font-bold text-red-600">
-                  {error.message}
+                  {error.data?.message}
                 </div>
               ) : categories.data.length > 0 ? (
                 <CategoryTable

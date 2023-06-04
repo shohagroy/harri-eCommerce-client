@@ -89,11 +89,24 @@ const Products = () => {
               </div>
 
               {/* products table  */}
-              <ProductsTable
-                products={products}
-                showPage={showPage}
-                setShowPage={setShowPage}
-              />
+
+              {productLoading ? (
+                <div className="text-center text-xl font-bold">Loading...</div>
+              ) : isProductError ? (
+                <div className="text-center text-xl font-bold text-red-600">
+                  {productError.data?.message}
+                </div>
+              ) : products.data.length > 0 ? (
+                <ProductsTable
+                  products={products}
+                  showPage={showPage}
+                  setShowPage={setShowPage}
+                />
+              ) : (
+                <div className="text-center text-xl font-bold">
+                  No Product Found!
+                </div>
+              )}
             </div>
           </CommonLayout>
         </section>

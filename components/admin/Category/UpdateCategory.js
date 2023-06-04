@@ -154,7 +154,7 @@ const UpdateCategory = ({ setCategoryDeawer, data }) => {
             className="py-3 px-6 bg-red-600/40 rounded-md 
         hover:bg-red-600 text-white  duration-300 w-full"
           >
-            {isLoading ? "Loading..." : "Add Category"}
+            {isLoading ? "Loading..." : "Update"}
           </button>
         </div>
       </form>

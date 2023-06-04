@@ -136,8 +136,8 @@ const AddNewProduct = () => {
                     className="w-full p-2 rounded-md border bg-gray-100 active:bg-white capitalize"
                   >
                     <option
-                      selected={!productInfo?.categories?.id}
-                      value={""}
+                      selected={!productInfo?.categories?._id}
+                      value={"no select"}
                       className="hidden"
                     >
                       Select Category
@@ -145,7 +145,7 @@ const AddNewProduct = () => {
 
                     {categories?.map((category) => (
                       <option
-                        key={category.id}
+                        key={category._id}
                         value={JSON.stringify({
                           name: category.name,
                           id: category._id,
@@ -290,8 +290,8 @@ const AddNewProduct = () => {
                   <button
                     type="submit"
                     disabled={productLoading}
-                    className="py-3 px-6 m-1 bg-blue-600 rounded-md 
-                    hover:bg-blue-700 text-white  duration-300 w-full"
+                    className="py-3 px-6 m-1 bg-red-600/50 rounded-md 
+                    hover:bg-red-600 text-white  duration-300 w-full"
                   >
                     {productLoading ? "Creating..." : "Add Product"}
                   </button>
