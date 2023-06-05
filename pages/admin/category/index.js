@@ -79,7 +79,6 @@ const Category = () => {
           <Drawer
             title={"Add Category"}
             placement="right"
-            // width={300}
             onClose={() => setCategoryDeawer(false)}
             open={categoryDrawer}
           >

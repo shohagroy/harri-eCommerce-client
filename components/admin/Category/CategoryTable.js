@@ -167,7 +167,9 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
             <p>
               Showing {showPage <= 1 ? 1 : (showPage - 1) * 10} -{" "}
               {showPage <= 1
-                ? 10
+                ? categories.count >= 10
+                  ? 10
+                  : categories.count
                 : showPage * 10 > categories.count
                 ? categories.count
                 : showPage * 10}{" "}
