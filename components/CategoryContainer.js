@@ -56,7 +56,10 @@ const CategoryContainer = () => {
           {categorys?.map((category) => {
             const { image, name, link } = category || {};
             return (
-              <div className="h-44 relative  aspect-video rounded-sm  ">
+              <div
+                key={name}
+                className="h-44 relative  aspect-video rounded-sm  "
+              >
                 <img
                   className="h-44 w-full  object-cover object-center"
                   src={image}

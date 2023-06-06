@@ -180,7 +180,9 @@ const ProductsTable = ({ products, showPage, setShowPage }) => {
             <p>
               Showing {showPage <= 1 ? 1 : (showPage - 1) * 10} -{" "}
               {showPage <= 1
-                ? 10
+                ? products.count >= 10
+                  ? 10
+                  : products.count
                 : showPage * 10 > products?.count
                 ? products?.count
                 : showPage * 10}{" "}
