@@ -1,3 +1,4 @@
+import { useCreateUserMutation } from "@/features/auth/authApi";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
@@ -10,9 +11,15 @@ const SignUp = () => {
     confirmPassword: "",
   });
 
+  const [createUser, { data, isLoading, isError, isSuccess, error }] =
+    useCreateUserMutation();
+
+  console.log(data, isLoading, isError, isSuccess, error);
+
   const userSignUpHandelar = (e) => {
     e.preventDefault();
-    console.log("click");
+
+    createUser(userInfo);
     console.log(userInfo);
   };
 
@@ -20,19 +27,13 @@ const SignUp = () => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Sign Up</title>
+        <title>User | Sign Up</title>
       </Head>
       <main>
         <div className="h-screen w-full flex border-b-2 bg-gray-100">
           <div className="flex justify-center items-center w-full">
             <div className=" w-full lg:w-1/2 lg:p-6 p-2">
-              <div className="grid lg:grid-cols-2 lg:gap-2">
-                <img
-                  className="hidden lg:block"
-                  src="https://cdni.iconscout.com/illustration/premium/thumb/login-page-4468581-3783954.png?f=webp"
-                  alt=""
-                />
-
+              <div className="">
                 <div className="flex  text-gray-900">
                   <div className="w-11/12 p-8 m-auto bg-white rounded-lg sm:w-96 bg-opacity-80 bg-clip-padding shadow-lg">
                     <div className="space-y-2">
@@ -162,25 +163,20 @@ const SignUp = () => {
                             </label>
                           </div>
 
-                          {userInfo?.password &&
-                            userInfo?.confirmPassword &&
-                            userInfo?.password !==
-                              userInfo?.confirmPassword && (
-                              <div>
-                                <p className="text-center text-red-600 text-xs capitalize">
-                                  password did not match
-                                </p>
-                              </div>
-                            )}
+                          {data && (
+                            <div>
+                              <p className="text-center text-red-600 text-xs capitalize">
+                                {data?.message}
+                              </p>
+                            </div>
+                          )}
 
                           <div>
                             <button
-                              disabled={
-                                userInfo?.password !== userInfo?.confirmPassword
-                              }
+                              disabled={false}
                               className="w-full p-2 text-sm font-semibold text-center text-white transition duration-100 rounded-md md:text-lg font-nunito bg-gradient-to-r from-blue-600 to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:shadow-lg"
                             >
-                              Sign Up
+                              {isLoading ? "Loading..." : "Sign Up"}
                             </button>
                           </div>
                         </div>

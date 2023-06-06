@@ -21,19 +21,13 @@ const CustomerLogin = () => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Login</title>
+        <title>User | Login</title>
       </Head>
       <main>
         <div className="h-screen w-full flex border-b-2 bg-gray-100">
           <div className="flex justify-center items-center w-full">
             <div className=" w-full lg:w-1/2 lg:p-6 p-2">
-              <div className="grid lg:grid-cols-2 lg:gap-2">
-                <img
-                  className="hidden lg:block"
-                  src="https://cdni.iconscout.com/illustration/premium/thumb/login-page-4468581-3783954.png?f=webp"
-                  alt=""
-                />
-
+              <div className="">
                 <div className="flex  text-gray-900">
                   <div className="w-11/12 p-8 m-auto bg-white rounded-lg sm:w-96 bg-opacity-80 bg-clip-padding shadow-lg">
                     <div className="space-y-2">
@@ -65,9 +59,9 @@ const CustomerLogin = () => {
                               stroke="currentColor"
                             >
                               <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
                                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                               />
                             </svg>
@@ -88,9 +82,9 @@ const CustomerLogin = () => {
                               stroke="currentColor"
                             >
                               <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
                                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                               />
                             </svg>

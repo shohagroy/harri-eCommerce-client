@@ -78,7 +78,7 @@ const Header = () => {
                 {userMenu && (
                   <div
                     className="absolute z-50 bottom-100 rounded-lg shadow-lg -left-12
-               text-gray-600 text-sm font-semibold  bg-white w-[250px]"
+               text-gray-600 text-sm font-semibold  bg-white w-[150px]"
                   >
                     <div>
                       {user ? (
@@ -195,23 +195,6 @@ const Header = () => {
                       </li>
                     ))}
                   </ul>
-                </div>
-
-                <div className=" flex justify-center my-4">
-                  <div className="relative ">
-                    <input
-                      className="bg-white w-[350px] border py-2 px-3 rounded-full"
-                      type="text"
-                      placeholder="search for products..."
-                    />
-
-                    <button className="absolute right-3 top-2.5">
-                      <BsSearch
-                        className="text-gray-500 hover:text-gray-700"
-                        size={20}
-                      />
-                    </button>
-                  </div>
                 </div>
 
                 <div className="flex items-center justify-center w-full">
