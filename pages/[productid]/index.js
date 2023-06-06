@@ -13,23 +13,22 @@ import ProductCard from "@/common/ProductCard";
 import { useGetSingleProductQuery } from "@/features/products/productApi";
 import Head from "next/head";
 import ImageMagnify from "@/components/imageMagnify";
+import { useRouter } from "next/router";
 
 const ProductDetails = () => {
   const [displayImage, setDisplayImage] = useState({});
 
-  const id = "647e1658a713cc89db57b462";
+  const router = useRouter();
+  const { productid } = router.query;
+
   const { data, isLoading, isError, isSuccess, error } =
-    useGetSingleProductQuery(id);
+    useGetSingleProductQuery(productid);
 
   useEffect(() => {
     if (isSuccess && !isLoading) {
       setDisplayImage(data?.data?.images[0]);
     }
   }, [isLoading, isSuccess]);
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
 
   const { images } = data?.data || {};
 
@@ -183,11 +182,11 @@ const ProductDetails = () => {
               </p>
 
               <div className="mt-4">
-                <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+                {/* <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
                   {[...Array(5)].map((Number, i) => (
                     <ProductCard info={i} key={i} />
                   ))}
-                </div>
+                </div> */}
               </div>
             </div>
           </CommonLayout>

@@ -10,25 +10,29 @@ import {
 const ProductCard = ({ info }) => {
   const [mouseHover, setMouseHover] = React.useState("");
 
+  const { _id, discount, price, title, images } = info || {};
+
   return (
-    <div className="mt-4">
+    <div className="mt-4 border border-black">
       <div
         onMouseOver={() => setMouseHover(info)}
         onMouseOut={() => setMouseHover("")}
-        className="relative overflow-hidden"
+        className="relative overflow-hidden p-10"
       >
-        <Link href={`${info}`}>
-          <img
-            className={`${
-              mouseHover === info ? "scale-125" : "scale-100"
-            } duration-300`}
-            src="https://hamart-shop.vercel.app/_next/image?url=https%3A%2F%2Fi.ibb.co%2FFhzmCxJ%2Fproduct-3.jpg&w=1920&q=75"
-            alt=""
-          />
+        <Link href={`${_id}`} className=" ">
+          <div className="">
+            <img
+              className={`h-[300px] ${
+                mouseHover === info ? "scale-125" : "scale-100"
+              } duration-300`}
+              src={images[0]?.url}
+              alt=""
+            />
+          </div>
         </Link>
         <div className="absolute top-3 left-0">
           <p className="px-3 py-1.5 mt-3 bg-red-600 text-white">Sale</p>
-          <p className="px-3 py-1.5 mt-2 bg-black text-white">-12%</p>
+          <p className="px-3 py-1.5 mt-2 bg-black text-white">-{discount}%</p>
         </div>
 
         <div
@@ -74,10 +78,10 @@ const ProductCard = ({ info }) => {
         </div>
       </div>
 
-      <div className="text-xl my-2 ">
-        <p className="py-1">TECLAST Tablet Protective Cover Case</p>
+      <div className="text-xl my-2 p-2 ">
+        <p className="py-1 capitalize">{title}</p>
         <p className="py-1">
-          <del>$899.00 </del> <span>$899.00 </span>
+          <del>${price} </del> <span>${price - (price * discount) / 100} </span>
         </p>
       </div>
     </div>

@@ -10,7 +10,7 @@ import Head from "next/head";
 const Products = () => {
   const [searchProducts, setSearchProducts] = useState("");
   const [showPage, setShowPage] = useState(1);
-  const [sort, setSort] = useState(1);
+  const [sort, setSort] = useState("");
   const [searchByCategory, setSearchByCategory] = useState("");
 
   const {

@@ -1,8 +1,23 @@
 import ProductCard from "@/common/ProductCard";
+import { useGetProductsQuery } from "@/features/products/productApi";
 import CommonLayout from "@/layouts/commonLayout";
 import React from "react";
 
 const PopularProducts = () => {
+  const productQuery = {
+    search: "",
+    skip: 0,
+    sort: 1,
+    searchByCategory: "",
+  };
+
+  const {
+    data: products,
+    isLoading: productLoading,
+    isError: isProductError,
+    error: productError,
+  } = useGetProductsQuery(productQuery);
+
   return (
     <section className="p-3">
       <CommonLayout>
@@ -22,8 +37,8 @@ const PopularProducts = () => {
         </div>
 
         <div className="my-6 grid grid-cols-1 lg:grid-cols-4 gap-4">
-          {[...Array(8)].map((Number, i) => (
-            <ProductCard key={i} info={i + 1} />
+          {products?.data.map((product) => (
+            <ProductCard key={product?._id} info={product} />
           ))}
         </div>
       </CommonLayout>

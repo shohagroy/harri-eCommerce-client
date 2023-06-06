@@ -1,12 +1,40 @@
 import ProductCard from "@/common/ProductCard";
 import Subscribe from "@/common/Subscribe";
 import OfferBanar from "@/components/OfferBanar";
+import { useGetCategorysQuery } from "@/features/category/categoryApi";
+import { useGetProductsQuery } from "@/features/products/productApi";
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
+import { BsSearch } from "react-icons/bs";
+
 const Shop = () => {
+  const [activeCategory, setActiveCategory] = useState("");
+  const [searchProducts, setSearchProducts] = useState("");
+  const [showPage, setShowPage] = useState(1);
+  const [sort, setSort] = useState(1);
+
+  const query = { search: "", skip: 0 };
+  const { data: categories } = useGetCategorysQuery(query);
+
+  const productQuery = {
+    search: searchProducts,
+    skip: showPage === 1 ? 0 : (showPage - 1) * 10,
+    sort,
+    searchByCategory: activeCategory,
+  };
+
+  const {
+    data: products,
+    isLoading: productLoading,
+    isError: isProductError,
+    error: productError,
+  } = useGetProductsQuery(productQuery);
+
+  console.log(products);
+
   return (
     <section className="">
       <CommonLayout>
@@ -15,22 +43,120 @@ const Shop = () => {
         </div>
 
         <div className="lg:p-0 p-3">
-          <div className="my-6 border p-3 flex flex-col lg:flex-row justify-between items-center">
-            <p className="p-3">Showing 1–9 of 27 results</p>
-            <div>
-              <select className="py-3 px-6 bg-white border">
-                <option value="">Sort Filtering</option>
-                <option value="">Latest Product</option>
-                <option value="">Price low to high</option>
-                <option value="">Price high to to </option>
-              </select>
-            </div>
-          </div>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="">
+              <div className="my-6 border p-3">
+                <p className="p-3 border-b text-2xl text-center font-semibold">
+                  Product Category
+                </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-            {[...Array(12)].map((Number, i) => {
-              return <ProductCard info={i} />;
-            })}
+                <div className="my-2">
+                  <button
+                    onClick={() => setActiveCategory("")}
+                    className={`p-5  m-1 text-white font-semibold w-full rounded-md ${
+                      activeCategory === "" ? "bg-red-400" : "bg-blue-400"
+                    }`}
+                  >
+                    All Category
+                  </button>
+
+                  {categories?.data?.map((category) => {
+                    const { _id, name, icon } = category || {};
+                    return (
+                      <button
+                        onClick={() => setActiveCategory(_id)}
+                        key={_id}
+                        className={`p-3 bg-blue-400 capitalize m-1 text-white font-semibold w-full rounded-md flex justify-center items-center ${
+                          activeCategory === _id ? "bg-red-400" : "bg-blue-400"
+                        }`}
+                      >
+                        <img
+                          className="h-10 p-1 w-10 mx-2 rounded-full"
+                          src={icon[0]?.url}
+                          alt="icon"
+                        />
+                        {name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="my-6 border p-3">
+                <p className="p-3 border-b text-2xl text-center font-semibold">
+                  Price Filter
+                </p>
+
+                <div className="my-2 w-full">
+                  <select
+                    onChange={(e) => setSort(e.target.value)}
+                    className="py-3 px-6 w-full bg-white border"
+                  >
+                    <option value="low">Price low to high</option>
+                    <option value="high">Price high to Low </option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="my-6 border p-3 w-full h-[300px]">
+                <p className="p-3 border-b text-2xl text-center font-semibold">
+                  sign up offer
+                </p>
+
+                <div className="my-2 w-full h-full flex justify-center items-center">
+                  <p className="text-5xl text-red-600">1</p>
+                </div>
+              </div>
+
+              <div className="my-6 border p-3 w-full h-[500px]">
+                <p className="p-3 border-b text-2xl text-center font-semibold">
+                  Advertisement
+                </p>
+
+                <div className="my-2 w-full h-full flex justify-center items-center">
+                  <p className="text-5xl text-red-600">1</p>
+                </div>
+              </div>
+
+              <div className="my-6 border p-3 w-full h-[500px]">
+                <p className="p-3 border-b text-2xl text-center font-semibold">
+                  Advertisement
+                </p>
+
+                <div className="my-2 w-full h-full flex justify-center items-center">
+                  <p className="text-5xl text-red-600">2</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-3 ">
+              <div className="my-6 border p-3 flex flex-col lg:flex-row justify-between items-center">
+                <p className="p-3">Showing 1–12 of {products?.count} results</p>
+                <div>
+                  <div className="relative">
+                    <input
+                      onChange={(e) => setSearchProducts(e.target.value)}
+                      className="bg-white w-[300px] border-black border py-2 px-5 rounded-full"
+                      type="text"
+                      placeholder="search for products..."
+                    />
+
+                    <button className="absolute right-3 top-2.5">
+                      <BsSearch
+                        className="text-gray-500 hover:text-gray-700"
+                        size={20}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                {products?.data?.map((product) => {
+                  return <ProductCard key={product?._id} info={product} />;
+                })}
+              </div>
+            </div>
           </div>
 
           <div className=" my-10">
