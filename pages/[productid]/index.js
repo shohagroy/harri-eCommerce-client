@@ -14,6 +14,7 @@ import { useGetSingleProductQuery } from "@/features/products/productApi";
 import Head from "next/head";
 import ImageMagnify from "@/components/imageMagnify";
 import { useRouter } from "next/router";
+import ProductReview from "@/components/ProductReview";
 
 const ProductDetails = () => {
   const [displayImage, setDisplayImage] = useState({});
@@ -194,6 +195,11 @@ const ProductDetails = () => {
                 className="max-w-[800px]"
                 dangerouslySetInnerHTML={{ __html: description }}
               />
+            </div>
+
+            <div className="my-4">
+              {/* review  */}
+              <ProductReview />
             </div>
 
             <div className="my-6 lg:my-16">
