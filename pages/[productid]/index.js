@@ -30,7 +30,20 @@ const ProductDetails = () => {
     }
   }, [isLoading, isSuccess]);
 
-  const { images } = data?.data || {};
+  const {
+    images,
+    description,
+    discount,
+    price,
+    quantity,
+    tags,
+    title,
+    unit,
+    _id,
+    category,
+  } = data?.data || {};
+
+  console.log(data?.data);
 
   return (
     <>
@@ -51,21 +64,38 @@ const ProductDetails = () => {
                   <ImageMagnify img={displayImage?.url} />
                 </div>
               </div>
+
               <div className="w-full h-full">
+                <p className="text-3xl py-2 font-semibold capitalize">
+                  {title}
+                </p>
+
                 <div>
-                  <p className="text-red-600 border py-2 font-semibold w-[150px] text-center">
-                    48 In Stock
-                  </p>
-                  <p className="text-3xl py-2 font-semibold">
-                    Stariver Electric Kettle
-                  </p>
+                  {(quantity > 30 && (
+                    <p className="text-green-600 border py-2 font-semibold w-[200px] text-center capitalize">
+                      Stock available Now
+                    </p>
+                  )) ||
+                    (quantity < 10 && (
+                      <p className="text-red-600 border py-2 font-semibold w-[200px] text-center capitalize">
+                        Low Stock
+                      </p>
+                    )) ||
+                    (quantity < 1 && (
+                      <p className="text-green-600 border py-2 font-semibold w-[200px] text-center capitalize">
+                        Out of Stock
+                      </p>
+                    ))}
 
-                  <p className="my-2 text-sm">
-                    Shop Harry.com for every day low prices. Free shipping on
-                    orders $35+ or Pickup In-store and get
-                  </p>
-
-                  <h2 className="text-3xl font-bold">$59</h2>
+                  <h2 className="text-3xl my-2 font-bold text-red-600">
+                    Price: ${price - (price * discount) / 100}
+                  </h2>
+                  <h2 className="text-xl my-2 font-semibold">
+                    Regular Price: <del className="">${price}</del>
+                  </h2>
+                  <h2 className="text-xl my-2 font-semibold">
+                    Product Unit: <span className="uppercase">{unit}</span>
+                  </h2>
                 </div>
 
                 <div className="flex items-center my-4">
@@ -77,37 +107,19 @@ const ProductDetails = () => {
                       Add to Cart
                     </button>
                   </div>
+                  <div className="w-full m-3 lg:w-[300px]">
+                    <button className="w-full py-2 text-white bg-blue-600 flex justify-center items-center">
+                      <span>
+                        <AiOutlineShoppingCart size={20} />
+                      </span>{" "}
+                      Buy Now
+                    </button>
+                  </div>
 
-                  <button className="w-10 h-10 ml-2 lg:ml-3  flex justify-center items-center border">
+                  <button className="w-10 h-10 flex bg-red-600 text-white justify-center items-center border">
                     <AiOutlineHeart size={20} />
                   </button>
                 </div>
-
-                {/* <div className="border-t">
-                  <p className="py-3 text-2xl font-bold">Description</p>
-
-                  <h2 className="text-xl font-semibold py-2">
-                    Stariver Electric Kettle
-                  </h2>
-                  <p>
-                    ★ [Practical Gooseneck Spout] - This kettle is designed with
-                    a gooseneck spout for precision control during pouring. The
-                    long and slender opening can greatly control the water flow
-                    to give a steady and predictable pour so that you can
-                    perfectly extract to enjoy a good cup of coffee, tea or
-                    milk. ★[Food Grade Stainless Steel] - This gooseneck kettle
-                    is 100% BPA-free, the interior of the kettle is totally made
-                    of food-grade stainless steel without any plastic. In order
-                    to bring you healthier drinking and higher life quality.
-                    There will be no plastic or metal taste in your water or
-                    coffee. ★ [Humanization Design] - One-touch switch is easy
-                    to operate the kettle, and the ergonomic design allows the
-                    kettle to be easily lifted off for pouring after the water
-                    boiling. The cool touch and grip design of handle can
-                    ergonomically give you a real and comfortable grip on your
-                    kettle.​
-                  </p>
-                </div> */}
 
                 <div className="mt-12">
                   <p>
@@ -115,8 +127,8 @@ const ProductDetails = () => {
                   </p>
 
                   <p>
-                    <strong>Categories:</strong> iPhone Cases,Android
-                    Cases,Accessories
+                    <strong>Categories:</strong>{" "}
+                    <span className="uppercase">{category?.name}</span>
                   </p>
 
                   <div className="flex items-center mt-2">
@@ -124,15 +136,14 @@ const ProductDetails = () => {
                       <strong>Tags:</strong>
                     </p>
 
-                    <button className="px-3 border hover:bg-red-600 hover:text-white duration-300">
-                      Stariver
-                    </button>
-                    <button className="px-3 border hover:bg-red-600 hover:text-white duration-300">
-                      Electric
-                    </button>
-                    <button className="px-3 border hover:bg-red-600 hover:text-white duration-300">
-                      Kettle
-                    </button>
+                    {tags &&
+                      tags.split(", ")?.map((tag) => {
+                        return (
+                          <button className="px-3 border capitalize hover:bg-red-600 hover:text-white duration-300">
+                            {tag}
+                          </button>
+                        );
+                      })}
                   </div>
 
                   <div className="flex items-center mt-6">
@@ -174,6 +185,15 @@ const ProductDetails = () => {
                   })}
                 </div>
               </div>
+            </div>
+
+            <div className="border-t">
+              <p className="py-3 text-2xl font-bold">Product Description</p>
+
+              <div
+                className="max-w-[800px]"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
             </div>
 
             <div className="my-6 lg:my-16">
