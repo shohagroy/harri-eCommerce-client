@@ -10,7 +10,7 @@ function Home() {
   return (
     <>
       <Head>
-        <title>Home Page</title>
+        <title>Wellcome to HarriShop</title>
       </Head>
       <main>
         <div>

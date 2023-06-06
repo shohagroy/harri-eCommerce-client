@@ -1,6 +1,7 @@
 import ProductCard from "@/common/ProductCard";
 import { useGetProductsQuery } from "@/features/products/productApi";
 import CommonLayout from "@/layouts/commonLayout";
+import Link from "next/link";
 import React from "react";
 
 const PopularProducts = () => {
@@ -40,6 +41,14 @@ const PopularProducts = () => {
           {products?.data.map((product) => (
             <ProductCard key={product?._id} info={product} />
           ))}
+        </div>
+
+        <div className="text-center">
+          <Link href={"/shop"}>
+            <button className="bg-red-600 px-6 py-2 rounded-md text-white  text-2xl">
+              See All
+            </button>
+          </Link>
         </div>
       </CommonLayout>
     </section>
