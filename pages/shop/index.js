@@ -6,7 +6,8 @@ import { useGetProductsQuery } from "@/features/products/productApi";
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
 import Head from "next/head";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 import { BsSearch } from "react-icons/bs";
@@ -16,6 +17,10 @@ const Shop = () => {
   const [searchProducts, setSearchProducts] = useState("");
   const [showPage, setShowPage] = useState(1);
   const [sort, setSort] = useState(1);
+
+  const route = useRouter();
+
+  const { search } = route.query;
 
   const query = { search: "", skip: 0 };
   const { data: categories } = useGetCategorysQuery(query);
@@ -35,6 +40,10 @@ const Shop = () => {
   } = useGetProductsQuery(productQuery);
 
   console.log(products);
+
+  useEffect(() => {
+    setSearchProducts(search);
+  }, [search]);
 
   return (
     <>
@@ -142,7 +151,9 @@ const Shop = () => {
                     <p className="p-3">
                       Showing 1–12 of {products?.count} results
                     </p>
-                    <div>
+
+                    <p>another search items</p>
+                    {/* <div>
                       <div className="relative">
                         <input
                           onChange={(e) => setSearchProducts(e.target.value)}
@@ -158,7 +169,7 @@ const Shop = () => {
                           />
                         </button>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

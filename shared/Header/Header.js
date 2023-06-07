@@ -1,6 +1,6 @@
 import CommonLayout from "@/layouts/commonLayout";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 import { RxDashboard } from "react-icons/rx";
 import { RiFacebookFill } from "react-icons/ri";
@@ -17,11 +17,16 @@ import {
 import { BsSearch } from "react-icons/bs";
 import { HiOutlineXMark } from "react-icons/hi2";
 import CartDrawer from "@/components/CartDrawer";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [userMenu, setUserMenu] = React.useState(false);
+
+  const [search, setSearch] = useState("");
+
+  const route = useRouter();
 
   const Links = [
     { name: "Home", link: "/" },
@@ -29,6 +34,13 @@ const Header = () => {
     { name: "Contact Us", link: "/contact-us" },
     { name: "About Us", link: "/about-us" },
   ];
+
+  const handelSearch = (e) => {
+    e.preventDefault();
+
+    route.push(`/shop?search=${search}`);
+    console.log("search");
+  };
 
   const user = null;
 
@@ -54,18 +66,21 @@ const Header = () => {
 
           <div className="flex items-center">
             <div className="relative">
-              <input
-                className="bg-white w-[300px] py-2 px-3 rounded-full"
-                type="text"
-                placeholder="search for products..."
-              />
-
-              <button className="absolute right-3 top-2.5">
-                <BsSearch
-                  className="text-gray-500 hover:text-gray-700"
-                  size={20}
+              <form onSubmit={handelSearch}>
+                <input
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="bg-white w-[300px] py-2 px-3 rounded-full"
+                  type="text"
+                  placeholder="search for products..."
                 />
-              </button>
+
+                <button className="absolute right-3 top-2.5">
+                  <BsSearch
+                    className="text-gray-500 hover:text-gray-700"
+                    size={20}
+                  />
+                </button>
+              </form>
             </div>
 
             <div className="ml-4 flex items-center">

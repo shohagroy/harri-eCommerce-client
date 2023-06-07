@@ -1,20 +1,38 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
 import CustomerLayout from "../../layouts/customerLayout";
+import { useState } from "react";
+import {
+  useLoginUserMutation,
+  useLoginWithGoogleMutation,
+} from "@/features/auth/authApi";
 
 const CustomerLogin = () => {
-  const { handleSubmit, control } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-      checkbox: false,
-    },
-  });
+  const [loginInfo, setLoginInfo] = useState({});
 
-  const onValid = (data) => {
-    console.log(data);
-    console.log("clicked");
+  const [loginUser, { data, isLoading, isError, isSuccess, error }] =
+    useLoginUserMutation();
+
+  const [
+    loginWithGoogle,
+    {
+      isLoading: googleLoading,
+      isError: isGoogleError,
+      isSuccess: googleSuccess,
+      error: googleError,
+    },
+  ] = useLoginWithGoogleMutation();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    console.log(loginInfo);
+    loginUser(loginInfo);
+  };
+
+  const googleLoginHandler = (e) => {
+    console.log("click");
+    loginWithGoogle({ message: "login..." });
   };
 
   return (
@@ -48,7 +66,10 @@ const CustomerLogin = () => {
                       </div>
                     </div>
                     <div className="mt-10">
-                      <form className="text-base font-nunito">
+                      <form
+                        onSubmit={handleLogin}
+                        className="text-base font-nunito"
+                      >
                         <div className="space-y-4">
                           <div className="relative flex items-center">
                             <svg
@@ -67,6 +88,12 @@ const CustomerLogin = () => {
                             </svg>
                             <input
                               className="w-full p-2 pl-10 text-gray-800 placeholder-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 border"
+                              onChange={(e) =>
+                                setLoginInfo({
+                                  ...loginInfo,
+                                  email: e.target.value,
+                                })
+                              }
                               type="email"
                               name="email"
                               placeholder="Email"
@@ -89,6 +116,12 @@ const CustomerLogin = () => {
                               />
                             </svg>
                             <input
+                              onChange={(e) =>
+                                setLoginInfo({
+                                  ...loginInfo,
+                                  password: e.target.value,
+                                })
+                              }
                               className="w-full p-2 pl-10 text-gray-800 placeholder-gray-600 rounded-md  border focus:outline-none focus:ring-2 focus:ring-blue-300"
                               type="password"
                               name="password"
@@ -112,20 +145,27 @@ const CustomerLogin = () => {
                           </div>
                           <div>
                             <button className="w-full p-2 text-sm font-semibold text-center text-white transition duration-100 rounded-md md:text-lg font-nunito bg-gradient-to-r from-blue-600 to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:shadow-lg">
-                              Sign In
+                              {isLoading ? "Loading..." : "Sign In"}
                             </button>
                           </div>
                         </div>
                       </form>
                       <div className="mt-4">
-                        <button className="w-full p-2 text-sm font-normal text-center transition bg-red-600 hover:bg-white text-white duration-300 rounded-md md:text-lg font-roboto focus:outline-none hover:shadow-lg hover:text-black">
+                        <button
+                          onClick={googleLoginHandler}
+                          className="w-full p-2 text-sm font-normal text-center transition bg-red-600 hover:bg-white text-white duration-300 rounded-md md:text-lg font-roboto focus:outline-none hover:shadow-lg hover:text-black"
+                        >
                           <span className="flex items-center justify-center gap-4">
                             <img
                               className="w-5 h-5 text-xs"
                               src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png"
                               alt="google_logo"
                             />
-                            <span>Continue with Google</span>
+                            <span>
+                              {googleLoading
+                                ? "Loading..."
+                                : "Continue with Google"}
+                            </span>
                           </span>
                         </button>
                       </div>

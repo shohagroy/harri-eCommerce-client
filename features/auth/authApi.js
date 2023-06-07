@@ -13,7 +13,34 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
+    loginUser: builder.mutation({
+      query: (data) => ({
+        url: `/login-user`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
+
+    loginWithGoogle: builder.mutation({
+      query: (data) => ({
+        url: `/login-google`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
-export const { useCreateUserMutation } = authApi;
+export const {
+  useCreateUserMutation,
+  useLoginUserMutation,
+  useLoginWithGoogleMutation,
+} = authApi;
