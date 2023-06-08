@@ -62,9 +62,9 @@ const Category = () => {
                 <div className="text-center text-xl font-bold text-red-600">
                   {error.data?.message}
                 </div>
-              ) : categories.data.length > 0 ? (
+              ) : categories?.data?.data.length > 0 ? (
                 <CategoryTable
-                  categories={categories}
+                  categories={categories?.data}
                   showPage={showPage}
                   setShowPage={setShowPage}
                 />

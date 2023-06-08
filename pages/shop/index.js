@@ -10,8 +10,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
-import { BsSearch } from "react-icons/bs";
-
 const Shop = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const [searchProducts, setSearchProducts] = useState("");

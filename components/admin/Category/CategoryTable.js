@@ -41,6 +41,8 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
     },
   ] = useUpdateCategoryByIdMutation();
 
+  console.log(updateError, isUpdateError);
+
   const deleteCategory = (deleteData) => {
     swal({
       title: "Are you sure?",
@@ -74,7 +76,7 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
       toast.success(updatedData.message);
     }
     if (!updateLoading && isUpdateError) {
-      toast.error(updateError.message);
+      toast.error(updateError);
     }
   }, [updateLoading, updateError, updateSuccess]);
 
