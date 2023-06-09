@@ -95,11 +95,11 @@ const withPrivate = (Component) => {
   const WrappedComponent = () => {
     return (
       <>
-        <CustomerLayout>
+        <AdminLayout>
           <PrivateLayout>
             <Component />
           </PrivateLayout>
-        </CustomerLayout>
+        </AdminLayout>
       </>
     );
   };
