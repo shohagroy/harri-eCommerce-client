@@ -338,8 +338,20 @@ const UpdateProduct = () => {
   );
 };
 
-UpdateProduct.getLayout = (page) => {
-  return <AdminLayout>{page}</AdminLayout>;
+const withPrivate = (Component) => {
+  const WrappedComponent = () => {
+    return (
+      <>
+        <CustomerLayout>
+          <PrivateLayout>
+            <Component />
+          </PrivateLayout>
+        </CustomerLayout>
+      </>
+    );
+  };
+
+  return WrappedComponent;
 };
 
-export default UpdateProduct;
+export default withPrivate(UpdateProduct);

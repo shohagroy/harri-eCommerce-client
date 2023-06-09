@@ -8,6 +8,7 @@ import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import EditTools from "@/common/editTools";
 import { usePostNewProductMutation } from "@/features/products/productApi";
 import Link from "next/link";
+import PrivateLayout from "@/layouts/PrivateLayout";
 
 const AddNewProduct = () => {
   const [images, setImages] = useState([]);
@@ -305,8 +306,20 @@ const AddNewProduct = () => {
   );
 };
 
-AddNewProduct.getLayout = (page) => {
-  return <AdminLayout>{page}</AdminLayout>;
+const withPrivate = (Component) => {
+  const WrappedComponent = () => {
+    return (
+      <>
+        <CustomerLayout>
+          <PrivateLayout>
+            <Component />
+          </PrivateLayout>
+        </CustomerLayout>
+      </>
+    );
+  };
+
+  return WrappedComponent;
 };
 
-export default AddNewProduct;
+export default withPrivate(AddNewProduct);
