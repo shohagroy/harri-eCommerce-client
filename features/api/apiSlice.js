@@ -10,7 +10,7 @@ export const apiSlice = createApi({
     tagTypes: ["categorys", "products", "users"],
 
     prepareHeaders: async (headers, { getState, endpoint }) => {
-      const token = localStorage.getItem("hariShop");
+      const token = JSON.parse(localStorage.getItem("hariShop"));
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }

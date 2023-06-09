@@ -5,9 +5,13 @@ import { useEffect, useState } from "react";
 import { useLoginUserMutation } from "@/features/auth/authApi";
 import swal from "sweetalert";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const CustomerLogin = () => {
   const [loginInfo, setLoginInfo] = useState({});
+
+  const router = useRouter();
+  const previousPath = router.query.path || "/";
 
   const [loginUser, { data, isLoading, isError, isSuccess, error }] =
     useLoginUserMutation();
@@ -28,6 +32,7 @@ const CustomerLogin = () => {
     if (isSuccess) {
       toast.success(data.message);
       localStorage.setItem("hariShop", JSON.stringify(data.token));
+      router.push(previousPath);
     }
   }, [isSuccess]);
 

@@ -52,4 +52,5 @@ export const {
   useCreateUserMutation,
   useLoginUserMutation,
   useLoginWithGoogleMutation,
+  useGetLoginUserQuery,
 } = authApi;
