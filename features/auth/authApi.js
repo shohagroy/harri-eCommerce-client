@@ -2,6 +2,16 @@ import { apiSlice } from "../api/apiSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getLoginUser: builder.query({
+      query: () => ({
+        url: `/get-login-user`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
+
     createUser: builder.mutation({
       query: (data) => ({
         url: `/create-user`,
@@ -22,7 +32,6 @@ export const authApi = apiSlice.injectEndpoints({
         },
         body: data,
       }),
-      invalidatesTags: ["users"],
     }),
 
     loginWithGoogle: builder.mutation({

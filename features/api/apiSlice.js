@@ -9,19 +9,13 @@ export const apiSlice = createApi({
 
     tagTypes: ["categorys", "products", "users"],
 
-    // "Content-Type": "multipart/form-data",
-    // prepareHeaders: async (headers, { getState, endpoint }) => {
-    //   const token = getState()?.auth?.accessToken;
-    //   if (token) {
-    //     headers.set("Authorization", `Bearer ${token}`);
-    //   }
-
-    //   return headers;
-    // },
-    // prepareHeaders: (headers) => {
-    //   headers.set("Content-Type", "application/json");
-    //   return headers;
-    // },
+    prepareHeaders: async (headers, { getState, endpoint }) => {
+      const token = localStorage.getItem("hariShop");
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
 
   endpoints: (builder) => ({}),

@@ -1,7 +1,9 @@
 import { useCreateUserMutation } from "@/features/auth/authApi";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import swal from "sweetalert";
 import CustomerLayout from "../../layouts/customerLayout";
 
 const SignUp = () => {
@@ -14,14 +16,25 @@ const SignUp = () => {
   const [createUser, { data, isLoading, isError, isSuccess, error }] =
     useCreateUserMutation();
 
-  console.log(data, isLoading, isError, isSuccess, error);
+  // console.log(data, isLoading, isError, isSuccess, error);
 
   const userSignUpHandelar = (e) => {
     e.preventDefault();
-
     createUser(userInfo);
-    console.log(userInfo);
   };
+
+  useEffect(() => {
+    if (isError) {
+      swal(error.data.message, "", "error");
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data.message);
+      localStorage.setItem("hariShop", JSON.stringify(data.token));
+    }
+  }, [isSuccess]);
 
   return (
     <>
@@ -162,14 +175,6 @@ const SignUp = () => {
                               <span>Remember Me</span>
                             </label>
                           </div>
-
-                          {data && (
-                            <div>
-                              <p className="text-center text-red-600 text-xs capitalize">
-                                {data?.message}
-                              </p>
-                            </div>
-                          )}
 
                           <div>
                             <button
