@@ -13,12 +13,7 @@ const Products = () => {
   const [sort, setSort] = useState("");
   const [searchByCategory, setSearchByCategory] = useState("");
 
-  const {
-    data: categories,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useGetCategorysQuery({ search: "", skip: 0 });
+  const { data: categories } = useGetCategorysQuery({ search: "", skip: 0 });
 
   const query = {
     search: searchProducts,
@@ -63,7 +58,7 @@ const Products = () => {
                   >
                     <option value={""}>All Category</option>
 
-                    {categories?.data?.map((item, i) => (
+                    {categories?.data?.data?.map((item, i) => (
                       <option className="" key={i} value={item._id}>
                         {item.name}
                       </option>
