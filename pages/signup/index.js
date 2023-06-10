@@ -5,8 +5,12 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import swal from "sweetalert";
 import CustomerLayout from "../../layouts/customerLayout";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
+  const router = useRouter();
+  const previousPath = router.query.path || "/";
+
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -32,7 +36,7 @@ const SignUp = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success(data.message);
-      localStorage.setItem("hariShop", JSON.stringify(data.token));
+      router.push(previousPath);
     }
   }, [isSuccess]);
 

@@ -27,7 +27,11 @@ const Header = () => {
 
   const [search, setSearch] = useState("");
 
-  const { user, isLoading } = useSelector((state) => state.auth);
+  // const state = useSelector((state) => state.auth) || {};
+
+  // console.log(state);
+
+  const user = null;
 
   const route = useRouter();
 

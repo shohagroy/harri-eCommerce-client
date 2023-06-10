@@ -10,7 +10,14 @@ export const apiSlice = createApi({
     tagTypes: ["categorys", "products", "users"],
 
     prepareHeaders: async (headers, { getState, endpoint }) => {
-      const token = JSON.parse(localStorage.getItem("hariShop"));
+      const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+        const [name, value] = cookie.split("=");
+        acc[name] = value;
+        return acc;
+      }, {});
+
+      const token = cookies["harriShop"];
+
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -20,3 +27,16 @@ export const apiSlice = createApi({
 
   endpoints: (builder) => ({}),
 });
+
+// prepareHeaders: async (headers, { getState, endpoint }) => {
+//   const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+//     const [name, value] = cookie.split("=");
+//     acc[name] = value;
+//     return acc;
+//   }, {});
+//   const token = cookies["hariShop"];
+//   if (token) {
+//     headers["authorization"] = `Bearer ${token}`;
+//   }
+//   return headers;
+// },
