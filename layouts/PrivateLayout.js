@@ -5,9 +5,7 @@ import React from "react";
 const PrivateLayout = ({ children }) => {
   const router = useRouter();
 
-  const { data, isLoading, isError, isSuccess, error } = useGetLoginUserQuery();
-
-  console.log(data, isLoading, isError, isSuccess, error);
+  const { data, isLoading } = useGetLoginUserQuery();
 
   if (isLoading) {
     return (

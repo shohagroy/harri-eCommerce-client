@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { getUserLoading, loginUserFound } from "../auth/authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,6 +11,16 @@ export const authApi = apiSlice.injectEndpoints({
           "Content-Type": "application/json",
         },
       }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        dispatch(getUserLoading());
+        try {
+          const result = await queryFulfilled;
+
+          if (result?.data?.data?._id) {
+            dispatch(loginUserFound(result?.data?.data));
+          }
+        } catch (err) {}
+      },
     }),
 
     createUser: builder.mutation({
@@ -24,6 +35,16 @@ export const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ["users"],
     }),
 
+    googleLogin: builder.query({
+      query: () => ({
+        url: `/login/auth/google`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
+
     loginUser: builder.mutation({
       query: (data) => ({
         url: `/login-user`,
@@ -32,16 +53,6 @@ export const authApi = apiSlice.injectEndpoints({
           "Content-Type": "application/json",
         },
         body: data,
-      }),
-    }),
-
-    googleLogin: builder.query({
-      query: () => ({
-        url: `/login/auth/google`,
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
       }),
     }),
   }),

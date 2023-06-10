@@ -18,6 +18,7 @@ import { BsSearch } from "react-icons/bs";
 import { HiOutlineXMark } from "react-icons/hi2";
 import CartDrawer from "@/components/CartDrawer";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
@@ -25,6 +26,8 @@ const Header = () => {
   const [userMenu, setUserMenu] = React.useState(false);
 
   const [search, setSearch] = useState("");
+
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   const route = useRouter();
 
@@ -42,7 +45,7 @@ const Header = () => {
     console.log("search");
   };
 
-  const user = null;
+  // const user = null;
 
   return (
     <section className="w-full border-b shadow-sm bg-[#F0F2EE]">
@@ -86,7 +89,26 @@ const Header = () => {
             <div className="ml-4 flex items-center">
               <div className="relative">
                 <button onClick={() => setUserMenu(!userMenu)} className="mx-2">
-                  <FiUser size={25} />
+                  <div>
+                    {user?.email ? (
+                      <div>
+                        {user?.avatar ? (
+                          <img
+                            src={user?.avatar}
+                            className="h-12 w-12 rounded-full border p-2"
+                            alt=""
+                          />
+                        ) : (
+                          <FiUser
+                            size={30}
+                            className="border rounded-full p-1 border-black"
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <FiUser size={25} />
+                    )}
+                  </div>
                 </button>
 
                 {/* user modal menu  */}
