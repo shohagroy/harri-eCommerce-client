@@ -41,8 +41,6 @@ const CategoryTable = ({ categories, showPage, setShowPage }) => {
     },
   ] = useUpdateCategoryByIdMutation();
 
-  console.log(updateError, isUpdateError);
-
   const deleteCategory = (deleteData) => {
     swal({
       title: "Are you sure?",

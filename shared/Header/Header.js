@@ -135,17 +135,17 @@ const Header = () => {
                 )}
               </div>
 
-              <div className="relative cursor-pointer">
-                <Link href={"/myWishlist"}>
+              <Link href={"/myWishlist"} className="">
+                <div className="relative cursor-pointer">
                   <button className="mx-1">
                     <AiOutlineHeart size={30} />
                   </button>
-                </Link>
 
-                <small className="absolute cursor-pointer top-0 right-0 w-5 h-5 flex justify-center items-center  bg-red-600 text-white font-bold rounded-full">
-                  1
-                </small>
-              </div>
+                  <small className="absolute cursor-pointer top-0 right-0 w-5 h-5 flex justify-center items-center  bg-red-600 text-white font-bold rounded-full">
+                    1
+                  </small>
+                </div>
+              </Link>
 
               <div
                 className="relative "

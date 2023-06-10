@@ -11,8 +11,8 @@ const PrivateLayout = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="h-full w-full flex justify-center items-center">
-        <div className="text-center">
+      <div className="h-screen bg-red-200 w-full flex justify-center items-center">
+        <div className="text-center text-4xl">
           <h2>Loading...</h2>
         </div>
       </div>

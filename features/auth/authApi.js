@@ -23,6 +23,7 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
+
     loginUser: builder.mutation({
       query: (data) => ({
         url: `/login-user`,
@@ -34,16 +35,14 @@ export const authApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    loginWithGoogle: builder.mutation({
-      query: (data) => ({
-        url: `/login-google`,
-        method: "POST",
+    googleLogin: builder.query({
+      query: () => ({
+        url: `/login/auth/google`,
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: data,
       }),
-      invalidatesTags: ["users"],
     }),
   }),
 });
@@ -51,6 +50,7 @@ export const authApi = apiSlice.injectEndpoints({
 export const {
   useCreateUserMutation,
   useLoginUserMutation,
-  useLoginWithGoogleMutation,
   useGetLoginUserQuery,
+  useGoogleLoginQuery,
+  useLoginWithGoogleQuery,
 } = authApi;

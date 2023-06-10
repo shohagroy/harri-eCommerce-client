@@ -2,7 +2,10 @@ import Head from "next/head";
 import Link from "next/link";
 import CustomerLayout from "../../layouts/customerLayout";
 import { useEffect, useState } from "react";
-import { useLoginUserMutation } from "@/features/auth/authApi";
+import {
+  useGoogleLoginQuery,
+  useLoginUserMutation,
+} from "@/features/auth/authApi";
 import swal from "sweetalert";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
@@ -15,6 +18,10 @@ const CustomerLogin = () => {
 
   const [loginUser, { data, isLoading, isError, isSuccess, error }] =
     useLoginUserMutation();
+
+  const { data: googleUrl, isLoading: googleLoading } = useGoogleLoginQuery();
+
+  console.log(googleUrl, googleLoading);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -152,16 +159,18 @@ const CustomerLogin = () => {
                         </div>
                       </form>
                       <div className="mt-4">
-                        <button className="w-full p-2 text-sm font-normal text-center transition bg-red-600 hover:bg-white text-white duration-300 rounded-md md:text-lg font-roboto focus:outline-none hover:shadow-lg hover:text-black">
-                          <span className="flex items-center justify-center gap-4">
-                            <img
-                              className="w-5 h-5 text-xs"
-                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png"
-                              alt="google_logo"
-                            />
-                            <span>"Continue with Google"</span>
-                          </span>
-                        </button>
+                        <a href={googleUrl?.data}>
+                          <button className="w-full p-2 text-sm font-normal text-center transition bg-red-600 hover:bg-white text-white duration-300 rounded-md md:text-lg font-roboto focus:outline-none hover:shadow-lg hover:text-black">
+                            <span className="flex items-center justify-center gap-4">
+                              <img
+                                className="w-5 h-5 text-xs"
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png"
+                                alt="google_logo"
+                              />
+                              <span>Continue with Google</span>
+                            </span>
+                          </button>
+                        </a>
                       </div>
                     </div>
                   </div>

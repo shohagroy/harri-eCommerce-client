@@ -73,7 +73,7 @@ const Shop = () => {
                         All Category
                       </button>
 
-                      {categories?.data?.map((category) => {
+                      {categories?.data?.data?.map((category) => {
                         const { _id, name, icon } = category || {};
                         return (
                           <button
