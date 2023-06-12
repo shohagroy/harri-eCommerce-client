@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 
 const SignUp = () => {
   const router = useRouter();
-  const previousPath = router.query.path || "/";
+  const previousPath = router.asPath;
 
   const [userInfo, setUserInfo] = useState({
     email: "",
@@ -19,8 +19,6 @@ const SignUp = () => {
 
   const [createUser, { data, isLoading, isError, isSuccess, error }] =
     useCreateUserMutation();
-
-  // console.log(data, isLoading, isError, isSuccess, error);
 
   const userSignUpHandelar = (e) => {
     e.preventDefault();
@@ -36,7 +34,8 @@ const SignUp = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success(data.message);
-      router.push(previousPath);
+      document.cookie = `harriShop=${data.token}; Path=/;`;
+      router.push("/");
     }
   }, [isSuccess]);
 

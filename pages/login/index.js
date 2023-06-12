@@ -14,16 +14,14 @@ const CustomerLogin = () => {
   const [loginInfo, setLoginInfo] = useState({});
 
   const router = useRouter();
-  const previousPath = router.query.path || "/";
+  const previousPath = router.asPath;
 
   const [loginUser, { data, isLoading, isError, isSuccess, error }] =
     useLoginUserMutation();
 
   const { data: googleUrl, isLoading: googleLoading } = useGoogleLoginQuery();
-
   const handleLogin = (e) => {
     e.preventDefault();
-
     loginUser(loginInfo);
   };
 
@@ -35,8 +33,9 @@ const CustomerLogin = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      document.cookie = `harriShop=${data.token}; Path=/;`;
       toast.success(data.message);
-      router.push(previousPath);
+      router.push("/");
     }
   }, [isSuccess]);
 
