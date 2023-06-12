@@ -1,12 +1,11 @@
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
-import PrivateLayout from "@/layouts/PrivateLayout";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 
-const myWishlist = () => {
+const MyWishlist = () => {
   const [count, setCount] = React.useState(1);
   return (
     <>
@@ -149,24 +148,25 @@ const myWishlist = () => {
   );
 };
 
-const withPrivate = (Component) => {
-  const WrappedComponent = () => {
-    return (
-      <>
-        <CustomerLayout>
-          <PrivateLayout>
-            <Component />
-          </PrivateLayout>
-        </CustomerLayout>
-      </>
-    );
-  };
+// const withPrivate = (Component) => {
+//   const WrappedComponent = () => {
+//     return (
+//       <>
+//         <CustomerLayout>
+//           <PrivateLayout>
+//             <Component />
+//           </PrivateLayout>
+//         </CustomerLayout>
+//       </>
+//     );
+//   };
 
-  return WrappedComponent;
+//   return WrappedComponent;
+// };
+// export default withPrivate(MyWishlist);
+
+MyWishlist.getLayout = (page) => {
+  return <CustomerLayout>{page}</CustomerLayout>;
 };
 
-// myWishlist.getLayout = (page) => {
-//   return <CustomerLayout>{page}</CustomerLayout>;
-// };
-
-export default withPrivate(myWishlist);
+export default MyWishlist;

@@ -22,7 +22,7 @@ export const authApi = apiSlice.injectEndpoints({
             return dispatch(loginUserFound(result?.data?.data));
           }
         } catch (err) {
-          dispatch(userNotLogin());
+          // dispatch(userNotLogin());
         }
       },
     }),
@@ -37,6 +37,15 @@ export const authApi = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["users"],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+
+          if (result.data?.user?._id) {
+            dispatch(loginUserFound(result.data.user));
+          }
+        } catch (err) {}
+      },
     }),
 
     googleLogin: builder.query({
@@ -60,6 +69,14 @@ export const authApi = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["users"],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          if (result.data?.user?._id) {
+            dispatch(loginUserFound(result.data.user));
+          }
+        } catch (err) {}
+      },
     }),
   }),
   tagTypes: ["users"],

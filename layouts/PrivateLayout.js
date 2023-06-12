@@ -1,11 +1,18 @@
-import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const PrivateLayout = ({ children }) => {
   const router = useRouter();
-
   const { user, isLoading } = useSelector((state) => state.auth);
+
+  console.log(user);
+
+  useEffect(() => {
+    if (!user?.email && !isLoading) {
+      router.replace("/login", router.asPath);
+    }
+  }, [user, router]);
 
   if (isLoading) {
     return (
@@ -18,11 +25,10 @@ const PrivateLayout = ({ children }) => {
   }
 
   if (!user?.email) {
-    // return <Navigate to="/login" state={{ path: location }} replace></Navigate>;
-    router.replace("/login", router.asPath);
-    return null;
-  } else {
-    return children;
+    return null; // Render nothing while redirecting
   }
+
+  return children;
 };
+
 export default PrivateLayout;
