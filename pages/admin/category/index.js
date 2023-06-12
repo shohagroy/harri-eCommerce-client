@@ -3,7 +3,7 @@ import CategoryTable from "@/components/admin/Category/CategoryTable";
 import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import AdminLayout from "@/layouts/AdminLayout";
 import CommonLayout from "@/layouts/commonLayout";
-import PrivateLayout from "@/layouts/PrivateLayout";
+import PrivateRouteHOC from "@/routes/PrivateRoute";
 import { Drawer } from "antd";
 import Head from "next/head";
 import { useState } from "react";
@@ -91,20 +91,8 @@ const Category = () => {
   );
 };
 
-const withPrivate = (Component) => {
-  const WrappedComponent = () => {
-    return (
-      <>
-        <AdminLayout>
-          <PrivateLayout>
-            <Component />
-          </PrivateLayout>
-        </AdminLayout>
-      </>
-    );
-  };
-
-  return WrappedComponent;
+Category.getLayout = (page) => {
+  return <AdminLayout>{page}</AdminLayout>;
 };
 
-export default withPrivate(Category);
+export default Category;

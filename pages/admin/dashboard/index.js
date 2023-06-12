@@ -9,7 +9,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import Charts from "@/components/admin/Charts";
 import AdminTable from "@/components/admin/AdminTable";
 import CommonLayout from "@/layouts/commonLayout";
-import PrivateLayout from "@/layouts/PrivateLayout";
+import PrivateRouteHOC from "@/routes/PrivateRoute";
 
 const Dashboard = () => {
   const orders = [
@@ -115,24 +115,11 @@ const Dashboard = () => {
         </section>
       </main>
     </>
-    // <div>hello</div>
   );
 };
 
-const withPrivate = (Component) => {
-  const WrappedComponent = () => {
-    return (
-      <>
-        <AdminLayout>
-          <PrivateLayout>
-            <Component />
-          </PrivateLayout>
-        </AdminLayout>
-      </>
-    );
-  };
-
-  return WrappedComponent;
+Dashboard.getLayout = (page) => {
+  return <AdminLayout>{page}</AdminLayout>;
 };
 
-export default withPrivate(Dashboard);
+export default PrivateRouteHOC(Dashboard);

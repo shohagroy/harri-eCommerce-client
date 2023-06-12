@@ -12,6 +12,7 @@ import {
 } from "@/features/products/productApi";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import PrivateRouteHOC from "@/routes/PrivateRoute";
 
 const UpdateProduct = () => {
   const router = useRouter();
@@ -338,20 +339,8 @@ const UpdateProduct = () => {
   );
 };
 
-const withPrivate = (Component) => {
-  const WrappedComponent = () => {
-    return (
-      <>
-        <AdminLayout>
-          <PrivateLayout>
-            <Component />
-          </PrivateLayout>
-        </AdminLayout>
-      </>
-    );
-  };
-
-  return WrappedComponent;
+UpdateProduct.getLayout = (page) => {
+  return <AdminLayout>{page}</AdminLayout>;
 };
 
-export default withPrivate(UpdateProduct);
+export default UpdateProduct;

@@ -1,5 +1,6 @@
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
+import PrivateRouteHOC from "@/routes/PrivateRoute";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
@@ -169,4 +170,4 @@ MyWishlist.getLayout = (page) => {
   return <CustomerLayout>{page}</CustomerLayout>;
 };
 
-export default MyWishlist;
+export default PrivateRouteHOC(MyWishlist);

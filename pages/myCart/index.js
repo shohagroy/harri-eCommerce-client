@@ -1,6 +1,6 @@
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
-import PrivateLayout from "@/layouts/PrivateLayout";
+import PrivateRouteHOC from "@/routes/PrivateRoute";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
@@ -167,24 +167,8 @@ const MyCart = () => {
   );
 };
 
-const withPrivate = (Component) => {
-  const WrappedComponent = () => {
-    return (
-      <>
-        <CustomerLayout>
-          <PrivateLayout>
-            <Component />
-          </PrivateLayout>
-        </CustomerLayout>
-      </>
-    );
-  };
-
-  return WrappedComponent;
+MyCart.getLayout = (page) => {
+  return <CustomerLayout>{page}</CustomerLayout>;
 };
 
-// MyCart.getLayout = (page) => {
-//   return <CustomerLayout>{page}</CustomerLayout>;
-// };
-
-export default withPrivate(MyCart);
+export default PrivateRouteHOC(MyCart);

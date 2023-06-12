@@ -1,5 +1,4 @@
 import Footer from "@/shared/Footer/Footer";
-import Header from "@/shared/Header/Header";
 import React from "react";
 
 const CustomerLayout = ({ children }) => {

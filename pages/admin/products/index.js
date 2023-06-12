@@ -6,7 +6,7 @@ import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import Link from "next/link";
 import { useGetProductsQuery } from "@/features/products/productApi";
 import Head from "next/head";
-import PrivateLayout from "@/layouts/PrivateLayout";
+import PrivateRouteHOC from "@/routes/PrivateRoute";
 
 const Products = () => {
   const [searchProducts, setSearchProducts] = useState("");
@@ -111,20 +111,8 @@ const Products = () => {
   );
 };
 
-const withPrivate = (Component) => {
-  const WrappedComponent = () => {
-    return (
-      <>
-        <AdminLayout>
-          <PrivateLayout>
-            <Component />
-          </PrivateLayout>
-        </AdminLayout>
-      </>
-    );
-  };
-
-  return WrappedComponent;
+Products.getLayout = (page) => {
+  return <AdminLayout>{page}</AdminLayout>;
 };
 
-export default withPrivate(Products);
+export default Products;
