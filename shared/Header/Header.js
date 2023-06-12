@@ -18,20 +18,17 @@ import { BsSearch } from "react-icons/bs";
 import { HiOutlineXMark } from "react-icons/hi2";
 import CartDrawer from "@/components/CartDrawer";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useGetLoginUserQuery } from "@/features/auth/authApi";
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [userMenu, setUserMenu] = React.useState(false);
-
   const [search, setSearch] = useState("");
 
-  // const state = useSelector((state) => state.auth) || {};
+  const { data } = useGetLoginUserQuery();
 
-  // console.log(state);
-
-  const user = null;
+  const user = data?.data;
 
   const route = useRouter();
 

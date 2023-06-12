@@ -1,5 +1,9 @@
 import { apiSlice } from "../api/apiSlice";
-import { getUserLoading, loginUserFound } from "../auth/authSlice";
+import {
+  getUserLoading,
+  loginNotLogin,
+  loginUserFound,
+} from "../auth/authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,9 +21,13 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
 
           if (result?.data?.data?._id) {
-            dispatch(loginUserFound(result?.data?.data));
+            return dispatch(loginUserFound(result?.data?.data));
           }
-        } catch (err) {}
+
+          dispatch(loginNotLogin());
+        } catch (err) {
+          dispatch(loginNotLogin());
+        }
       },
     }),
 

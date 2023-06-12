@@ -14,17 +14,21 @@ const authSlice = createSlice({
       state.user = state.user;
     },
     loginUserFound: (state, action) => {
-      state.isLoading = false;
       state.user = action.payload;
+      state.isLoading = false;
+    },
+    loginNotLogin: (state) => {
+      state.user = undefined;
+      state.isLoading = false;
     },
     userLoggedOut: (state) => {
-      localStorage.clear();
-      state.isLoading = false;
+      document.cookie = "";
       state.user = undefined;
+      state.isLoading = false;
     },
   },
 });
 
-export const { getUserLoading, loginUserFound, userLoggedOut } =
+export const { getUserLoading, loginUserFound, userLoggedOut, loginNotLogin } =
   authSlice.actions;
 export default authSlice.reducer;

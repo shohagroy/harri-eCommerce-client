@@ -5,7 +5,7 @@ import React from "react";
 const CustomerLayout = ({ children }) => {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className=" lg:mt-0">{children}</div>
       <Footer />
     </div>
