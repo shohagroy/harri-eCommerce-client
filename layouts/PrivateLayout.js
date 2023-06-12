@@ -1,11 +1,11 @@
-import { useGetLoginUserQuery } from "@/features/auth/authApi";
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const PrivateLayout = ({ children }) => {
   const router = useRouter();
 
-  const { data, isLoading } = useGetLoginUserQuery();
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   if (isLoading) {
     return (
@@ -17,7 +17,7 @@ const PrivateLayout = ({ children }) => {
     );
   }
 
-  if (!data?.data?.email) {
+  if (!user?.email) {
     // return <Navigate to="/login" state={{ path: location }} replace></Navigate>;
     router.replace("/login", router.asPath);
     return null;

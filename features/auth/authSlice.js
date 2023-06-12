@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
-  user: undefined,
+  user: null,
 };
 
 const authSlice = createSlice({
@@ -17,18 +17,19 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isLoading = false;
     },
-    loginNotLogin: (state) => {
-      state.user = undefined;
+    userNotLogin: (state) => {
+      state.user = null;
       state.isLoading = false;
     },
     userLoggedOut: (state) => {
-      document.cookie = "";
-      state.user = undefined;
+      document.cookie =
+        "harriShop=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      state.user = null;
       state.isLoading = false;
     },
   },
 });
 
-export const { getUserLoading, loginUserFound, userLoggedOut, loginNotLogin } =
+export const { getUserLoading, loginUserFound, userLoggedOut, userNotLogin } =
   authSlice.actions;
 export default authSlice.reducer;

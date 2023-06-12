@@ -30,6 +30,8 @@ const Shop = () => {
     searchByCategory: activeCategory,
   };
 
+  // console.log(searchProducts);
+
   const {
     data: products,
     isLoading: productLoading,
@@ -37,7 +39,7 @@ const Shop = () => {
     error: productError,
   } = useGetProductsQuery(productQuery);
 
-  console.log(products);
+  // console.log(products);
 
   useEffect(() => {
     setSearchProducts(search);

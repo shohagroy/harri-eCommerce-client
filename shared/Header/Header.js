@@ -18,6 +18,8 @@ import { BsSearch } from "react-icons/bs";
 import { HiOutlineXMark } from "react-icons/hi2";
 import CartDrawer from "@/components/CartDrawer";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { userLoggedOut } from "@/features/auth/authSlice";
 import { useGetLoginUserQuery } from "@/features/auth/authApi";
 
 const Header = () => {
@@ -26,12 +28,12 @@ const Header = () => {
   const [userMenu, setUserMenu] = React.useState(false);
   const [search, setSearch] = useState("");
 
-  const { data } = useGetLoginUserQuery();
+  const dispatch = useDispatch();
+  useGetLoginUserQuery();
 
-  const user = data?.data;
+  const { user } = useSelector((state) => state.auth);
 
   const route = useRouter();
-
   const Links = [
     { name: "Home", link: "/" },
     { name: "Shops", link: "/shop" },
@@ -43,10 +45,11 @@ const Header = () => {
     e.preventDefault();
 
     route.push(`/shop?search=${search}`);
-    console.log("search");
   };
 
-  // const user = null;
+  const handelUserLogout = () => {
+    dispatch(userLoggedOut());
+  };
 
   return (
     <section className="w-full border-b shadow-sm bg-[#F0F2EE]">
@@ -137,7 +140,10 @@ const Header = () => {
                             <span className="">Edit Profile</span>
                           </Link>
 
-                          <button className="w-full rounded-lg rounded-t-none flex font-sm p-3 duration-300 hover:bg-gray-200 items-center">
+                          <button
+                            onClick={handelUserLogout}
+                            className="w-full rounded-lg rounded-t-none flex font-sm p-3 duration-300 hover:bg-gray-200 items-center"
+                          >
                             <AiOutlineLogout className="mr-2" />
                             <span className="">Log Out</span>
                           </button>

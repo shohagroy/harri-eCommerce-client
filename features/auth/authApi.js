@@ -1,9 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import {
-  getUserLoading,
-  loginNotLogin,
-  loginUserFound,
-} from "../auth/authSlice";
+import { getUserLoading, userNotLogin, loginUserFound } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,18 +11,18 @@ export const authApi = apiSlice.injectEndpoints({
           "Content-Type": "application/json",
         },
       }),
+      invalidatesTags: ["users"],
+      providesTags: ["users"],
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        console.log("call lkasdhlij fpoajpofjsapofdjosai");
         dispatch(getUserLoading());
         try {
           const result = await queryFulfilled;
-
           if (result?.data?.data?._id) {
             return dispatch(loginUserFound(result?.data?.data));
           }
-
-          dispatch(loginNotLogin());
         } catch (err) {
-          dispatch(loginNotLogin());
+          dispatch(userNotLogin());
         }
       },
     }),
@@ -51,6 +47,7 @@ export const authApi = apiSlice.injectEndpoints({
           "Content-Type": "application/json",
         },
       }),
+      invalidatesTags: ["users"],
     }),
 
     loginUser: builder.mutation({
@@ -62,8 +59,10 @@ export const authApi = apiSlice.injectEndpoints({
         },
         body: data,
       }),
+      invalidatesTags: ["users"],
     }),
   }),
+  tagTypes: ["users"],
 });
 
 export const {
