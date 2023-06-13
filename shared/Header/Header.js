@@ -29,7 +29,9 @@ const Header = () => {
   const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
-  useGetLoginUserQuery();
+  const { data, isLoading } = useGetLoginUserQuery();
+
+  console.log(data);
 
   const { user } = useSelector((state) => state.auth);
 
@@ -52,7 +54,7 @@ const Header = () => {
   };
 
   return (
-    <section className="w-full border-b shadow-sm bg-[#F0F2EE]">
+    <section className="w-full fixed top-0 left-0 z-50 border-b shadow-sm bg-[#F0F2EE]">
       <CommonLayout>
         <div className="hidden p-3 lg:flex justify-between items-center">
           <div className="flex items-center">
@@ -170,9 +172,11 @@ const Header = () => {
                     <AiOutlineHeart size={30} />
                   </button>
 
-                  <small className="absolute cursor-pointer top-0 right-0 w-5 h-5 flex justify-center items-center  bg-red-600 text-white font-bold rounded-full">
-                    {user?.wishList.length}
-                  </small>
+                  {user?.wishList.length > 0 && (
+                    <small className="absolute cursor-pointer top-0 right-0 w-5 h-5 flex justify-center items-center  bg-red-600 text-white font-bold rounded-full">
+                      {user?.wishList.length}
+                    </small>
+                  )}
                 </div>
               </Link>
 

@@ -14,10 +14,8 @@ const ProductCard = ({ info }) => {
   const [mouseHover, setMouseHover] = React.useState("");
 
   const { user } = useSelector((state) => state.auth);
-
   const { _id, discount, price, title, images, unit } = info || {};
-
-  const listed = user.wishList.find((id) => id === _id);
+  const listed = user?.wishList?.find((id) => id === _id);
 
   const [addToWishList, { data, isSuccess, isError, error }] =
     useAddToWishListMutation();

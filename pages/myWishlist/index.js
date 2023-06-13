@@ -8,8 +8,7 @@ import React from "react";
 import { BiTrash } from "react-icons/bi";
 
 const MyWishlist = () => {
-  const { data, isLoading, isError, isSuccess, error } =
-    useGetUserWishListProductsQuery();
+  const { data, isLoading, isError, error } = useGetUserWishListProductsQuery();
   return (
     <>
       <Head>
