@@ -26,9 +26,29 @@ const authSlice = createSlice({
       state.user = null;
       state.isLoading = false;
     },
+    userWishList: (state, action) => {
+      const alreadyListed = state.user.wishList.find(
+        (id) => id === action.payload
+      );
+
+      if (!!alreadyListed) {
+        // Item already exists in the wishlist, remove it
+        state.user.wishList = state.user.wishList.filter(
+          (id) => id !== action.payload
+        );
+      } else {
+        // Item doesn't exist in the wishlist, add it
+        state.user.wishList.push(action.payload);
+      }
+    },
   },
 });
 
-export const { startLoading, loginUserFound, userLoggedOut, stopeLoading } =
-  authSlice.actions;
+export const {
+  startLoading,
+  loginUserFound,
+  userLoggedOut,
+  stopeLoading,
+  userWishList,
+} = authSlice.actions;
 export default authSlice.reducer;

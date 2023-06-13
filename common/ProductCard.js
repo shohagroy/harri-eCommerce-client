@@ -8,11 +8,16 @@ import {
   AiOutlineLink,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
 const ProductCard = ({ info }) => {
   const [mouseHover, setMouseHover] = React.useState("");
 
+  const { user } = useSelector((state) => state.auth);
+
   const { _id, discount, price, title, images, unit } = info || {};
+
+  const listed = user.wishList.find((id) => id === _id);
 
   const [addToWishList, { data, isSuccess, isError, error }] =
     useAddToWishListMutation();
@@ -90,7 +95,9 @@ const ProductCard = ({ info }) => {
             <button
               onClick={addToWishListHandelar}
               title="Add to Wishlist"
-              className="bg-white hover:bg-red-600 hover:text-white shadow-md h-10 w-10 flex justify-center items-center duration-200"
+              className={`hover:text-white hover:bg-red-600  shadow-md h-10 w-10 flex justify-center items-center duration-200 ${
+                listed ? "text-white bg-red-600" : null
+              }`}
             >
               <AiOutlineHeart size={25} />
             </button>

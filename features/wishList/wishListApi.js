@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { userWishList } from "../auth/authSlice";
 
 export const wishListApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,22 +10,12 @@ export const wishListApi = apiSlice.injectEndpoints({
         body: data,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        console.log("api cal");
         try {
           const result = await queryFulfilled;
 
-          console.log(result);
           if (result.data.status === "success") {
             const { productId } = arg;
-            // dispatch(
-            //   apiSlice.util.updateQueryData(
-            //     "get-login-user",
-            //     undefined,
-            //     (draft) => {
-            //       console.log(JSON.stringify(draft));
-            //     }
-            //   )
-            // );
+            dispatch(userWishList(productId));
           }
         } catch (err) {}
       },
