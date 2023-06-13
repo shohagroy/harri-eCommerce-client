@@ -29,9 +29,7 @@ const Header = () => {
   const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
-  const { data, isLoading } = useGetLoginUserQuery();
-
-  console.log(data);
+  useGetLoginUserQuery();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -54,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <section className="w-full fixed top-0 left-0 z-50 border-b shadow-sm bg-[#F0F2EE]">
+    <section className="w-full z-50 border-b shadow-sm bg-[#F0F2EE]">
       <CommonLayout>
         <div className="hidden p-3 lg:flex justify-between items-center">
           <div className="flex items-center">

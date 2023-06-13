@@ -41,6 +41,22 @@ const authSlice = createSlice({
         state.user.wishList.push(action.payload);
       }
     },
+
+    userCartList: (state, action) => {
+      const alreadyListed = state.user.cartList.find(
+        (id) => id === action.payload
+      );
+
+      if (!!alreadyListed) {
+        // Item already exists in the wishlist, remove it
+        state.user.cartList = state.user.cartList.filter(
+          (id) => id !== action.payload
+        );
+      } else {
+        // Item doesn't exist in the wishlist, add it
+        state.user.cartList.push(action.payload);
+      }
+    },
   },
 });
 
@@ -50,5 +66,6 @@ export const {
   userLoggedOut,
   stopeLoading,
   userWishList,
+  userCartList,
 } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,3 +1,4 @@
+import { useAddToCartListMutation } from "@/features/cartList/cartListApi";
 import { useAddToWishListMutation } from "@/features/wishList/wishListApi";
 import Link from "next/link";
 import React, { useEffect } from "react";
@@ -20,25 +21,38 @@ const ProductCard = ({ info }) => {
   const [addToWishList, { data, isSuccess, isError, error }] =
     useAddToWishListMutation();
 
+  const [
+    addToCartList,
+    {
+      data: cartData,
+      isSuccess: cartSuccess,
+      isError: isCartError,
+      error: cartError,
+    },
+  ] = useAddToCartListMutation();
+
+  const product = {
+    title,
+    images: images[0].url,
+    unit,
+    discount,
+    price,
+    totalPrice: price,
+    productId: _id,
+  };
+
   const addToWishListHandelar = () => {
-    console.log("addToWishListHandelar");
-
-    const wishListProduct = {
-      title,
-      images: images[0].url,
-      unit,
-      discount,
-      price,
-      totalPrice: price,
-      productId: _id,
-    };
-
-    addToWishList(wishListProduct);
+    addToWishList(product);
   };
 
   const addToCartHandelar = () => {
-    console.log(info);
+    addToCartList(product);
   };
+
+  useEffect(() => {
+    if (cartSuccess) toast.success(cartData.message);
+    if (isCartError) toast.error(cartError.data.message);
+  }, [cartSuccess, isCartError]);
 
   useEffect(() => {
     if (isSuccess) toast.success(data.message);
