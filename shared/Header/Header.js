@@ -186,11 +186,13 @@ const Header = () => {
                   <AiOutlineShoppingCart size={30} />
                 </button>
 
-                <div className="cursor-pointer">
-                  <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
-                    1
-                  </small>
-                </div>
+                {user?.cartList.length > 0 && (
+                  <div className="cursor-pointer">
+                    <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
+                      {user?.cartList?.length}
+                    </small>
+                  </div>
+                )}
               </div>
             </div>
           </div>
