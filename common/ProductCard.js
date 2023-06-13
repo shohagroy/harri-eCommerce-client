@@ -16,7 +16,7 @@ const ProductCard = ({ info }) => {
   const [addToWishList, { isLoading, isError, error }] =
     useAddToWishListMutation();
 
-  console.log(isLoading, isError, error);
+  // console.log(isLoading, isError, error);
 
   const addToWishListHandelar = () => {
     console.log("addToWishListHandelar");

@@ -251,10 +251,10 @@ const Header = () => {
                       <button className="m-1">
                         <AiOutlineHeart size={30} />
                       </button>
+                      <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
+                        1
+                      </small>
                     </Link>
-                    <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
-                      1
-                    </small>
                   </div>
 
                   <div

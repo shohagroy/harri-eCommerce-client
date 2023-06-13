@@ -37,7 +37,7 @@ const PopularProducts = () => {
           </div>
         </div>
 
-        <div className="my-6 grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div className="my-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {products?.data.map((product) => (
             <ProductCard key={product?._id} info={product} />
           ))}
