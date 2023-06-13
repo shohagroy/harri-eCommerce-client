@@ -3,12 +3,20 @@ import { userWishList } from "../auth/authSlice";
 
 export const wishListApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getUserWishListProducts: builder.query({
+      query: () => ({
+        url: `/wish-lists`,
+        method: "GET",
+      }),
+      providesTags: ["wishlists"],
+    }),
     addToWishList: builder.mutation({
       query: (data) => ({
         url: `/wish-lists`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["wishlists"],
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
@@ -23,4 +31,5 @@ export const wishListApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAddToWishListMutation } = wishListApi;
+export const { useAddToWishListMutation, useGetUserWishListProductsQuery } =
+  wishListApi;

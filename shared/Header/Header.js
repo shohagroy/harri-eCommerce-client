@@ -171,7 +171,7 @@ const Header = () => {
                   </button>
 
                   <small className="absolute cursor-pointer top-0 right-0 w-5 h-5 flex justify-center items-center  bg-red-600 text-white font-bold rounded-full">
-                    1
+                    {user?.wishList.length}
                   </small>
                 </div>
               </Link>

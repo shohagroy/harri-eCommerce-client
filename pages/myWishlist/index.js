@@ -1,3 +1,4 @@
+import { useGetUserWishListProductsQuery } from "@/features/wishList/wishListApi";
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
 import PrivateRouteHOC from "@/routes/PrivateRoute";
@@ -7,7 +8,8 @@ import React from "react";
 import { BiTrash } from "react-icons/bi";
 
 const MyWishlist = () => {
-  const [count, setCount] = React.useState(1);
+  const { data, isLoading, isError, isSuccess, error } =
+    useGetUserWishListProductsQuery();
   return (
     <>
       <Head>
@@ -38,56 +40,74 @@ const MyWishlist = () => {
             <div className="my-6 p-3 lg:p-0 text-xs lg:text-normal">
               <div className="mx-auto ">
                 <div className="overflow-x-auto">
-                  <table className="min-w-full ">
-                    <colgroup>
-                      <col />
-                      <col />
-                      <col />
-                      <col />
-                      <col />
-                      <col />
-                    </colgroup>
-                    <thead className="border">
-                      <tr className="text-center">
-                        <th className="p-3 border">Image</th>
-                        <th className="p-3 border">Product</th>
-                        <th className="p-3 border">Unit Price</th>
-                        <th className="p-3 border">Quantity</th>
-                        <th className="p-3 border ">Total</th>
-                        <th className="p-3 border">Remove</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border border-opacity-20 ">
-                        <td className="p-3 border-r">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <img
-                              className="w-28 h-auto"
-                              src="https://hamart-shop.vercel.app/_next/image?url=https%3A%2F%2Fi.ibb.co%2F2dDcxYr%2Fproduct-1.jpg&w=128&q=75"
-                              alt=""
-                            />
-                          </div>
-                        </td>
-                        <td className="p-3 border-r">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <Link href={"/"}>
-                              <p className="text-xl font-semibold hover:text-red-600">
-                                Buy Guild Planer - 900w
-                              </p>
-                            </Link>
-                          </div>
-                        </td>
-                        <td className="p-3 border-r ">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <p className="text-xl font-semibold hover:text-red-600">
-                              $239
-                            </p>
-                          </div>
-                        </td>
+                  {isLoading ? (
+                    <div className="text-2xl font-semibold text-center p-3">
+                      <p> Loading...</p>
+                    </div>
+                  ) : isError ? (
+                    <div className="text-2xl font-semibold text-center p-3">
+                      <p>{error?.data?.message}</p>
+                    </div>
+                  ) : data?.data?.length > 0 ? (
+                    <table className="min-w-full ">
+                      <colgroup>
+                        <col />
+                        <col />
+                        <col />
+                        <col />
+                        <col />
+                        <col />
+                      </colgroup>
+                      <thead className="border">
+                        <tr className="text-center">
+                          <th className="p-3 border">SL</th>
+                          <th className="p-3 border">Image</th>
+                          <th className="p-3 border">Title</th>
+                          <th className="p-3 border">Unit</th>
+                          <th className="p-3 border ">Price</th>
+                          <th className="p-3 border">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data?.data?.map((wishList, i) => {
+                          const { _id, images, price, title, unit } = wishList;
+                          return (
+                            <tr key={_id} className="border border-opacity-20 ">
+                              <th className="p-3 border-r">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <p>{i + 1}</p>
+                                </div>
+                              </th>
 
-                        <td className="p-3 border-r ">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <div className="flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold">
+                              <td className="p-3 border-r">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <img
+                                    className="w-14 h-14 rounded-full"
+                                    src={images}
+                                    alt={title}
+                                  />
+                                </div>
+                              </td>
+                              <td className="p-3 border-r">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <Link href={"/"}>
+                                    <p className="text-xl font-semibold hover:text-red-600">
+                                      {title}
+                                    </p>
+                                  </Link>
+                                </div>
+                              </td>
+                              <td className="p-3 border-r ">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <p className="text-xl font-semibold hover:text-red-600 uppercase">
+                                    {unit}
+                                  </p>
+                                </div>
+                              </td>
+
+                              <td className="p-3 border-r ">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  {/* <div className="flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold">
                               <div className="m-0">
                                 <button
                                   disabled={count < 2 ? true : false}
@@ -110,27 +130,30 @@ const MyWishlist = () => {
                                   +
                                 </button>
                               </div>
-                            </div>
-                          </div>
-                        </td>
+                            </div> */}
+                                  <p className="text-xl font-semibold hover:text-red-600">
+                                    ${price}
+                                  </p>
+                                </div>
+                              </td>
 
-                        <td className="p-3 border-r ">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <p className="text-xl font-semibold hover:text-red-600">
-                              $239
-                            </p>
-                          </div>
-                        </td>
-                        <td className="p-3 border-r ">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <button className="text-red-600">
-                              <BiTrash size={30} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                              <td className="p-3 border-r ">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <button className="text-red-600">
+                                    <BiTrash size={30} />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div className="text-2xl font-semibold text-center p-3">
+                      <p>No Wish List Product Found!</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -148,23 +171,6 @@ const MyWishlist = () => {
     </>
   );
 };
-
-// const withPrivate = (Component) => {
-//   const WrappedComponent = () => {
-//     return (
-//       <>
-//         <CustomerLayout>
-//           <PrivateLayout>
-//             <Component />
-//           </PrivateLayout>
-//         </CustomerLayout>
-//       </>
-//     );
-//   };
-
-//   return WrappedComponent;
-// };
-// export default withPrivate(MyWishlist);
 
 MyWishlist.getLayout = (page) => {
   return <CustomerLayout>{page}</CustomerLayout>;
