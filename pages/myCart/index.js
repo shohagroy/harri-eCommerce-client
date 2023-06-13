@@ -1,3 +1,4 @@
+import { useGetUserCartListProductsQuery } from "@/features/cartList/cartListApi";
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
 import PrivateRouteHOC from "@/routes/PrivateRoute";
@@ -8,6 +9,8 @@ import { BiTrash } from "react-icons/bi";
 
 const MyCart = () => {
   const [count, setCount] = React.useState(1);
+
+  const { data, isLoading, isError, error } = useGetUserCartListProductsQuery();
 
   return (
     <>
@@ -39,127 +42,157 @@ const MyCart = () => {
             <div className="my-6 text-xs lg:text-normal p-3 lg:p-0">
               <div className="mx-auto sm:p-4 ">
                 <div className="overflow-x-auto">
-                  <table className="min-w-full ">
-                    <colgroup>
-                      <col />
-                      <col />
-                      <col />
-                      <col />
-                      <col />
-                      <col />
-                    </colgroup>
-                    <thead className="border">
-                      <tr className="text-center">
-                        <th className="p-3 border">Image</th>
-                        <th className="p-3 border">Product</th>
-                        <th className="p-3 border">Unit Price</th>
-                        <th className="p-3 border">Quantity</th>
-                        <th className="p-3 border ">Total</th>
-                        <th className="p-3 border">Remove</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border border-opacity-20 ">
-                        <td className="p-3 border-r">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <img
-                              className="w-28 h-auto"
-                              src="https://hamart-shop.vercel.app/_next/image?url=https%3A%2F%2Fi.ibb.co%2F2dDcxYr%2Fproduct-1.jpg&w=128&q=75"
-                              alt=""
-                            />
-                          </div>
-                        </td>
-                        <td className="p-3 border-r">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <Link href={"/"}>
-                              <p className="text-xl font-semibold hover:text-red-600">
-                                Buy Guild Planer - 900w
-                              </p>
-                            </Link>
-                          </div>
-                        </td>
-                        <td className="p-3 border-r ">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <p className="text-xl font-semibold hover:text-red-600">
-                              $239
-                            </p>
-                          </div>
-                        </td>
+                  {isLoading ? (
+                    <div className="text-2xl font-semibold text-center p-3">
+                      <p> Loading...</p>
+                    </div>
+                  ) : isError ? (
+                    <div className="text-2xl font-semibold text-center p-3">
+                      <p>{error?.data?.message}</p>
+                    </div>
+                  ) : data?.data?.length > 0 ? (
+                    <table className="min-w-full ">
+                      <colgroup>
+                        <col />
+                        <col />
+                        <col />
+                        <col />
+                        <col />
+                        <col />
+                      </colgroup>
+                      <thead className="border">
+                        <tr className="text-center">
+                          <th className="p-3 border">SL</th>
+                          <th className="p-3 border">Image</th>
+                          <th className="p-3 border">Title</th>
+                          <th className="p-3 border">Unit Price</th>
+                          <th className="p-3 border">Quantity</th>
+                          <th className="p-3 border ">Price</th>
+                          <th className="p-3 border">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data?.data?.map((cartList, i) => {
+                          const { _id, images, price, title, quantity } =
+                            cartList;
+                          return (
+                            <tr key={_id} className="border border-opacity-20 ">
+                              <th className="p-3 border-r">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <p>{i + 1}</p>
+                                </div>
+                              </th>
 
-                        <td className="p-3 border-r ">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <div className="flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold">
-                              <div className="m-0">
-                                <button
-                                  disabled={count < 2 ? true : false}
-                                  onClick={() => setCount(count - 1)}
-                                  className=" px-3 py-1 my-0 mx-auto text-lg "
-                                >
-                                  −
-                                </button>
-                              </div>
-                              <div className="m-0">
-                                <p className=" px-3 py-1 my-0 mx-auto ">
-                                  {count}
-                                </p>
-                              </div>
-                              <div className="m-0">
-                                <button
-                                  onClick={() => setCount(count + 1)}
-                                  className=" px-3 py-1 my-0 mx-auto text-lg "
-                                >
-                                  +
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
+                              <td className="p-3 border-r">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <img
+                                    className="w-14 h-14 rounded-full"
+                                    src={images}
+                                    alt={title}
+                                  />
+                                </div>
+                              </td>
+                              <td className="p-3 border-r">
+                                <div className="w-full h-full flex  items-center">
+                                  <Link href={"/"}>
+                                    <p className="text-xl font-semibold hover:text-red-600">
+                                      {title}
+                                    </p>
+                                  </Link>
+                                </div>
+                              </td>
+                              <td className="p-3 border-r ">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <p className="text-xl font-semibold hover:text-red-600 uppercase">
+                                    ${price}
+                                  </p>
+                                </div>
+                              </td>
 
-                        <td className="p-3 border-r ">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <p className="text-xl font-semibold hover:text-red-600">
-                              $239
-                            </p>
-                          </div>
-                        </td>
-                        <td className="p-3 border-r ">
-                          <div className="w-full h-full flex justify-center items-center">
-                            <button className="text-red-600">
-                              <BiTrash size={30} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                              <td className="p-3 border-r ">
+                                <div className="flex justify-center items-start w-full">
+                                  <div className="flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold">
+                                    <div className="m-0">
+                                      <button
+                                        disabled={count < 2 ? true : false}
+                                        onClick={() => setCount(count - 1)}
+                                        className=" px-3 py-1 my-0 mx-auto text-lg "
+                                      >
+                                        −
+                                      </button>
+                                    </div>
+                                    <div className="m-0">
+                                      <p className=" px-3 py-1 my-0 mx-auto ">
+                                        {count}
+                                      </p>
+                                    </div>
+                                    <div className="m-0">
+                                      <button
+                                        onClick={() => setCount(count + 1)}
+                                        className=" px-3 py-1 my-0 mx-auto text-lg "
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+
+                              <td className="p-3 border-r ">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <p className="text-xl font-semibold hover:text-red-600">
+                                    ${price * quantity}
+                                  </p>
+                                </div>
+                              </td>
+
+                              <td className="p-3 border-r ">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <button className="text-red-600">
+                                    <BiTrash size={30} />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div className="text-2xl font-semibold text-center p-3">
+                      <p>No Wish List Product Found!</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="w-full flex lg:justify-end items-center p-3 lg:p-0">
-              <div className="lg:w-[400px] w-full">
-                <p className="text-2xl font-semibold ">Cart Totals</p>
-
-                <div className="my-4">
-                  <div className="w-full h-full flex justify-between items-center p-4 bg-gray-100 border">
-                    <p>Subtotal</p>
-                    <p>$456</p>
-                  </div>
-                  <div className="w-full h-full flex justify-between items-center p-4 bg-gray-100 border">
-                    <p>Total</p>
-                    <p>$456</p>
-                  </div>
+            {data?.data?.length > 0 && (
+              <div className="w-full flex lg:justify-end items-center p-3 lg:p-0">
+                <div className="lg:w-[400px] w-full">
+                  <p className="text-2xl font-semibold ">Cart Totals</p>
 
                   <div className="my-4">
-                    <Link href={"/checkout"}>
-                      <button className=" p-4 w-full bg-red-600 text-white font-semibold">
-                        Proceed to checkout
-                      </button>
-                    </Link>
+                    <div className="w-full h-full flex justify-between items-center p-4 bg-gray-100 border">
+                      <p>Subtotal</p>
+                      <p>$456</p>
+                    </div>
+                    <div className="w-full h-full flex justify-between items-center p-4 bg-gray-100 border">
+                      <p>Total</p>
+                      <p>$456</p>
+                    </div>
+
+                    <div className="my-4">
+                      <Link href={"/checkout"}>
+                        <button className=" p-4 w-full bg-red-600 text-white font-semibold">
+                          Proceed to checkout
+                        </button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </CommonLayout>
         </section>
       </main>

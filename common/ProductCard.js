@@ -16,7 +16,8 @@ const ProductCard = ({ info }) => {
 
   const { user } = useSelector((state) => state.auth);
   const { _id, discount, price, title, images, unit } = info || {};
-  const listed = user?.wishList?.find((id) => id === _id);
+  const wishListed = user?.wishList?.find((id) => id === _id);
+  const cartListed = user?.cartList?.find((id) => id === _id);
 
   const [addToWishList, { data, isSuccess, isError, error }] =
     useAddToWishListMutation();
@@ -94,7 +95,7 @@ const ProductCard = ({ info }) => {
             <span>
               <AiOutlineShoppingCart size={20} />
             </span>{" "}
-            Add to Cart
+            {cartListed ? "Already added to Cart" : "Add to Cart"}
           </button>
         </div>
 
@@ -108,7 +109,7 @@ const ProductCard = ({ info }) => {
               onClick={addToWishListHandelar}
               title="Add to Wishlist"
               className={`hover:text-white hover:bg-red-600  shadow-md h-10 w-10 flex justify-center items-center duration-200 ${
-                listed ? "text-white bg-red-600" : null
+                wishListed ? "text-white bg-red-600" : null
               }`}
             >
               <AiOutlineHeart size={25} />
