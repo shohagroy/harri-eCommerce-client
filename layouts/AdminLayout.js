@@ -9,7 +9,6 @@ const AdminLayout = ({ children }) => {
         <div className="">
           <SideBar />
         </div>
-
         <div className="w-full h-full">{children}</div>
       </div>
     </div>

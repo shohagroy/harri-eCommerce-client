@@ -8,7 +8,6 @@ import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import EditTools from "@/common/editTools";
 import { usePostNewProductMutation } from "@/features/products/productApi";
 import Link from "next/link";
-import PrivateRouteHOC from "@/routes/PrivateRoute";
 
 const AddNewProduct = () => {
   const [images, setImages] = useState([]);
@@ -57,6 +56,9 @@ const AddNewProduct = () => {
         description: "",
         images: [],
         publish: false,
+        wishList: [],
+        cartList: [],
+        buyList: [],
       });
       setDescription("");
       toast.success("New Product Added Successfully!");

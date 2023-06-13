@@ -1,3 +1,4 @@
+import { useAddToWishListMutation } from "@/features/wishList/wishListApi";
 import Link from "next/link";
 import React from "react";
 import {
@@ -10,8 +11,31 @@ import {
 const ProductCard = ({ info }) => {
   const [mouseHover, setMouseHover] = React.useState("");
 
-  const { _id, discount, price, title, images } = info || {};
+  const { _id, discount, price, title, images, unit } = info || {};
 
+  const [addToWishList, { isLoading, isError, error }] =
+    useAddToWishListMutation();
+
+  console.log(isLoading, isError, error);
+
+  const addToWishListHandelar = () => {
+    console.log("addToWishListHandelar");
+
+    const wishListProduct = {
+      title,
+      images: images[0].url,
+      unit,
+      price,
+      totalPrice: price,
+      productId: _id,
+    };
+
+    addToWishList(wishListProduct);
+  };
+
+  const addToCartHandelar = () => {
+    console.log(info);
+  };
   return (
     <div className="mt-4 border border-black">
       <div
@@ -40,7 +64,10 @@ const ProductCard = ({ info }) => {
             mouseHover === info ? "bottom-0" : " -bottom-12"
           } duration-300`}
         >
-          <button className="w-full py-2 text-white bg-black flex justify-center items-center">
+          <button
+            onClick={addToCartHandelar}
+            className="w-full py-2 text-white bg-black flex justify-center items-center"
+          >
             <span>
               <AiOutlineShoppingCart size={20} />
             </span>{" "}
@@ -55,6 +82,7 @@ const ProductCard = ({ info }) => {
         >
           <div>
             <button
+              onClick={addToWishListHandelar}
               title="Add to Wishlist"
               className="bg-white hover:bg-red-600 hover:text-white shadow-md h-10 w-10 flex justify-center items-center duration-200"
             >

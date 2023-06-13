@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     baseUrl: process.env.NEXT_PUBLIC_DEVELOPMENT
       ? "http://localhost:5000/api/v1"
       : process.env.NEXT_PUBLIC_BACKEND_BASE_URL,
-    tagTypes: ["categorys", "products", "users"],
+    tagTypes: ["categorys", "products", "users", "wishList"],
 
     prepareHeaders: async (headers, { getState, endpoint }) => {
       const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
