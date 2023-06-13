@@ -1,6 +1,7 @@
 import { useAddToWishListMutation } from "@/features/wishList/wishListApi";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
 import {
   AiOutlineHeart,
   AiFillEye,
@@ -13,10 +14,8 @@ const ProductCard = ({ info }) => {
 
   const { _id, discount, price, title, images, unit } = info || {};
 
-  const [addToWishList, { isLoading, isError, error }] =
+  const [addToWishList, { data, isSuccess, isError, error }] =
     useAddToWishListMutation();
-
-  // console.log(isLoading, isError, error);
 
   const addToWishListHandelar = () => {
     console.log("addToWishListHandelar");
@@ -25,6 +24,7 @@ const ProductCard = ({ info }) => {
       title,
       images: images[0].url,
       unit,
+      discount,
       price,
       totalPrice: price,
       productId: _id,
@@ -36,6 +36,12 @@ const ProductCard = ({ info }) => {
   const addToCartHandelar = () => {
     console.log(info);
   };
+
+  useEffect(() => {
+    if (isSuccess) toast.success(data.message);
+    if (isError) toast.error(error.data.message);
+  }, [isSuccess, isError]);
+
   return (
     <div className="mt-4 border border-black">
       <div
