@@ -12,8 +12,6 @@ import {
 import swal from "sweetalert";
 
 function CartDrawer({ openDrawer, setOpenDrawer }) {
-  const [count, setCount] = useState(1);
-
   const { data, isLoading, isError, error } = useGetUserCartListProductsQuery();
 
   const [
@@ -110,14 +108,18 @@ function CartDrawer({ openDrawer, setOpenDrawer }) {
                           ></img>
                           <div className="flex ml-2 items-center justify-between flex-grow">
                             <div>
-                              <p className="text-lg font-semibold">
+                              {/* <p className="text-lg font-semibold">
                                 {cartItem?.title}
-                              </p>
+                              </p> */}
                               <p className="text-gray-500 text-sm">
                                 Item Price: ${cartItem?.price}
                               </p>
-                              <p className="text-lg">
-                                ${cartItem?.price * cartItem?.quantity}
+
+                              <p className="text-lg font-semibold">
+                                $
+                                {(cartItem?.price -
+                                  (cartItem.price * cartItem?.discount) / 100) *
+                                  cartItem?.quantity}
                               </p>
                             </div>
                             <div className="flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold">
@@ -163,7 +165,10 @@ function CartDrawer({ openDrawer, setOpenDrawer }) {
                               $
                               {data?.data.reduce(
                                 (acc, product) =>
-                                  acc + product.price * product.quantity,
+                                  acc +
+                                  (product.price -
+                                    (product.price * product.discount) / 100) *
+                                    product.quantity,
                                 0
                               )}
                             </span>
