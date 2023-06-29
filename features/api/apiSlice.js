@@ -6,7 +6,6 @@ export const apiSlice = createApi({
     baseUrl: process.env.NEXT_PUBLIC_DEVELOPMENT
       ? "http://localhost:5000/api/v1"
       : process.env.NEXT_PUBLIC_BACKEND_BASE_URL,
-    tagTypes: ["categorys", "products", "users", "wishlists"],
 
     prepareHeaders: async (headers, { getState, endpoint }) => {
       const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
@@ -16,13 +15,13 @@ export const apiSlice = createApi({
       }, {});
 
       const token = cookies["harriShop"];
-      // console.log(token);
 
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
       return headers;
     },
+    tagTypes: ["categorys", "products", "users", "wishlists"],
   }),
 
   endpoints: (builder) => ({}),

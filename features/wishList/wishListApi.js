@@ -10,6 +10,7 @@ export const wishListApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["wishlists"],
     }),
+
     addToWishList: builder.mutation({
       query: (data) => ({
         url: `/wish-lists`,

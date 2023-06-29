@@ -1,14 +1,55 @@
-import { useGetUserWishListProductsQuery } from "@/features/wishList/wishListApi";
+import {
+  useAddToWishListMutation,
+  useGetUserWishListProductsQuery,
+} from "@/features/wishList/wishListApi";
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
 import PrivateRouteHOC from "@/routes/PrivateRoute";
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { BiTrash } from "react-icons/bi";
+import swal from "sweetalert";
 
 const MyWishlist = () => {
   const { data, isLoading, isError, error } = useGetUserWishListProductsQuery();
+
+  const [
+    addToWishList,
+    { isLoading: deleteLoading, isSuccess: deleteSuccess },
+  ] = useAddToWishListMutation();
+
+  const handelRemoveWishList = (product) => {
+    swal({
+      title: "Are you sure?",
+      text: "Remove this product on Wish list?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        addToWishList(product);
+      } else {
+        swal("Your Wist List Product is safe!");
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (deleteLoading) {
+      swal("Please Wait...", {
+        icon: "info",
+        buttons: false,
+      });
+    }
+
+    if (deleteSuccess) {
+      swal("Wist List Product Remove Successfully!", {
+        icon: "success",
+      });
+    }
+  }, [deleteLoading, deleteSuccess]);
+
   return (
     <>
       <Head>
@@ -69,7 +110,8 @@ const MyWishlist = () => {
                       </thead>
                       <tbody>
                         {data?.data?.map((wishList, i) => {
-                          const { _id, images, price, title, unit } = wishList;
+                          const { _id, images, price, title, unit, productId } =
+                            wishList;
                           return (
                             <tr key={_id} className="border border-opacity-20 ">
                               <th className="p-3 border-r">
@@ -88,8 +130,8 @@ const MyWishlist = () => {
                                 </div>
                               </td>
                               <td className="p-3 border-r">
-                                <div className="w-full h-full flex justify-center items-center">
-                                  <Link href={"/"}>
+                                <div className="w-full h-full capitalize">
+                                  <Link href={`/${productId}`}>
                                     <p className="text-xl font-semibold hover:text-red-600">
                                       {title}
                                     </p>
@@ -138,7 +180,12 @@ const MyWishlist = () => {
 
                               <td className="p-3 border-r ">
                                 <div className="w-full h-full flex justify-center items-center">
-                                  <button className="text-red-600">
+                                  <button
+                                    onClick={() =>
+                                      handelRemoveWishList(wishList)
+                                    }
+                                    className="text-red-600"
+                                  >
                                     <BiTrash size={30} />
                                   </button>
                                 </div>
