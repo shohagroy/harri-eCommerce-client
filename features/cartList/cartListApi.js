@@ -28,8 +28,30 @@ export const cartListApi = apiSlice.injectEndpoints({
         } catch (err) {}
       },
     }),
+
+    updateCartProductQuantaty: builder.mutation({
+      query: (data) => ({
+        url: `/cart-lists`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["cartlists"],
+      // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      //   try {
+      //     const result = await queryFulfilled;
+
+      //     if (result.data.status === "success") {
+      //       const { productId } = arg;
+      //       dispatch(userCartList(productId));
+      //     }
+      //   } catch (err) {}
+      // },
+    }),
   }),
 });
 
-export const { useAddToCartListMutation, useGetUserCartListProductsQuery } =
-  cartListApi;
+export const {
+  useAddToCartListMutation,
+  useGetUserCartListProductsQuery,
+  useUpdateCartProductQuantatyMutation,
+} = cartListApi;

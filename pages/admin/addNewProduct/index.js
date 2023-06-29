@@ -21,7 +21,9 @@ const AddNewProduct = () => {
     skip: 0,
   };
   const { data, isLoading, isError, isSuccess } = useGetCategorysQuery(query);
-  const categories = data?.data || [];
+  const categories = data?.data?.data || [];
+
+  console.log(categories);
 
   const [
     postNewProduct,

@@ -28,7 +28,7 @@ const Category = () => {
   return (
     <>
       <Head>
-        <title>Admin | Categorirs</title>
+        <title>Admin | Categories</title>
       </Head>
       <main>
         <section className=" bg-gray-100 min-h-screen">

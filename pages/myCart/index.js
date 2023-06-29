@@ -1,16 +1,66 @@
-import { useGetUserCartListProductsQuery } from "@/features/cartList/cartListApi";
+import {
+  useAddToCartListMutation,
+  useGetUserCartListProductsQuery,
+  useUpdateCartProductQuantatyMutation,
+} from "@/features/cartList/cartListApi";
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
 import PrivateRouteHOC from "@/routes/PrivateRoute";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
+import { useEffect } from "react";
 import { BiTrash } from "react-icons/bi";
+import swal from "sweetalert";
 
 const MyCart = () => {
-  const [count, setCount] = React.useState(1);
-
   const { data, isLoading, isError, error } = useGetUserCartListProductsQuery();
+
+  const [
+    addToCartList,
+    { isLoading: deleteLoading, isSuccess: deleteSuccess },
+  ] = useAddToCartListMutation();
+
+  const [updateCartProductQuantaty] = useUpdateCartProductQuantatyMutation();
+
+  const handelRemoveCartList = (product) => {
+    swal({
+      title: "Are you sure?",
+      text: "Remove this product on Cart list?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        addToCartList(product);
+      } else {
+        swal("Your Cart List Product is safe!");
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (deleteLoading) {
+      swal("Please Wait...", {
+        icon: "info",
+        buttons: false,
+      });
+    }
+
+    if (deleteSuccess) {
+      swal("Cart List Product Remove Successfully!", {
+        icon: "success",
+      });
+    }
+  }, [deleteLoading, deleteSuccess]);
+
+  const incQuentaty = (product) => {
+    updateCartProductQuantaty({ ...product, quantity: product.quantity + 1 });
+  };
+
+  const decQuentaty = (product) => {
+    updateCartProductQuantaty({ ...product, quantity: product.quantity - 1 });
+  };
 
   return (
     <>
@@ -66,6 +116,7 @@ const MyCart = () => {
                           <th className="p-3 border">Image</th>
                           <th className="p-3 border">Title</th>
                           <th className="p-3 border">Unit Price</th>
+                          <th className="p-3 border">Discount</th>
                           <th className="p-3 border">Quantity</th>
                           <th className="p-3 border ">Price</th>
                           <th className="p-3 border">Action</th>
@@ -73,8 +124,15 @@ const MyCart = () => {
                       </thead>
                       <tbody>
                         {data?.data?.map((cartList, i) => {
-                          const { _id, images, price, title, quantity } =
-                            cartList;
+                          const {
+                            _id,
+                            images,
+                            price,
+                            title,
+                            quantity,
+                            productId,
+                            discount,
+                          } = cartList;
                           return (
                             <tr key={_id} className="border border-opacity-20 ">
                               <th className="p-3 border-r">
@@ -93,8 +151,8 @@ const MyCart = () => {
                                 </div>
                               </td>
                               <td className="p-3 border-r">
-                                <div className="w-full h-full flex  items-center">
-                                  <Link href={"/"}>
+                                <div className="w-full h-full flex  items-center capitalize">
+                                  <Link href={`/${productId}`}>
                                     <p className="text-xl font-semibold hover:text-red-600">
                                       {title}
                                     </p>
@@ -108,14 +166,21 @@ const MyCart = () => {
                                   </p>
                                 </div>
                               </td>
+                              <td className="p-3 border-r ">
+                                <div className="w-full h-full flex justify-center items-center">
+                                  <p className="text-xl font-semibold hover:text-red-600 uppercase">
+                                    -{discount}%
+                                  </p>
+                                </div>
+                              </td>
 
                               <td className="p-3 border-r ">
                                 <div className="flex justify-center items-start w-full">
                                   <div className="flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold">
                                     <div className="m-0">
                                       <button
-                                        disabled={count < 2 ? true : false}
-                                        onClick={() => setCount(count - 1)}
+                                        disabled={quantity === 1}
+                                        onClick={() => decQuentaty(cartList)}
                                         className=" px-3 py-1 my-0 mx-auto text-lg "
                                       >
                                         −
@@ -123,12 +188,12 @@ const MyCart = () => {
                                     </div>
                                     <div className="m-0">
                                       <p className=" px-3 py-1 my-0 mx-auto ">
-                                        {count}
+                                        {quantity}
                                       </p>
                                     </div>
                                     <div className="m-0">
                                       <button
-                                        onClick={() => setCount(count + 1)}
+                                        onClick={() => incQuentaty(cartList)}
                                         className=" px-3 py-1 my-0 mx-auto text-lg "
                                       >
                                         +
@@ -141,14 +206,20 @@ const MyCart = () => {
                               <td className="p-3 border-r ">
                                 <div className="w-full h-full flex justify-center items-center">
                                   <p className="text-xl font-semibold hover:text-red-600">
-                                    ${price * quantity}
+                                    {(price - (price * discount) / 100) *
+                                      quantity}
                                   </p>
                                 </div>
                               </td>
 
                               <td className="p-3 border-r ">
                                 <div className="w-full h-full flex justify-center items-center">
-                                  <button className="text-red-600">
+                                  <button
+                                    onClick={() =>
+                                      handelRemoveCartList(cartList)
+                                    }
+                                    className="text-red-600"
+                                  >
                                     <BiTrash size={30} />
                                   </button>
                                 </div>
@@ -175,11 +246,31 @@ const MyCart = () => {
                   <div className="my-4">
                     <div className="w-full h-full flex justify-between items-center p-4 bg-gray-100 border">
                       <p>Subtotal</p>
-                      <p>$456</p>
+                      <p>
+                        $
+                        {data?.data?.reduce(
+                          (acc, product) =>
+                            acc +
+                            (product.price -
+                              (product.price * product.discount) / 100) *
+                              product.quantity,
+                          0
+                        )}
+                      </p>
                     </div>
-                    <div className="w-full h-full flex justify-between items-center p-4 bg-gray-100 border">
+                    <div className="w-full h-full flex justify-between items-center p-4 bg-gray-100 border font-semibold">
                       <p>Total</p>
-                      <p>$456</p>
+                      <p>
+                        $
+                        {data?.data?.reduce(
+                          (acc, product) =>
+                            acc +
+                            (product.price -
+                              (product.price * product.discount) / 100) *
+                              product.quantity,
+                          0
+                        )}
+                      </p>
                     </div>
 
                     <div className="my-4">
