@@ -9,12 +9,15 @@ import {
   AiFillLinkedin,
   AiFillYoutube,
 } from "react-icons/ai";
-import ProductCard from "@/common/ProductCard";
 import { useGetSingleProductQuery } from "@/features/products/productApi";
 import Head from "next/head";
 import ImageMagnify from "@/components/imageMagnify";
 import { useRouter } from "next/router";
 import ProductReview from "@/components/ProductReview";
+import { useSelector } from "react-redux";
+import { useAddToWishListMutation } from "@/features/wishList/wishListApi";
+import { useAddToCartListMutation } from "@/features/cartList/cartListApi";
+import { toast } from "react-hot-toast";
 
 const ProductDetails = () => {
   const [displayImage, setDisplayImage] = useState({});
@@ -44,7 +47,58 @@ const ProductDetails = () => {
     category,
   } = data?.data || {};
 
-  console.log(data?.data);
+  const { user } = useSelector((state) => state.auth);
+
+  const wishListed = user?.wishList?.find((id) => id === _id);
+  const cartListed = user?.cartList?.find((id) => id === _id);
+
+  const [
+    addToWishList,
+    {
+      data: wishListData,
+      isSuccess: wishListSuccess,
+      isError: wishListIsError,
+      error: wishListError,
+    },
+  ] = useAddToWishListMutation();
+
+  const [
+    addToCartList,
+    {
+      data: cartData,
+      isSuccess: cartSuccess,
+      isError: isCartError,
+      error: cartError,
+    },
+  ] = useAddToCartListMutation();
+
+  const product = {
+    title,
+    images: images && images[0].url,
+    unit,
+    discount,
+    price,
+    totalPrice: price,
+    productId: _id,
+  };
+
+  const addToWishListHandelar = () => {
+    addToWishList(product);
+  };
+
+  const addToCartHandelar = () => {
+    addToCartList(product);
+  };
+
+  useEffect(() => {
+    if (cartSuccess) toast.success(cartData.message);
+    if (isCartError) toast.error(cartError.data.message);
+  }, [cartSuccess, isCartError]);
+
+  useEffect(() => {
+    if (wishListSuccess) toast.success(wishListData.message);
+    if (wishListIsError) toast.error(wishListData.data.message);
+  }, [isSuccess, isError]);
 
   return (
     <>
@@ -101,11 +155,14 @@ const ProductDetails = () => {
 
                 <div className="flex items-center my-4">
                   <div className="w-full my-3 lg:w-[300px]">
-                    <button className="w-full py-2 text-white bg-black flex justify-center items-center">
+                    <button
+                      onClick={() => addToCartHandelar()}
+                      className="w-full py-2 text-white bg-black flex justify-center items-center"
+                    >
                       <span>
                         <AiOutlineShoppingCart size={20} />
                       </span>{" "}
-                      Add to Cart
+                      {cartListed ? "Already added to Cart" : "Add to Cart"}
                     </button>
                   </div>
                   <div className="w-full m-3 lg:w-[300px]">
@@ -117,7 +174,12 @@ const ProductDetails = () => {
                     </button>
                   </div>
 
-                  <button className="w-10 h-10 flex bg-red-600 text-white justify-center items-center border">
+                  <button
+                    onClick={() => addToWishListHandelar()}
+                    className={`hover:text-white hover:bg-red-600  shadow-md p-2.5 flex justify-center items-center duration-200 ${
+                      wishListed ? "text-white bg-red-600" : null
+                    }`}
+                  >
                     <AiOutlineHeart size={20} />
                   </button>
                 </div>

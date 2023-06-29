@@ -15,6 +15,7 @@ const ProductCard = ({ info }) => {
   const [mouseHover, setMouseHover] = React.useState("");
 
   const { user } = useSelector((state) => state.auth);
+
   const { _id, discount, price, title, images, unit } = info || {};
   const wishListed = user?.wishList?.find((id) => id === _id);
   const cartListed = user?.cartList?.find((id) => id === _id);

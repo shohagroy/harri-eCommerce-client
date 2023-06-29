@@ -19,7 +19,8 @@ function CartDrawer({ openDrawer, setOpenDrawer }) {
     { isLoading: deleteLoading, isSuccess: deleteSuccess },
   ] = useAddToCartListMutation();
 
-  const [updateCartProductQuantaty] = useUpdateCartProductQuantatyMutation();
+  const [updateCartProductQuantaty, { isLoading: updateLoading }] =
+    useUpdateCartProductQuantatyMutation();
 
   const handelRemoveCartList = (product) => {
     swal({
@@ -122,7 +123,11 @@ function CartDrawer({ openDrawer, setOpenDrawer }) {
                                   cartItem?.quantity}
                               </p>
                             </div>
-                            <div className="flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold">
+                            <div
+                              className={`flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold ${
+                                updateLoading && "bg-gray-200"
+                              }`}
+                            >
                               <div className="m-0">
                                 <button
                                   disabled={cartItem?.quantity === 1}

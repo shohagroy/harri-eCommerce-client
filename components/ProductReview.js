@@ -4,19 +4,18 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 const ProductReview = () => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-  const [seleceReating, setSeleteReating] = useState(0);
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
 
     // Perform any necessary actions with the rating and review text
-    console.log("Rating:", seleceReating);
+    console.log("Rating:", rating);
     console.log("Review Text:", reviewText);
 
     // Reset the form
-    setRating(0);
-    setSeleteReating(0);
-    setReviewText("");
+    // setRating(0);
+    // setSeleteReating(0);
+    // setReviewText("");
   };
 
   return (
@@ -56,7 +55,7 @@ const ProductReview = () => {
         </div>
       </div>
 
-      <div className="my-4 flex items-center">
+      {/* <div className="my-4 flex items-center">
         <div className="w-16 h-16">
           <img
             className="w-full h-full rounded-md border border-red-600 p-1"
@@ -83,9 +82,9 @@ const ProductReview = () => {
           </div>
           <p className=" text-xl font-bold">very nice product</p>
         </div>
-      </div>
+      </div> */}
 
-      <div className="my-4 flex items-center">
+      {/* <div className="my-4 flex items-center">
         <div className="w-16 h-16">
           <img
             className="w-full h-full rounded-md border border-red-600 p-1"
@@ -112,12 +111,12 @@ const ProductReview = () => {
           </div>
           <p className=" text-xl font-bold">very nice product</p>
         </div>
-      </div>
+      </div> */}
 
       <div className="p-4">
         <p className="text-2xl my-2 font-semibold">Write a review</p>
 
-        <form onSubmit={handleReviewSubmit}>
+        {/* <form onSubmit={handleReviewSubmit}>
           <p>Your rating *</p>
 
           <div className="flex">
@@ -141,15 +140,56 @@ const ProductReview = () => {
             <p>Your review *</p>
 
             <textarea
-              rows="5"
+              rows="4"
               value={reviewText}
+              required
               onChange={(e) => setReviewText(e.target.value)}
-              className="w-full p-3 py-4 border border-black rounded-md"
+              className="w-full p-1 lg:p-3  lg:py-4 border border-black rounded-md"
             ></textarea>
           </div>
 
           <div>
-            <button className="py-4 px-8 text-white  lg:text-2xl font-bold rounded-md bg-blue-600">
+            <button className="lg:py-4 lg:px-8 py-2 px-4 text-white  lg:text-xl font-bold rounded-md bg-blue-600">
+              Submit
+            </button>
+          </div>
+        </form> */}
+        <form onSubmit={handleReviewSubmit}>
+          <p>Your rating *</p>
+          <div className="flex">
+            {[...Array(5)].map((_, i) => (
+              <label key={i}>
+                <input
+                  type="radio"
+                  name="rating"
+                  value={i + 1}
+                  required
+                  onChange={() => setRating(i + 1)}
+                  className="sr-only"
+                />
+                <AiFillStar
+                  size={25}
+                  className={`${
+                    rating >= i + 1 && "text-yellow-400"
+                  } cursor-pointer`}
+                />
+              </label>
+            ))}
+          </div>
+
+          <div className="my-4">
+            <p>Your review *</p>
+            <textarea
+              rows="4"
+              value={reviewText}
+              required
+              onChange={(e) => setReviewText(e.target.value)}
+              className="w-full p-1 lg:p-3 lg:py-4 border border-black rounded-md"
+            ></textarea>
+          </div>
+
+          <div>
+            <button className="lg:py-4 lg:px-8 py-2 px-4 text-white lg:text-xl font-bold rounded-md bg-blue-600">
               Submit
             </button>
           </div>

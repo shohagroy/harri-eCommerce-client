@@ -21,7 +21,8 @@ const MyCart = () => {
     { isLoading: deleteLoading, isSuccess: deleteSuccess },
   ] = useAddToCartListMutation();
 
-  const [updateCartProductQuantaty] = useUpdateCartProductQuantatyMutation();
+  const [updateCartProductQuantaty, { isLoading: updateLoading }] =
+    useUpdateCartProductQuantatyMutation();
 
   const handelRemoveCartList = (product) => {
     swal({
@@ -176,7 +177,11 @@ const MyCart = () => {
 
                               <td className="p-3 border-r ">
                                 <div className="flex justify-center items-start w-full">
-                                  <div className="flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold">
+                                  <div
+                                    className={`flex items-center content-center my-auto  py-0 rounded-md border border-gray-100 font-semibold ${
+                                      updateLoading && "bg-gray-200"
+                                    }`}
+                                  >
                                     <div className="m-0">
                                       <button
                                         disabled={quantity === 1}
