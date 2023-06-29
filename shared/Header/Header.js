@@ -133,7 +133,7 @@ const Header = () => {
                           </Link>
 
                           <Link
-                            href={"/admin/setting"}
+                            href={"/edit-profile"}
                             className="w-full flex font-sm p-3 duration-300 hover:bg-gray-200 items-center"
                           >
                             <AiFillSetting className="mr-2" />

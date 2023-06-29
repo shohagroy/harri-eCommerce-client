@@ -1,3 +1,4 @@
+import Footer from "@/shared/Footer/Footer";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -27,7 +28,12 @@ const PrivateRouteHOC = (WrappedComponent) => {
     }
 
     // Render the component if user is authenticated, otherwise null
-    return isAuthenticated && <WrappedComponent {...props} />;
+    return (
+      <>
+        isAuthenticated && <WrappedComponent {...props} />
+        <Footer />
+      </>
+    );
   };
 
   return PrivateRoute;

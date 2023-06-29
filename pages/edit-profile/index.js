@@ -13,26 +13,20 @@ const EditProfile = () => {
   const [userInfoUpdate, { isLoading, isError, isSuccess, error }] =
     useUserInfoUpdateMutation();
 
-  console.log(isLoading, isError, isSuccess, error);
-
-  const information = {
-    firstName: "",
-    lastName: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-  };
-
-  const [userInfo, setUserInfo] = useState(information);
+  const [userInfo, setUserInfo] = useState(user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    userInfoUpdate(information);
+    userInfoUpdate(userInfo);
 
     console.log(userInfo);
   };
+
+  useEffect(() => {
+    if (user._id) {
+      setUserInfo(userInfo);
+    }
+  }, [user]);
 
   return (
     <>
@@ -196,7 +190,7 @@ const EditProfile = () => {
               </fieldset>
               <div className="flex justify-center items-center">
                 <button className="w-full lg:w-[200px] lg:text-xl lg:px-8 lg:py-4 py-2 px-4 bg-blue-400 hover:bg-blue-600 text-white font-semibold rounded-md ">
-                  Submit
+                  {isLoading ? "Loading..." : "Submit"}
                 </button>
               </div>
             </form>
