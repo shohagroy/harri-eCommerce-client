@@ -1,22 +1,56 @@
-import React, { useState } from "react";
+import {
+  useAddProductReviewMutation,
+  useGetProductReviewsQuery,
+} from "@/features/review/reviewApi";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
-const ProductReview = () => {
+const ProductReview = ({ productId }) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+
+  const { user } = useSelector((state) => state.auth);
+
+  const { data: reviews, isLoading: reviewLoading } =
+    useGetProductReviewsQuery(productId);
+
+  const [addProductReview, { isLoading, isError, isSuccess, error }] =
+    useAddProductReviewMutation();
+
+  const reviewInfo = {
+    rating,
+    reviewText,
+    userId: user?._id,
+    userName: `${user?.firstName} ${user?.lastName}`,
+    userAvatar: user?.avatar,
+    productId,
+    reviewDate: new Date().toISOString(),
+  };
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
 
-    // Perform any necessary actions with the rating and review text
-    console.log("Rating:", rating);
-    console.log("Review Text:", reviewText);
-
-    // Reset the form
-    // setRating(0);
-    // setSeleteReating(0);
-    // setReviewText("");
+    console.log(reviewInfo);
+    addProductReview(reviewInfo);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Your Review created successfully!");
+      setReviewText("");
+      setRating(0);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.message);
+      setReviewText("");
+      setRating(0);
+    }
+  }, [isError]);
 
   return (
     <section className="bg-gray-100 p-2 lg:p-8 rounded-md">
@@ -190,7 +224,7 @@ const ProductReview = () => {
 
           <div>
             <button className="lg:py-4 lg:px-8 py-2 px-4 text-white lg:text-xl font-bold rounded-md bg-blue-600">
-              Submit
+              {isLoading ? "Loading..." : "Submit"}
             </button>
           </div>
         </form>

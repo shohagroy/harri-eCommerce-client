@@ -261,7 +261,7 @@ const ProductDetails = () => {
 
             <div className="my-4">
               {/* review  */}
-              <ProductReview />
+              <ProductReview productId={_id} />
             </div>
 
             <div className="my-6 lg:my-16">
