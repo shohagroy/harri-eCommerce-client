@@ -30,7 +30,7 @@ const PrivateRouteHOC = (WrappedComponent) => {
     // Render the component if user is authenticated, otherwise null
     return (
       <>
-        isAuthenticated && <WrappedComponent {...props} />
+        <WrappedComponent {...props} />
         <Footer />
       </>
     );

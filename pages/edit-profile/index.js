@@ -9,25 +9,45 @@ import { useSelector } from "react-redux";
 
 const EditProfile = () => {
   const { user } = useSelector((state) => state.auth);
+  const [preview, setPreview] = useState();
+  const [userInfo, setUserInfo] = useState(user);
 
   const [userInfoUpdate, { isLoading, isError, isSuccess, error }] =
     useUserInfoUpdateMutation();
 
-  const [userInfo, setUserInfo] = useState(user);
+  const showPreview = (e) => {
+    const img = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload = () => {
+      setUserInfo({ ...userInfo, avatar: reader.result });
+      setPreview(() => reader.result);
+    };
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    userInfoUpdate(userInfo);
 
-    console.log(userInfo);
+    userInfoUpdate(userInfo);
   };
 
   useEffect(() => {
-    if (user._id) {
+    if (user?._id) {
       setUserInfo(userInfo);
     }
   }, [user]);
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Profile updated successfully");
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.message);
+    }
+  }, [isError]);
   return (
     <>
       <Head>
@@ -173,17 +193,33 @@ const EditProfile = () => {
                       Photo
                     </label>
                     <div className="flex items-center space-x-2">
-                      <img
-                        src="https://source.unsplash.com/30x30/?random"
-                        alt=""
-                        className="w-10 h-10 rounded-full bg-gray-500 "
-                      />
-                      <button
-                        type="button"
-                        className="px-4 py-2 border rounded-md border-gray-100"
-                      >
-                        Change
-                      </button>
+                      {preview ? (
+                        <img
+                          src={preview}
+                          alt=""
+                          className="w-14 h-14 rounded-full bg-gray-500 "
+                        />
+                      ) : (
+                        <img
+                          src={
+                            userInfo.avatar
+                              ? userInfo.avatar
+                              : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
+                          }
+                          alt=""
+                          className="w-14 h-14 rounded-full bg-gray-500 "
+                        />
+                      )}
+
+                      <div className="flex my-2 lg:my-0">
+                        <input
+                          type="file"
+                          name="file"
+                          id="file"
+                          onChange={showPreview}
+                          className="px-8 py-8 w-full border-2 border-dashed rounded-md border-gray-300 text-gray-400 "
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
