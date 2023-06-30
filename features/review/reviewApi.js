@@ -7,7 +7,7 @@ export const reviewApi = apiSlice.injectEndpoints({
         url: `/product-reviews/${id}`,
         method: "GET",
       }),
-      providesTags: ["wishlists"],
+      providesTags: ["review"],
     }),
 
     addProductReview: builder.mutation({
