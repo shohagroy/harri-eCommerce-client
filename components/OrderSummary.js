@@ -1,47 +1,54 @@
-const OrderSummary = () => {
+const OrderSummary = ({ products }) => {
+  const subtotal = products?.reduce(
+    (acc, product) =>
+      acc + product.price * (products?.length === 1 ? 1 : product.quantity),
+    0
+  );
+
+  const discount = products?.reduce(
+    (acc, product) => acc + (product.price * product.discount) / 100,
+    0
+  );
+
+  const totalPrice = subtotal - discount + 20;
+
+  console.log(subtotal);
   return (
     <div className="border rounded p-3">
       <h3 className="font-medium mb-3">Order Summary</h3>
       <div>
-        {[1, 2, 3, 4, 5].map((i) => (
-          <p>Product {i}</p>
+        {products?.map((product, i) => (
+          <p className="capitalize font-semibold" key={product?._id}>
+            {i + 1}. {product?.title} -{" "}
+            {`(${products.length > 1 ? product?.quantity : 1})`}
+          </p>
         ))}
-        <div className="flex gap-3 justify-between items-center">
-          <input
-            type="text"
-            placeholder="Input your coupon code"
-            className="px-3 py-2 border rounded outline-none mt-3"
-          />
-          {/* <Button text={"Apply"} /> */}
-          <button className="px-3 py-2 bg-red-600 text-white rounded-md">
-            Apply
-          </button>
-        </div>
-        <div className="mt-5 border-b">
+
+        <div className="mt-5 border-b border-t">
           <ul>
             <li className="flex justify-between items-center my-2">
               Subtotal{" "}
               <span>
-                <b>$0.00</b>
+                <b>${subtotal}</b>
               </span>
             </li>
             <li className="flex justify-between items-center my-2">
               Shipping Cost{" "}
               <span>
-                <b>$0.00</b>
+                <b>$20</b>
               </span>
             </li>
             <li className="flex justify-between items-center my-2">
               Discount{" "}
               <span className="text-orange-500">
-                <b>$0.00</b>
+                <b>${discount}</b>
               </span>
             </li>
           </ul>
         </div>
         <div className="mt-3 font-bold">
           <p className="flex justify-between items-center">
-            Total Cost <span>$0.00</span>
+            Total Cost <span>${totalPrice}</span>
           </p>
         </div>
       </div>

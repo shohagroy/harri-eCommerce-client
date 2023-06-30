@@ -1,17 +1,29 @@
+import React, { useState } from "react";
 import Head from "next/head";
-import { useForm } from "react-hook-form";
 import OrderSummary from "@/components/OrderSummary";
 import CommonLayout from "@/layouts/commonLayout";
 import CustomerLayout from "@/layouts/customerLayout";
+import { useSelector } from "react-redux";
+import PrivateRouteHOC from "@/routes/PrivateRoute";
+import { useRouter } from "next/router";
+import { useGetCheckoutProductsQuery } from "@/features/checkout/checkoutApi";
 
-const checkout = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
+const Checkout = () => {
+  const { user } = useSelector((state) => state.auth);
+  const [userInfo, setUserInfo] = useState(user);
 
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { data: checkoutProducts } = useGetCheckoutProductsQuery(
+    id ? id : "allCart"
+  );
+
+  console.log(checkoutProducts);
+
+  const handelCheckout = (e) => {
+    e.preventDefault();
+  };
   return (
     <>
       <Head>
@@ -21,154 +33,144 @@ const checkout = () => {
         <section className="my-16 ">
           <CommonLayout>
             <div className="container">
-              <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-2">
                 <div className="p-2">
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="mb-8">
-                      <h3 className="mb-3 font-medium">01. Personal Details</h3>
-                      <div>
-                        <div className="flex gap-3 mb-5">
-                          <div className="w-full">
-                            <label
-                              htmlFor="firstName"
-                              className="mb-1 inline-block"
-                            >
-                              First Name
-                            </label>
-                            <br />
-                            <input
-                              id="firstName"
-                              placeholder="John"
-                              className="px-3 py-2 w-full outline-none border rounded focus:border-green-600"
-                              {...register("firstName")}
-                            />
-                          </div>
-                          <div className="w-full">
-                            <label
-                              htmlFor="lastName"
-                              className="mb-1 inline-block"
-                            >
-                              Last Name
-                            </label>
-                            <br />
-                            <input
-                              id="lastName"
-                              placeholder="Doe"
-                              className="px-3 py-2 w-full outline-none border rounded focus:border-green-600"
-                              {...register("lastName")}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="flex gap-3">
-                          <div className="w-full">
-                            <label
-                              htmlFor="email"
-                              className="mb-1 inline-block"
-                            >
-                              Email Address
-                            </label>
-                            <br />
-                            <input
-                              id="email"
-                              className="px-3 py-2 w-full outline-none border rounded focus:border-green-600"
-                              placeholder="John@gmail.com"
-                              {...register("email")}
-                            />
-                          </div>
-                          <div className="w-full">
-                            <label
-                              htmlFor="phoneNumber"
-                              className="mb-1 inline-block"
-                            >
-                              Phone Number
-                            </label>
-                            <br />
-                            <input
-                              id="phoneNumber"
-                              className="px-3 py-2 w-full outline-none border rounded focus:border-green-600"
-                              placeholder="e.g. 123456789"
-                              {...register("phoneNumber")}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mb-8">
-                      <h3 className="mb-3 font-medium">02. Shipping Details</h3>
-                      <div>
-                        <div className="w-full mb-3">
-                          <label
-                            htmlFor="shippingAddress"
-                            className="mb-1 inline-block"
-                          >
-                            Shipping Address
-                          </label>
-                          <br />
-                          <input
-                            id="shippingAddress"
-                            className="px-3 py-2 w-full outline-none border rounded focus:border-green-600"
-                            placeholder="123 Boulevard Rd, Beverley Hills"
-                            {...register("shippingAddress")}
-                          />
-                        </div>
-                        <div className="flex gap-3 mb-5">
-                          <div className="w-full">
-                            <label htmlFor="city" className="mb-1 inline-block">
-                              City
-                            </label>
-                            <br />
-                            <input
-                              id="city"
-                              className="px-3 py-2 w-full outline-none border rounded focus:border-green-600"
-                              placeholder="Dhaka"
-                              {...register("city")}
-                            />
-                          </div>
-                          <div className="w-full">
-                            <label
-                              htmlFor="country"
-                              className="mb-1 inline-block"
-                            >
-                              Country
-                            </label>
-                            <br />
-                            <input
-                              id="country"
-                              className="px-3 py-2 w-full outline-none border rounded focus:border-green-600"
-                              placeholder="Bangladesh"
-                              {...register("country")}
-                            />
-                          </div>
-                          <div className="w-full">
-                            <label htmlFor="zip" className="mb-1 inline-block">
-                              ZIP / Postal
-                            </label>
-                            <br />
-                            <input
-                              id="zip"
-                              className="px-3 py-2 w-full outline-none border rounded focus:border-green-600"
-                              placeholder="2345"
-                              {...register("zip")}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {errors.exampleRequired && (
-                      <span>This field is required</span>
-                    )}
-
-                    <input
-                      className="bg-red-600 px-5 py-2 text-white rounded cursor-pointer"
-                      type="submit"
-                    />
-                  </form>
+                  <OrderSummary products={checkoutProducts?.data} />
                 </div>
                 <div className="p-2">
-                  <OrderSummary />
+                  <form
+                    onSubmit={handelCheckout}
+                    className="container flex flex-col mx-auto space-y-12"
+                  >
+                    <fieldset className="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-200">
+                      <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+                        <div className="col-span-full sm:col-span-3">
+                          <label htmlFor="firstname" className="text-sm">
+                            First name
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setUserInfo({
+                                ...userInfo,
+                                firstName: e.target.value,
+                              })
+                            }
+                            value={userInfo.firstName}
+                            type="text"
+                            className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
+                          />
+                        </div>
+                        <div className="col-span-full sm:col-span-3">
+                          <label htmlFor="lastname" className="text-sm">
+                            Last name
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setUserInfo({
+                                ...userInfo,
+                                lastName: e.target.value,
+                              })
+                            }
+                            value={userInfo.lastName}
+                            type="text"
+                            className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
+                          />
+                        </div>
+                        <div className="col-span-full sm:col-span-3">
+                          <label htmlFor="email" className="text-sm">
+                            Phone Number
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setUserInfo({
+                                ...userInfo,
+                                phone: e.target.value,
+                              })
+                            }
+                            value={userInfo.phone}
+                            type="text"
+                            className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
+                          />
+                        </div>
+                        <div className="col-span-full sm:col-span-3">
+                          <label htmlFor="email" className="text-sm">
+                            Email
+                          </label>
+                          <input
+                            defaultValue={user?.email}
+                            readOnly
+                            type="email"
+                            className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
+                          />
+                        </div>
+                        <div className="col-span-full">
+                          <label htmlFor="address" className="text-sm">
+                            Address
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setUserInfo({
+                                ...userInfo,
+                                address: e.target.value,
+                              })
+                            }
+                            value={userInfo.address}
+                            type="text"
+                            placeholder=""
+                            className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
+                          />
+                        </div>
+                        <div className="col-span-full sm:col-span-2">
+                          <label htmlFor="city" className="text-sm">
+                            City
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setUserInfo({ ...userInfo, city: e.target.value })
+                            }
+                            value={userInfo.city}
+                            type="text"
+                            placeholder=""
+                            className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
+                          />
+                        </div>
+                        <div className="col-span-full sm:col-span-2">
+                          <label htmlFor="state" className="text-sm">
+                            State / Province
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setUserInfo({
+                                ...userInfo,
+                                state: e.target.value,
+                              })
+                            }
+                            value={userInfo.state}
+                            type="text"
+                            placeholder=""
+                            className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
+                          />
+                        </div>
+                        <div className="col-span-full sm:col-span-2">
+                          <label htmlFor="zip" className="text-sm">
+                            ZIP / Postal
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setUserInfo({ ...userInfo, zip: e.target.value })
+                            }
+                            value={userInfo.zip}
+                            type="text"
+                            placeholder=""
+                            className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <button className="w-full p-2 bg-red-500 hover:bg-red-600 text-white rounded-md">
+                      Checkout
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -179,8 +181,8 @@ const checkout = () => {
   );
 };
 
-checkout.getLayout = (page) => {
+Checkout.getLayout = (page) => {
   return <CustomerLayout>{page}</CustomerLayout>;
 };
 
-export default checkout;
+export default PrivateRouteHOC(Checkout);

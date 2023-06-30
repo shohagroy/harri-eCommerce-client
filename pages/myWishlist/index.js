@@ -19,6 +19,8 @@ const MyWishlist = () => {
     { isLoading: deleteLoading, isSuccess: deleteSuccess },
   ] = useAddToWishListMutation();
 
+  console.log(data);
+
   const handelRemoveWishList = (product) => {
     swal({
       title: "Are you sure?",

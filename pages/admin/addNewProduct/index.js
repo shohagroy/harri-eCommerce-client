@@ -23,8 +23,6 @@ const AddNewProduct = () => {
   const { data, isLoading, isError, isSuccess } = useGetCategorysQuery(query);
   const categories = data?.data?.data || [];
 
-  console.log(categories);
-
   const [
     postNewProduct,
     {

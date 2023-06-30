@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { useAddToWishListMutation } from "@/features/wishList/wishListApi";
 import { useAddToCartListMutation } from "@/features/cartList/cartListApi";
 import { toast } from "react-hot-toast";
+import Link from "next/link";
 
 const ProductDetails = () => {
   const [displayImage, setDisplayImage] = useState({});
@@ -166,12 +167,15 @@ const ProductDetails = () => {
                     </button>
                   </div>
                   <div className="w-full m-3 lg:w-[300px]">
-                    <button className="w-full py-2 text-white bg-blue-600 flex justify-center items-center">
-                      <span>
-                        <AiOutlineShoppingCart size={20} />
-                      </span>{" "}
-                      Buy Now
-                    </button>
+                    <Link href={`checkout?id=${_id}`}>
+                      <button className="w-full py-2 text-white bg-blue-600 flex justify-center items-center">
+                        <span>
+                          <AiOutlineShoppingCart size={20} />
+                        </span>
+                        {"  "}
+                        Buy Now
+                      </button>
+                    </Link>
                   </div>
 
                   <button
