@@ -1,7 +1,6 @@
 const OrderSummary = ({ products }) => {
   const subtotal = products?.reduce(
-    (acc, product) =>
-      acc + product.price * (products?.length === 1 ? 1 : product.quantity),
+    (acc, product) => acc + product.price * product.quantity,
     0
   );
 
@@ -12,15 +11,13 @@ const OrderSummary = ({ products }) => {
 
   const totalPrice = subtotal - discount + 20;
 
-  console.log(subtotal);
   return (
     <div className="border rounded p-3">
       <h3 className="font-medium mb-3">Order Summary</h3>
       <div>
         {products?.map((product, i) => (
           <p className="capitalize font-semibold" key={product?._id}>
-            {i + 1}. {product?.title} -{" "}
-            {`(${products.length > 1 ? product?.quantity : 1})`}
+            {i + 1}. {product?.title} - {`(${product?.quantity})`}
           </p>
         ))}
 
@@ -47,7 +44,7 @@ const OrderSummary = ({ products }) => {
           </ul>
         </div>
         <div className="mt-3 font-bold">
-          <p className="flex justify-between items-center">
+          <p className="flex justify-btween items-center">
             Total Cost <span>${totalPrice}</span>
           </p>
         </div>

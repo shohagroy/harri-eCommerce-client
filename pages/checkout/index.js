@@ -40,9 +40,9 @@ const Checkout = () => {
                 <div className="p-2">
                   <form
                     onSubmit={handelCheckout}
-                    className="container flex flex-col mx-auto space-y-12"
+                    className="container flex flex-col mx-auto space-y-12 "
                   >
-                    <fieldset className="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-200">
+                    <fieldset className="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-200 capitalize">
                       <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                         <div className="col-span-full sm:col-span-3">
                           <label htmlFor="firstname" className="text-sm">

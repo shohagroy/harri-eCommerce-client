@@ -67,14 +67,18 @@ const ProductReview = ({ productId }) => {
             <div className="w-16 h-16">
               <img
                 className="w-full h-full rounded-md border border-red-600 p-1"
-                src={userAvatar}
+                src={
+                  userAvatar
+                    ? userAvatar
+                    : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
+                }
                 alt="avatar"
               />
             </div>
             <div className=" ml-3">
               <div>
                 <p className="text-xl font-semibold capitalize">
-                  {userName} -{" "}
+                  {userName ? userName : "unknow"} -{" "}
                   <i className="text-normal text-gray-500 text-sm">
                     {" "}
                     {new Date(reviewDate).toLocaleDateString("en-US", {
