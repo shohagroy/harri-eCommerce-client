@@ -1,4 +1,6 @@
-const OrderSummary = ({ products }) => {
+import { useEffect } from "react";
+
+const OrderSummary = ({ products, setProductInfo }) => {
   const subtotal = products?.reduce(
     (acc, product) => acc + product.price * product.quantity,
     0
@@ -10,6 +12,10 @@ const OrderSummary = ({ products }) => {
   );
 
   const totalPrice = subtotal - discount + 20;
+
+  useEffect(() => {
+    setProductInfo({ subtotal, discount, totalPrice });
+  }, [products]);
 
   return (
     <div className="border rounded p-3">
@@ -44,7 +50,7 @@ const OrderSummary = ({ products }) => {
           </ul>
         </div>
         <div className="mt-3 font-bold">
-          <p className="flex justify-btween items-center">
+          <p className="flex justify-between items-center">
             Total Cost <span>${totalPrice}</span>
           </p>
         </div>

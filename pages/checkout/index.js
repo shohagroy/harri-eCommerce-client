@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import OrderSummary from "@/components/OrderSummary";
 import CommonLayout from "@/layouts/commonLayout";
@@ -6,24 +6,42 @@ import CustomerLayout from "@/layouts/customerLayout";
 import { useSelector } from "react-redux";
 import PrivateRouteHOC from "@/routes/PrivateRoute";
 import { useRouter } from "next/router";
-import { useGetCheckoutProductsQuery } from "@/features/checkout/checkoutApi";
+import {
+  useAddNewCheckoutMutation,
+  useGetCheckoutProductsQuery,
+} from "@/features/checkout/checkoutApi";
 
 const Checkout = () => {
   const { user } = useSelector((state) => state.auth);
   const [userInfo, setUserInfo] = useState(user);
+  const [productInfo, setProductInfo] = useState({});
 
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: checkoutProducts } = useGetCheckoutProductsQuery(
-    id ? id : "allCart"
-  );
+  const productId = id ? id : "allCart";
 
-  console.log(checkoutProducts);
+  const { data: checkoutProducts } = useGetCheckoutProductsQuery(productId);
+
+  const [addNewCheckout, { data: checkoutData, isLoading: checkoutLoading }] =
+    useAddNewCheckoutMutation();
+
+  console.log(checkoutData);
 
   const handelCheckout = (e) => {
     e.preventDefault();
+
+    console.log({ productInfo, userInfo, productId });
+    //
+    addNewCheckout({ productInfo, userInfo, productId });
   };
+
+  useEffect(() => {
+    if (checkoutData?.data) {
+      window.location.replace(checkoutData.data);
+    }
+  }, [checkoutData]);
+
   return (
     <>
       <Head>
@@ -35,7 +53,10 @@ const Checkout = () => {
             <div className="container">
               <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-2">
                 <div className="p-2">
-                  <OrderSummary products={checkoutProducts?.data} />
+                  <OrderSummary
+                    products={checkoutProducts?.data}
+                    setProductInfo={setProductInfo}
+                  />
                 </div>
                 <div className="p-2">
                   <form
@@ -168,7 +189,7 @@ const Checkout = () => {
                       </div>
                     </fieldset>
                     <button className="w-full p-2 bg-red-500 hover:bg-red-600 text-white rounded-md">
-                      Checkout
+                      {checkoutLoading ? "Loading..." : "Checkout"}
                     </button>
                   </form>
                 </div>
