@@ -5,8 +5,19 @@ import PopularProducts from "@/components/PopularProducts";
 import UtilsContainer from "@/components/UtilsContainer";
 import CustomerLayout from "@/layouts/customerLayout";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 function Home() {
+  const router = useRouter();
+  const { query } = router;
+
+  useEffect(() => {
+    if (query?.token) {
+      document.cookie = `harriShop=${query.token}; Path=/;`;
+      router.push("/");
+    }
+  }, [query]);
   return (
     <>
       <Head>

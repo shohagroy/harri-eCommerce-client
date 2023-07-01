@@ -20,6 +20,7 @@ const CustomerLogin = () => {
     useLoginUserMutation();
 
   const { data: googleUrl, isLoading: googleLoading } = useGoogleLoginQuery();
+
   const handleLogin = (e) => {
     e.preventDefault();
     loginUser(loginInfo);
