@@ -98,7 +98,7 @@ const ProductCard = ({ info }) => {
               <span>
                 <AiOutlineShoppingCart size={20} />
               </span>{" "}
-              {cartListed ? "Already added to Cart" : "Add to Cart"}
+              {cartListed ? "Already added" : "Add to Cart"}
             </button>
             <button
               onClick={addToCartHandelar}

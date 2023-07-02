@@ -28,6 +28,7 @@ const PopularProducts = () => {
               Popular Products
             </h3>
           </div>
+
           <div className="mt-3 font-semibold w-full flex justify-between items-center">
             <button className="w-full text-center border-b-2 text-red-600 border-red-600 p-2">
               Top Rated

@@ -1,7 +1,13 @@
+import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import CommonLayout from "@/layouts/commonLayout";
+import Link from "next/link";
 import React from "react";
 
 const CategoryContainer = () => {
+  const query = { search: "", skip: 0 };
+  const { data: categories } = useGetCategorysQuery(query);
+
+  console.log(categories);
   const categorys = [
     {
       name: "Camera Bluetooth & Headset",
@@ -53,25 +59,43 @@ const CategoryContainer = () => {
     <section className="my-6 p-3 lg:p-0">
       <CommonLayout>
         <div className="relative w-full flex gap-2 overflow-x-auto text-center font-semibold text-gray-500 ">
-          {categorys?.map((category) => {
-            const { image, name, link } = category || {};
+          {categories?.data?.data?.map((category) => {
+            const { name, icon } = category || {};
             return (
-              <div
-                key={name}
-                className="h-44 relative  aspect-video rounded-sm  "
-              >
-                <img
-                  className="h-44 w-full  object-cover object-center"
-                  src={image}
-                  alt={name}
-                />
+              <Link href={`/shop?search=${name}`}>
+                <div
+                  key={name}
+                  className="h-44 relative  aspect-video rounded-sm  "
+                >
+                  <img
+                    className="h-44 w-full  object-cover object-center"
+                    src={icon[0]?.url}
+                    alt={name}
+                  />
 
-                <div className="absolute left-0 top-0 p-3 text-black w-full h-full">
-                  <p className="text-center bg-white rounded-full p-1 mt-32">
-                    {name}
-                  </p>
+                  <div className="absolute left-0 top-0 p-3 text-black w-full h-full">
+                    <p className="text-center bg-white rounded-full p-1 mt-32">
+                      {name}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
+
+              // <div
+              //   key={category.title}
+              //   className="relative overflow-hidden rounded-lg shadow-md"
+              // >
+              //   <img
+              //     src={category.image}
+              //     alt={category.title}
+              //     className="object-cover w-full h-64"
+              //   />
+              //   <div className="absolute inset-0 flex items-center justify-center p-4 bg-gray-900 bg-opacity-50 transition duration-300 opacity-0 hover:opacity-100">
+              //     <h2 className="text-xl font-semibold text-white">
+              //       {category.title}
+              //     </h2>
+              //   </div>
+              // </div>
             );
           })}
         </div>
