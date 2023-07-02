@@ -2,6 +2,7 @@ import AddNewCategory from "@/components/admin/Category/AddNewCategory";
 import CategoryTable from "@/components/admin/Category/CategoryTable";
 import UserTable from "@/components/admin/user/UserTable";
 import { useGetCategorysQuery } from "@/features/category/categoryApi";
+import { useGetAllUserQuery } from "@/features/user/userApi";
 import AdminLayout from "@/layouts/AdminLayout";
 import CommonLayout from "@/layouts/commonLayout";
 import AdminRoute from "@/routes/AdminRoute";
@@ -11,6 +12,10 @@ import { useState } from "react";
 const Customers = () => {
   const [searchCategory, setSearchCategory] = useState("");
   const [showPage, setShowPage] = useState(1);
+
+  const { data: customers } = useGetAllUserQuery();
+
+  console.log(customers);
 
   const query = {
     search: searchCategory,
@@ -53,7 +58,8 @@ const Customers = () => {
                 </div>
               ) : categories?.data?.data.length > 0 ? (
                 <UserTable
-                  categories={categories?.data}
+                  customers={customers}
+                  categories={categories}
                   showPage={showPage}
                   setShowPage={setShowPage}
                 />

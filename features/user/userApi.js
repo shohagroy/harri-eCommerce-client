@@ -5,7 +5,7 @@ export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     userInfoUpdate: builder.mutation({
       query: (data) => ({
-        url: `/userInfo`,
+        url: `/users`,
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -23,8 +23,28 @@ export const userApi = apiSlice.injectEndpoints({
         } catch (err) {}
       },
     }),
+
+    getAllUser: builder.query({
+      query: () => ({
+        url: `/users`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      invalidatesTags: ["users"],
+      // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      //   try {
+      //     const result = await queryFulfilled;
+
+      //     if (result.data?.user?._id) {
+      //       dispatch(loginUserFound(result.data.user));
+      //     }
+      //   } catch (err) {}
+      // },
+    }),
   }),
   tagTypes: ["users"],
 });
 
-export const { useUserInfoUpdateMutation } = userApi;
+export const { useUserInfoUpdateMutation, useGetAllUserQuery } = userApi;
