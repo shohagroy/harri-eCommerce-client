@@ -4,7 +4,6 @@ import React from "react";
 const AdminLayout = ({ children }) => {
   return (
     <div>
-      {/* <Header /> */}
       <div className="flex">
         <div className="">
           <SideBar />

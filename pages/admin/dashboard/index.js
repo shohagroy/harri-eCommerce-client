@@ -10,6 +10,7 @@ import Charts from "@/components/admin/Charts";
 import AdminTable from "@/components/admin/AdminTable";
 import CommonLayout from "@/layouts/commonLayout";
 import PrivateRouteHOC from "@/routes/PrivateRoute";
+import AdminRoute from "@/routes/AdminRoute";
 
 const Dashboard = () => {
   const orders = [
@@ -122,4 +123,4 @@ Dashboard.getLayout = (page) => {
   return <AdminLayout>{page}</AdminLayout>;
 };
 
-export default Dashboard;
+export default AdminRoute(Dashboard);
