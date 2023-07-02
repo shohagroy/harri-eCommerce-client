@@ -26,8 +26,6 @@ const Checkout = () => {
   const [addNewCheckout, { data: checkoutData, isLoading: checkoutLoading }] =
     useAddNewCheckoutMutation();
 
-  console.log(checkoutData);
-
   const handelCheckout = (e) => {
     e.preventDefault();
 
@@ -76,7 +74,7 @@ const Checkout = () => {
                                 firstName: e.target.value,
                               })
                             }
-                            value={userInfo.firstName}
+                            value={userInfo?.firstName}
                             type="text"
                             className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
                           />
@@ -92,7 +90,7 @@ const Checkout = () => {
                                 lastName: e.target.value,
                               })
                             }
-                            value={userInfo.lastName}
+                            value={userInfo?.lastName}
                             type="text"
                             className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
                           />
@@ -108,7 +106,7 @@ const Checkout = () => {
                                 phone: e.target.value,
                               })
                             }
-                            value={userInfo.phone}
+                            value={userInfo?.phone}
                             type="text"
                             className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
                           />
@@ -135,7 +133,7 @@ const Checkout = () => {
                                 address: e.target.value,
                               })
                             }
-                            value={userInfo.address}
+                            value={userInfo?.address}
                             type="text"
                             placeholder=""
                             className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
@@ -149,7 +147,7 @@ const Checkout = () => {
                             onChange={(e) =>
                               setUserInfo({ ...userInfo, city: e.target.value })
                             }
-                            value={userInfo.city}
+                            value={userInfo?.city}
                             type="text"
                             placeholder=""
                             className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
@@ -166,7 +164,7 @@ const Checkout = () => {
                                 state: e.target.value,
                               })
                             }
-                            value={userInfo.state}
+                            value={userInfo?.state}
                             type="text"
                             placeholder=""
                             className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
@@ -180,7 +178,7 @@ const Checkout = () => {
                             onChange={(e) =>
                               setUserInfo({ ...userInfo, zip: e.target.value })
                             }
-                            value={userInfo.zip}
+                            value={userInfo?.zip}
                             type="text"
                             placeholder=""
                             className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 p-2"
