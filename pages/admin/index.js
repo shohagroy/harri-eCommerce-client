@@ -1,15 +1,21 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Login = () => {
+  const route = useRouter();
+
+  useEffect(() => {
+    route.push("/admin/dashboard");
+  }, [route]);
+
   return (
     <>
       <Head>
-        <title>Admin Login</title>
+        <title>Admin | Routes</title>
       </Head>
       <main>
-        <div className="w-screen  flex justify-center">
+        {/* <div className="w-screen  flex justify-center">
           <div className="bg-gradient-to-r w-full">
             <div className="flex h-screen text-gray-900">
               <div className="w-11/12 p-8 m-auto bg-white shadow-xl rounded-lg sm:w-96 bg-opacity-80 bg-clip-padding">
@@ -118,7 +124,7 @@ const Login = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </main>
     </>
   );

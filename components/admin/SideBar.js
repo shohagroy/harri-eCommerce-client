@@ -67,12 +67,6 @@ const SideBar = () => {
     },
   ];
 
-  const logOut = () => {
-    signOut({ redirect: false });
-    setTimeout(() => {
-      router.push("/admin/login");
-    }, 500);
-  };
   return (
     <div className="hidden lg:block w-[250px] min-h-screen">
       {/* nav menu  */}
@@ -128,17 +122,14 @@ const SideBar = () => {
         </div>
 
         {/* logout button  */}
-        <div className="absolute bottom-44 lg:bottom-4 w-full ">
+        {/* <div className="absolute bottom-44 lg:bottom-4 w-full ">
           <div className=" flex justify-center items-center ">
-            <button
-              className="flex items-center px-14 py-2 rounded-lg font-semibold duration-300 hover:bg-[#016a47] text-white bg-[#0E9F6E]"
-              onClick={logOut}
-            >
+            <button className="flex items-center px-14 py-2 rounded-lg font-semibold duration-300 hover:bg-[#016a47] text-white bg-[#0E9F6E]">
               <AiOutlineLogout className="mr-2" />
               <span className="">Log Out</span>
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

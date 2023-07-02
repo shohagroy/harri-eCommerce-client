@@ -12,7 +12,6 @@ import {
 } from "@/features/products/productApi";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import PrivateRouteHOC from "@/routes/PrivateRoute";
 
 const UpdateProduct = () => {
   const router = useRouter();
@@ -177,7 +176,7 @@ const UpdateProduct = () => {
                       Select Category
                     </option>
 
-                    {categories?.map((category) => (
+                    {categories?.data?.map((category) => (
                       <option
                         selected={productInfo?.categories?._id === category._id}
                         key={category._id}
