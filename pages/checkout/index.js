@@ -10,6 +10,7 @@ import {
   useAddNewCheckoutMutation,
   useGetCheckoutProductsQuery,
 } from "@/features/checkout/checkoutApi";
+import { toast } from "react-hot-toast";
 
 const Checkout = () => {
   const { user } = useSelector((state) => state.auth);
@@ -23,22 +24,40 @@ const Checkout = () => {
 
   const { data: checkoutProducts } = useGetCheckoutProductsQuery(productId);
 
-  const [addNewCheckout, { data: checkoutData, isLoading: checkoutLoading }] =
-    useAddNewCheckoutMutation();
+  const [
+    addNewCheckout,
+    {
+      data: checkoutData,
+      isLoading: checkoutLoading,
+      isError: isCheckoutError,
+      error: checkoutError,
+    },
+  ] = useAddNewCheckoutMutation();
 
   const handelCheckout = (e) => {
     e.preventDefault();
 
-    console.log({ productInfo, userInfo, productId });
+    // console.log({ productInfo, userInfo, productId });
     //
     addNewCheckout({ productInfo, userInfo, productId });
   };
 
   useEffect(() => {
+    // console.log(checkoutData);
     if (checkoutData?.data) {
       window.location.replace(checkoutData.data);
+    } else {
+      toast.error("SSLCOMMEREZ Not Working in Production Environment");
     }
   }, [checkoutData]);
+
+  useEffect(() => {
+    // console.log(checkoutData);
+    if (isCheckoutError) {
+      toast.error(checkoutError?.data.message);
+    } else {
+    }
+  }, [isCheckoutError, checkoutError]);
 
   return (
     <>
