@@ -69,7 +69,9 @@ const Shop = () => {
                       <button
                         onClick={() => setActiveCategory("")}
                         className={`p-5  m-1 text-white font-semibold w-full rounded-md ${
-                          activeCategory === "" ? "bg-red-400" : "bg-blue-400"
+                          activeCategory === ""
+                            ? "text-red-600 font-bold"
+                            : "bg-blue-400"
                         }`}
                       >
                         All Category

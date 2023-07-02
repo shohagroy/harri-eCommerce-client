@@ -122,4 +122,4 @@ Dashboard.getLayout = (page) => {
   return <AdminLayout>{page}</AdminLayout>;
 };
 
-export default PrivateRouteHOC(Dashboard);
+export default Dashboard;

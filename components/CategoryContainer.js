@@ -65,10 +65,10 @@ const CategoryContainer = () => {
               <Link href={`/shop?search=${name}`}>
                 <div
                   key={name}
-                  className="h-44 relative  aspect-video rounded-sm  "
+                  className="h-44 relative capitalize aspect-video rounded-sm "
                 >
                   <img
-                    className="h-44 w-full  object-cover object-center"
+                    className="h-44 w-full  object-center"
                     src={icon[0]?.url}
                     alt={name}
                   />

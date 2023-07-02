@@ -28,12 +28,14 @@ const Header = () => {
   const [userMenu, setUserMenu] = React.useState(false);
   const [search, setSearch] = useState("");
 
+  const route = useRouter();
+  const isAdminRoute = route?.pathname.split("/")[1] === "admin";
+
   const dispatch = useDispatch();
   useGetLoginUserQuery();
 
   const { user } = useSelector((state) => state.auth);
 
-  const route = useRouter();
   const Links = [
     { name: "Home", link: "/" },
     { name: "Shops", link: "/shop" },
@@ -54,22 +56,28 @@ const Header = () => {
   return (
     <section className="w-full z-50 border-b shadow-sm bg-[#F0F2EE]">
       <CommonLayout>
-        <div className="hidden p-3 lg:flex justify-between items-center">
-          <div className="flex items-center">
-            <Link href={"/"}>
-              <img
-                src="https://hamart-shop.vercel.app/_next/static/media/logo-black.de19b08e.svg"
-                alt="logo"
-              />
-            </Link>
-            <div className="ml-8">
-              {Links.map((menu) => (
-                <Link key={menu.name} className="mx-2" href={menu.link}>
-                  {menu.name}
-                </Link>
-              ))}
+        <div
+          className={`hidden p-3 lg:flex  items-center ${
+            isAdminRoute ? "justify-end" : "justify-between"
+          }`}
+        >
+          {!isAdminRoute && (
+            <div className="flex items-center">
+              <Link href={"/"}>
+                <img
+                  src="https://hamart-shop.vercel.app/_next/static/media/logo-black.de19b08e.svg"
+                  alt="logo"
+                />
+              </Link>
+              <div className="ml-8">
+                {Links.map((menu) => (
+                  <Link key={menu.name} className="mx-2" href={menu.link}>
+                    {menu.name}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flex items-center">
             <div className="relative">
@@ -124,13 +132,23 @@ const Header = () => {
                     <div>
                       {user ? (
                         <>
-                          <Link
-                            href={"/admin/dashboard"}
-                            className="w-full flex items-center p-3 duration-300 hover:bg-gray-200 "
-                          >
-                            <RxDashboard className="mr-2" />
-                            <span className="">Dashbord</span>
-                          </Link>
+                          {user?.role === "admin" ? (
+                            <Link
+                              href={"/admin/dashboard"}
+                              className="w-full flex items-center p-3 duration-300 hover:bg-gray-200 "
+                            >
+                              <RxDashboard className="mr-2" />
+                              <span className="">Dashbord</span>
+                            </Link>
+                          ) : (
+                            <Link
+                              href={"/orders"}
+                              className="w-full flex items-center p-3 duration-300 hover:bg-gray-200 "
+                            >
+                              <RxDashboard className="mr-2" />
+                              <span className="">My Orders</span>
+                            </Link>
+                          )}
 
                           <Link
                             href={"/edit-profile"}
