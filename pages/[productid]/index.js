@@ -110,13 +110,18 @@ const ProductDetails = () => {
         <section className="p-3 my-16 lg:p-0">
           <CommonLayout>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              <div className="w-full h-full">
+              <div className="object-cover object-center w-full h-full ">
                 <img
                   className="w-full h-full lg:hidden"
                   src={displayImage?.url}
                   alt=""
                 />
-                <div className="w-[500px] hidden lg:block ">
+                <div className="w-[100%] h-[100%] hidden lg:block ">
+                  {/* <img
+                    src="https://source.unsplash.com/random/300x300/?2"
+                    alt=""
+                    className="object-cover object-center w-full h-full dark:bg-gray-500"
+                  /> */}
                   <ImageMagnify img={displayImage?.url} />
                 </div>
               </div>
