@@ -1,5 +1,6 @@
 import { useAddToCartListMutation } from "@/features/cartList/cartListApi";
 import { useAddToWishListMutation } from "@/features/wishList/wishListApi";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -62,20 +63,20 @@ const ProductCard = ({ info }) => {
   }, [isSuccess, isError]);
 
   return (
-    <div className="mt-4 border border-black">
+    <div className="mt-4 border border-black rounded-md shadow-md">
       <div
         onMouseOver={() => setMouseHover(info)}
         onMouseOut={() => setMouseHover("")}
-        className="relative overflow-hidden p-10"
+        className="relative overflow-hidden"
       >
         <Link href={`${_id}`} className=" ">
           <div className="">
             <img
-              className={`h-[300px] ${
-                mouseHover === info ? "scale-125" : "scale-100"
-              } duration-300`}
               src={images[0]?.url}
               alt=""
+              className={`object-cover h-[400px] object-center w-full rounded-t-md dark:bg-gray-500 ${
+                mouseHover === info ? "scale-125" : "scale-100"
+              } duration-300`}
             />
           </div>
         </Link>
@@ -86,18 +87,29 @@ const ProductCard = ({ info }) => {
 
         <div
           className={`absolute left-0 w-full ${
-            mouseHover === info ? "bottom-0" : " -bottom-12"
+            mouseHover === info ? "bottom-0" : " -bottom-14"
           } duration-300`}
         >
-          <button
-            onClick={addToCartHandelar}
-            className="w-full py-2 text-white bg-black flex justify-center items-center"
-          >
-            <span>
-              <AiOutlineShoppingCart size={20} />
-            </span>{" "}
-            {cartListed ? "Already added to Cart" : "Add to Cart"}
-          </button>
+          <div className="flex">
+            <button
+              onClick={addToCartHandelar}
+              className="flex justify-center items-center m-1 w-full p-2 text-sm font-semibold text-center text-white transition duration-100 rounded-md md:text-lg font-nunito bg-gradient-to-r from-blue-600 to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:shadow-lg"
+            >
+              <span>
+                <AiOutlineShoppingCart size={20} />
+              </span>{" "}
+              {cartListed ? "Already added to Cart" : "Add to Cart"}
+            </button>
+            <button
+              onClick={addToCartHandelar}
+              className="flex justify-center items-center m-1 w-full p-2 text-sm font-semibold text-center text-white transition duration-100 rounded-md md:text-lg font-nunito bg-gradient-to-r from-blue-400 to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:shadow-lg"
+            >
+              <span>
+                <AiOutlineShoppingCart size={20} />
+              </span>{" "}
+              Buy Now
+            </button>
+          </div>
         </div>
 
         <div
@@ -109,8 +121,8 @@ const ProductCard = ({ info }) => {
             <button
               onClick={addToWishListHandelar}
               title="Add to Wishlist"
-              className={`hover:text-white hover:bg-red-600  shadow-md h-10 w-10 flex justify-center items-center duration-200 ${
-                wishListed ? "text-white bg-red-600" : null
+              className={`hover:text-white hover:bg-red-600   bg-white shadow-md h-10 w-10 flex justify-center items-center duration-200 ${
+                wishListed ? "text-red-600 " : null
               }`}
             >
               <AiOutlineHeart size={25} />

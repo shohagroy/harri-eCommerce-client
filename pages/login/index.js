@@ -14,13 +14,12 @@ const CustomerLogin = () => {
   const [loginInfo, setLoginInfo] = useState({});
 
   const router = useRouter();
-  const previousPath = router.asPath;
+  // const previousPath = router.asPath;
 
   const [loginUser, { data, isLoading, isError, isSuccess, error }] =
     useLoginUserMutation();
 
   const { data: googleUrl, isLoading: googleLoading } = useGoogleLoginQuery();
-  console.log(googleUrl?.data);
 
   const handleLogin = (e) => {
     e.preventDefault();
