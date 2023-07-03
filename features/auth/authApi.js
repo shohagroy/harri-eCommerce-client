@@ -5,7 +5,7 @@ export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getLoginUser: builder.query({
       query: () => ({
-        url: `/get-login-user`,
+        url: `users/get-login-user`,
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export const authApi = apiSlice.injectEndpoints({
 
     createUser: builder.mutation({
       query: (data) => ({
-        url: `/create-user`,
+        url: `users/create-user`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export const authApi = apiSlice.injectEndpoints({
 
     googleLogin: builder.query({
       query: () => ({
-        url: `/login/auth/google`,
+        url: `users/login/auth/google`,
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export const authApi = apiSlice.injectEndpoints({
 
     loginUser: builder.mutation({
       query: (data) => ({
-        url: `/login-user`,
+        url: `users/login-user`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
