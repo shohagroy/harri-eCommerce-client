@@ -20,6 +20,7 @@ const Products = () => {
     skip: showPage === 1 ? 0 : (showPage - 1) * 10,
     sort,
     searchByCategory,
+    limit: 10,
   };
 
   const {

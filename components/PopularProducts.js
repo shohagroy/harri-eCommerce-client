@@ -11,6 +11,7 @@ const PopularProducts = () => {
     skip: 0,
     sort: 1,
     searchByCategory: "",
+    limit: 12,
   };
 
   const { data: products, isLoading: productLoading } =
