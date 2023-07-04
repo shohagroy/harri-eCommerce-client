@@ -29,8 +29,6 @@ const Products = () => {
     error: productError,
   } = useGetProductsQuery(query);
 
-  console.log(products);
-
   return (
     <>
       <Head>

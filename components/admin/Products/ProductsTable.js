@@ -109,7 +109,9 @@ const ProductsTable = ({ products, showPage, setShowPage }) => {
                       src={product?.images[0]?.url}
                       alt="product"
                     />
-                    <span className="ml-2">{product?.title}</span>
+                    <Link href={`/shop/${product?._id}`}>
+                      <span className="ml-2">{product?.title}</span>
+                    </Link>
                   </div>
                 </td>
                 <td className="px-3 py-2 capitalize">

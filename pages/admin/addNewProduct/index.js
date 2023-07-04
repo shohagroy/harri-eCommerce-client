@@ -20,7 +20,7 @@ const AddNewProduct = () => {
     search: "",
     skip: 0,
   };
-  const { data, isLoading, isError, isSuccess } = useGetCategorysQuery(query);
+  const { data } = useGetCategorysQuery(query);
   const categories = data?.data?.data || [];
 
   const [
@@ -65,7 +65,7 @@ const AddNewProduct = () => {
     }
 
     if (isProductError) {
-      toast.error(productError.message);
+      toast.error(productError?.data?.message);
     }
   }, [productSuccess, isProductError]);
 
