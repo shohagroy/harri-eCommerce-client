@@ -76,12 +76,21 @@ const Shop = () => {
                     <div className="grid grid-cols-4 gap-4">
                       <div className="hidden lg:block ">
                         <div className="my-6 border p-3">
-                          <p className="p-3 border-b text-2xl text-center font-semibold">
+                          <p className="p-3 border-b text-2xl font-semibold">
                             Product Category
                           </p>
 
                           <div className="my-2">
                             <button
+                              onClick={() => setActiveCategory("")}
+                              className={`p-3  m-1 text font-semibold rounded-md border-b w-full text-left  ${
+                                activeCategory === "" && "bg-gray-100 "
+                              }`}
+                            >
+                              All Category
+                            </button>
+
+                            {/* <button
                               onClick={() => setActiveCategory("")}
                               className={`p-5  m-1 text-white font-semibold w-full rounded-md ${
                                 activeCategory === ""
@@ -90,7 +99,7 @@ const Shop = () => {
                               }`}
                             >
                               All Category
-                            </button>
+                            </button> */}
 
                             {categories?.data?.data?.map((category) => {
                               const { _id, name, icon } = category || {};
@@ -98,14 +107,12 @@ const Shop = () => {
                                 <button
                                   onClick={() => setActiveCategory(_id)}
                                   key={_id}
-                                  className={`p-3 bg-blue-400 capitalize m-1 text-white font-semibold w-full rounded-md flex justify-center items-center ${
-                                    activeCategory === _id
-                                      ? "bg-red-400"
-                                      : "bg-blue-400"
+                                  className={`p-1 capitalize m-1 font-semibold w-full rounded-md flex  items-center border-b ${
+                                    activeCategory === _id && "bg-gray-100"
                                   }`}
                                 >
                                   <img
-                                    className="h-10 p-1 w-10 mx-2 rounded-full"
+                                    className="h-10 p-1 w-10 mx-2 rounded-lg"
                                     src={icon[0]?.url}
                                     alt="icon"
                                   />
