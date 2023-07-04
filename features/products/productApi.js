@@ -4,7 +4,7 @@ export const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: ({ search, skip, sort, searchByCategory, limit }) => ({
-        url: `/products?search=${search}&skip=${skip}&sort=${sort}&searchByCategory=${searchByCategory}limit=${limit}`,
+        url: `/products?search=${search}&skip=${skip}&sort=${sort}&searchByCategory=${searchByCategory}&limit=${limit}`,
         method: "GET",
       }),
       providesTags: ["products"],
