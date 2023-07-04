@@ -19,7 +19,7 @@ import { useAddToWishListMutation } from "@/features/wishList/wishListApi";
 import { useAddToCartListMutation } from "@/features/cartList/cartListApi";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
-import ProductLoading from "@/components/loaders/ProductLoading";
+import ShopLoader from "@/components/loaders/ShopLoader";
 
 const ProductDetails = () => {
   const [displayImage, setDisplayImage] = useState({});
@@ -108,7 +108,7 @@ const ProductDetails = () => {
       </Head>
 
       {isLoading ? (
-        <ProductLoading />
+        <ShopLoader />
       ) : (
         <main>
           <section className="p-3 my-16 lg:p-0">
