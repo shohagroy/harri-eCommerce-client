@@ -13,7 +13,6 @@ import { useGetSingleProductQuery } from "@/features/products/productApi";
 import Head from "next/head";
 import ImageMagnify from "@/components/imageMagnify";
 import { useRouter } from "next/router";
-import ProductReview from "@/components/ProductReview";
 import { useSelector } from "react-redux";
 import { useAddToWishListMutation } from "@/features/wishList/wishListApi";
 import { useAddToCartListMutation } from "@/features/cartList/cartListApi";
@@ -49,6 +48,8 @@ const ProductDetails = () => {
     _id,
     category,
   } = data?.data || {};
+
+  // console.log(category);
 
   const { user } = useSelector((state) => state.auth);
 
@@ -268,7 +269,10 @@ const ProductDetails = () => {
                 />
               </div>
 
-              <RelatedProducts title={title} tags={tags} />
+              <RelatedProducts
+                title={title}
+                category={data?.data?.category?.id}
+              />
             </CommonLayout>
           </section>
         </main>

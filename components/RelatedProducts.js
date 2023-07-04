@@ -1,17 +1,27 @@
 import { useGetProductsQuery } from "@/features/products/productApi";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
-const RelatedProducts = ({ title, tags }) => {
+const RelatedProducts = ({ category }) => {
+  const [searchCategory, setSearchCateory] = useState("");
   const productQuery = {
-    search: title,
+    search: "",
     skip: 0,
     sort: 1,
-    searchByCategory: "",
+    searchByCategory: searchCategory,
     limit: 6,
   };
 
   const { data } = useGetProductsQuery(productQuery);
+
+  useEffect(() => {
+    setSearchCateory(category);
+  }, [category]);
+
+  console.log(data);
+
+  console.log(searchCategory);
 
   return (
     <div>
