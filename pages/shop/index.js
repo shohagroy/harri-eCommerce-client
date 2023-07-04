@@ -21,7 +21,7 @@ const Shop = () => {
 
   const route = useRouter();
 
-  const { search } = route.query;
+  const { search, searchCategory } = route.query;
 
   const query = { search: "", skip: 0 };
   const { data: categories } = useGetCategorysQuery(query);
@@ -32,8 +32,6 @@ const Shop = () => {
     sort,
     searchByCategory: activeCategory,
   };
-
-  // console.log(searchProducts);
 
   const {
     data: products,
@@ -46,6 +44,10 @@ const Shop = () => {
 
   useEffect(() => {
     setSearchProducts(search);
+
+    if (searchCategory) {
+      setActiveCategory(searchCategory);
+    }
   }, [search]);
 
   return (
@@ -89,17 +91,6 @@ const Shop = () => {
                             >
                               All Category
                             </button>
-
-                            {/* <button
-                              onClick={() => setActiveCategory("")}
-                              className={`p-5  m-1 text-white font-semibold w-full rounded-md ${
-                                activeCategory === ""
-                                  ? "bg-red-600 font-bold"
-                                  : "bg-blue-400"
-                              }`}
-                            >
-                              All Category
-                            </button> */}
 
                             {categories?.data?.data?.map((category) => {
                               const { _id, name, icon } = category || {};
@@ -185,50 +176,39 @@ const Shop = () => {
                             </div>
                           </div>
                         </div>
-
-                        {/* <div className="my-6 border p-3 w-full h-[500px]">
-                        <p className="p-3 border-b text-2xl text-center font-semibold">
-                          Advertisement
-                        </p>
-    
-                        <div className="my-2 w-full h-full flex justify-center items-center">
-                          <p className="text-5xl text-red-600">1</p>
-                        </div>
-                      </div>
-    
-                      <div className="my-6 border p-3 w-full h-[500px]">
-                        <p className="p-3 border-b text-2xl text-center font-semibold">
-                          Advertisement
-                        </p>
-    
-                        <div className="my-2 w-full h-full flex justify-center items-center">
-                          <p className="text-5xl text-red-600">2</p>
-                        </div>
-                      </div> */}
                       </div>
 
                       <div className="col-span-4 lg:col-span-3  ">
                         <div className="my-6 border p-3 flex flex-col lg:flex-row justify-between items-center">
                           <p className="p-3">
-                            Showing {showPage <= 1 ? 1 : (showPage - 1) * 10} -{" "}
+                            Showing {showPage <= 1 ? 1 : (showPage - 1) * 12} -
                             {showPage <= 1
-                              ? products?.data.count >= 10
+                              ? products?.data.count >= 12
                                 ? 10
                                 : products?.data.count
-                              : showPage * 10 > products?.data?.count
+                              : showPage * 12 > products?.data?.count
                               ? products?.data?.count
-                              : showPage * 10}{" "}
+                              : showPage * 12}{" "}
                             of {products?.data?.count}
                           </p>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                          {products?.data?.data.map((product) => {
-                            return (
-                              <ProductCard key={product?._id} info={product} />
-                            );
-                          })}
-                        </div>
+                        {products?.data?.data?.length > 0 ? (
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                            {products?.data?.data.map((product) => {
+                              return (
+                                <ProductCard
+                                  key={product?._id}
+                                  info={product}
+                                />
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <div className="w-full text-center text-2xl text-red-400">
+                            No Product Found
+                          </div>
+                        )}
                       </div>
                     </div>
 
