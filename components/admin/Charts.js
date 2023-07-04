@@ -54,10 +54,13 @@ const data2 = [
 ];
 
 const data = [
-  { name: "Potato", value: 400 },
-  { name: "Onion", value: 300 },
-  { name: "Banana", value: 300 },
-  { name: "cucumber", value: 200 },
+  { name: "Phone & Tablets", value: 62 },
+  { name: "Camera Bluetooth", value: 78 },
+  { name: "Watches", value: 230 },
+  { name: "Shaver", value: 3 },
+  { name: "Monitor", value: 30 },
+  { name: "Kettle", value: 140 },
+  { name: "Planer & Virtual", value: 200 },
 ];
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -124,29 +127,31 @@ export default function Charts() {
         <div className="p-8">
           <p className="font-bold">Top selling products</p>
         </div>
-        <ResponsiveContainer width="99%" height={400}>
-          <DynamicPieChart>
-            <Pie
-              data={data}
-              cx={200}
-              cy={200}
-              labelLine={false}
-              label={({ name, value }) => `${name}: ${value}`}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Legend />
-            <Tooltip />
-          </DynamicPieChart>
-        </ResponsiveContainer>
+        <div className="">
+          <ResponsiveContainer width="99%" height={400}>
+            <DynamicPieChart>
+              <Pie
+                data={data}
+                cx={200}
+                cy={200}
+                labelLine={false}
+                label={({ name, value }) => `${name}: ${value}`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {data.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Legend />
+              <Tooltip />
+            </DynamicPieChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );

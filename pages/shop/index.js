@@ -31,6 +31,7 @@ const Shop = () => {
     skip: showPage === 1 ? 0 : (showPage - 1) * 10,
     sort,
     searchByCategory: activeCategory,
+    limit: 12,
   };
 
   const {
