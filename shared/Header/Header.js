@@ -10,7 +10,7 @@ import {
   AiOutlineBars,
   AiOutlineTwitter,
   AiFillLinkedin,
-  AiFillYoutube,
+  AiFillGithub,
   AiFillSetting,
   AiOutlineLogout,
 } from "react-icons/ai";
@@ -27,6 +27,8 @@ const Header = () => {
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [userMenu, setUserMenu] = React.useState(false);
   const [search, setSearch] = useState("");
+
+  console.log(open);
 
   const route = useRouter();
   const isAdminRoute = route?.pathname.split("/")[1] === "admin";
@@ -216,8 +218,8 @@ const Header = () => {
           </div>
         </div>
 
-        {/* mobile menu  */}
-        <div className=" lg:hidden fixed w-full border-b  z-50 shadow-sm ">
+        {/* mobile menu */}
+        <div className=" lg:hidden fixed left-0 w-full border-b z-50 shadow-sm">
           <div className="">
             <div className="flex h-[7vh] px-3 bg-[#F0F2EE] items-center justify-between">
               <img
@@ -264,36 +266,119 @@ const Header = () => {
                 </div>
 
                 <div className="flex items-center justify-center w-full">
-                  <button className="m-2" onClick={() => setOpen(!open)}>
-                    <FiUser size={25} />
-                  </button>
-
-                  <div className="relative  " onClick={() => setOpen(!open)}>
-                    <Link href={"/myWishlist"}>
-                      <button className="m-1">
-                        <AiOutlineHeart size={30} />
+                  <div className="ml-4 flex items-center">
+                    <div className="relative">
+                      <button
+                        onClick={() => setUserMenu(!userMenu)}
+                        className="mx-2"
+                      >
+                        <div>
+                          {user?.email ? (
+                            <div>
+                              {user?.avatar ? (
+                                <img
+                                  src={user?.avatar}
+                                  className="h-12 w-12 rounded-full border"
+                                  alt=""
+                                />
+                              ) : (
+                                <FiUser
+                                  size={30}
+                                  className="border rounded-full p-1 border-black"
+                                />
+                              )}
+                            </div>
+                          ) : (
+                            <FiUser size={25} />
+                          )}
+                        </div>
                       </button>
-                      <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
-                        1
-                      </small>
-                    </Link>
-                  </div>
 
-                  <div
-                    className="relative cursor-pointer "
-                    onClick={() => setOpen(!open)}
-                  >
-                    <button
-                      className="m-2"
+                      {/* user modal menu  */}
+                      {userMenu && (
+                        <div className="absolute z-50 bottom-100 rounded-lg shadow-lg -left-12 text-gray-600 text-sm font-semibold  bg-white w-[150px]">
+                          <div onClick={() => setOpenDrawer(!open)}>
+                            {user ? (
+                              <>
+                                {user?.role === "admin" ? (
+                                  <Link
+                                    href={"/admin/dashboard"}
+                                    className="w-full flex items-center p-3 duration-300 hover:bg-gray-200 "
+                                  >
+                                    <RxDashboard className="mr-2" />
+                                    <span className="">Dashbord</span>
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={"/orders"}
+                                    className="w-full flex items-center p-3 duration-300 hover:bg-gray-200 "
+                                  >
+                                    <RxDashboard className="mr-2" />
+                                    <span className="">My Orders</span>
+                                  </Link>
+                                )}
+
+                                <Link
+                                  href={"/edit-profile"}
+                                  className="w-full flex font-sm p-3 duration-300 hover:bg-gray-200 items-center"
+                                >
+                                  <AiFillSetting className="mr-2" />
+                                  <span className="">Edit Profile</span>
+                                </Link>
+
+                                <button
+                                  onClick={handelUserLogout}
+                                  className="w-full rounded-lg rounded-t-none flex font-sm p-3 duration-300 hover:bg-gray-200 items-center"
+                                >
+                                  <AiOutlineLogout className="mr-2" />
+                                  <span className="">Log Out</span>
+                                </button>
+                              </>
+                            ) : (
+                              <Link href="/login">
+                                <button
+                                  onClick={() => setOpen(!open)}
+                                  className="w-full rounded-lg rounded-t-none flex font-sm p-3 duration-300 hover:bg-gray-200 items-center"
+                                >
+                                  <AiOutlineLogout className="mr-2" />
+                                  <span className="">Log in</span>
+                                </button>
+                              </Link>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <Link href={"/myWishlist"} className="">
+                      <div className="relative cursor-pointer">
+                        <button className="mx-1">
+                          <AiOutlineHeart size={30} />
+                        </button>
+
+                        {user?.wishList.length > 0 && (
+                          <small className="absolute cursor-pointer top-0 right-0 w-5 h-5 flex justify-center items-center  bg-red-600 text-white font-bold rounded-full">
+                            {user?.wishList.length}
+                          </small>
+                        )}
+                      </div>
+                    </Link>
+
+                    <div
+                      className="relative "
                       onClick={() => setOpenDrawer(!openDrawer)}
                     >
-                      <AiOutlineShoppingCart size={30} />
-                    </button>
+                      <button className="mx-2">
+                        <AiOutlineShoppingCart size={30} />
+                      </button>
 
-                    <div>
-                      <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
-                        1
-                      </small>
+                      {user?.cartList.length > 0 && (
+                        <div className="cursor-pointer">
+                          <small className="absolute top-0 right-0 w-5 h-5 flex justify-center items-center bg-red-600 text-white font-bold rounded-full">
+                            {user?.cartList?.length}
+                          </small>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -303,26 +388,34 @@ const Header = () => {
 
                   <div className=" flex items-center mt-2">
                     <div className="w-8 h-8 flex justify-center items-center border">
-                      <RiFacebookFill size={20} />
+                      <a href="https://www.facebook.com/shohagroy.7771/">
+                        <RiFacebookFill size={20} />
+                      </a>
                     </div>
 
                     <div className="w-8 h-8 ml-1 flex justify-center items-center border">
-                      <AiOutlineTwitter size={20} />
+                      <a href="https://twitter.com/shohagroy27">
+                        <AiOutlineTwitter size={20} />
+                      </a>
                     </div>
 
                     <div className="w-8 h-8 ml-1 flex justify-center items-center border">
-                      <AiFillLinkedin size={20} />
+                      <a href="https://www.linkedin.com/in/shohag-roy/">
+                        <AiFillLinkedin size={20} />
+                      </a>
                     </div>
 
                     <div className="w-8 h-8 ml-1 flex justify-center items-center border">
-                      <AiFillYoutube size={20} />
+                      <a href="https://github.com/shohagroy">
+                        <AiFillGithub size={20} />
+                      </a>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-10 m-2">
-                  <p className="text-2xl font-bold">+964 742 44 763</p>
-                  <p>shohagroy@gmail.com</p>
+                  <p className="text-2xl font-bold">+880 1760 567 555</p>
+                  <p>pkshohag240@gmail.com</p>
                 </div>
               </div>
 

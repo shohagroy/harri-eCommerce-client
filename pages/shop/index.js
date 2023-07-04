@@ -38,10 +38,7 @@ const Shop = () => {
     data: products,
     isLoading: productLoading,
     isError: isProductError,
-    error: productError,
   } = useGetProductsQuery(productQuery);
-
-  // const productLoading = true;
 
   useEffect(() => {
     setSearchProducts(search);

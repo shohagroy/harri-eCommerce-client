@@ -1,13 +1,13 @@
 import React from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { GrFormNextLink } from "react-icons/gr";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import CommonLayout from "@/layouts/commonLayout";
 
 const OfferBanar = () => {
   return (
-    <section className="p-3 lg:p-0 my-6">
+    <section className="pt-3 lg:p-0 my-6">
       <CommonLayout>
         <div className="relative text-white text-[20px] w-full mx-auto">
           <Carousel
