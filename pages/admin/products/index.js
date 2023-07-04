@@ -6,7 +6,6 @@ import { useGetCategorysQuery } from "@/features/category/categoryApi";
 import Link from "next/link";
 import { useGetProductsQuery } from "@/features/products/productApi";
 import Head from "next/head";
-import PrivateRouteHOC from "@/routes/PrivateRoute";
 
 const Products = () => {
   const [searchProducts, setSearchProducts] = useState("");
@@ -29,6 +28,8 @@ const Products = () => {
     isError: isProductError,
     error: productError,
   } = useGetProductsQuery(query);
+
+  console.log(products);
 
   return (
     <>
@@ -92,9 +93,9 @@ const Products = () => {
                 <div className="text-center text-xl font-bold text-red-600">
                   {productError.data?.message}
                 </div>
-              ) : products.data.length > 0 ? (
+              ) : products.data?.data?.length > 0 ? (
                 <ProductsTable
-                  products={products}
+                  products={products?.data}
                   showPage={showPage}
                   setShowPage={setShowPage}
                 />

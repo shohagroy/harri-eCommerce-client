@@ -1,3 +1,4 @@
+import ShopLoader from "@/components/loaders/ShopLoader";
 import Footer from "@/shared/Footer/Footer";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -18,13 +19,7 @@ const PrivateRouteHOC = (WrappedComponent) => {
     }, [isAuthenticated, isLoading, router]);
 
     if (isLoading) {
-      return (
-        <div className="h-screen flex justify-center items-center">
-          <div className="text-center text-4xl">
-            <h2>Loading...</h2>
-          </div>
-        </div>
-      );
+      return <ShopLoader />;
     }
 
     // Render the component if user is authenticated, otherwise null
