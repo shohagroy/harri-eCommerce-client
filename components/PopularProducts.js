@@ -13,12 +13,8 @@ const PopularProducts = () => {
     searchByCategory: "",
   };
 
-  const {
-    data: products,
-    isLoading: productLoading,
-    isError: isProductError,
-    error: productError,
-  } = useGetProductsQuery(productQuery);
+  const { data: products, isLoading: productLoading } =
+    useGetProductsQuery(productQuery);
 
   return (
     <section className="p-3">

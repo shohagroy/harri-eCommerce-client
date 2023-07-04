@@ -99,7 +99,7 @@ const ProductsTable = ({ products, showPage, setShowPage }) => {
               >
                 <td className="px-3 py-2 text-left">
                   <span>
-                    {showPage <= 1 ? i + 1 : (showPage - 1) * 10 + i + 1}
+                    {showPage <= 1 ? i + 1 : (showPage - 1) * 12 + i + 1}
                   </span>
                 </td>
                 <td className="px-3 py-2 text-left">
