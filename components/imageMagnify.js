@@ -23,7 +23,7 @@ const ImageMagnify = ({ img }) => {
               height: 1600,
             },
             enlargedImageContainerDimensions: {
-              width: "100%",
+              width: "130%",
               height: "100%",
             },
             enlargedImageContainerStyle: {

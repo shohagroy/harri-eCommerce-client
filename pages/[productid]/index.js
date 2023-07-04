@@ -20,6 +20,7 @@ import { useAddToCartListMutation } from "@/features/cartList/cartListApi";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import ShopLoader from "@/components/loaders/ShopLoader";
+import RelatedProducts from "@/components/RelatedProducts";
 
 const ProductDetails = () => {
   const [displayImage, setDisplayImage] = useState({});
@@ -121,11 +122,6 @@ const ProductDetails = () => {
                     alt=""
                   />
                   <div className="w-[100%] h-[100%] hidden lg:block ">
-                    {/* <img
-                    src="https://source.unsplash.com/random/300x300/?2"
-                    alt=""
-                    className="object-cover object-center w-full h-full dark:bg-gray-500"
-                  /> */}
                     <ImageMagnify img={displayImage?.url} />
                   </div>
                 </div>
@@ -272,24 +268,7 @@ const ProductDetails = () => {
                 />
               </div>
 
-              <div className="my-4">
-                {/* review  */}
-                <ProductReview productId={productid} />
-              </div>
-
-              <div className="my-6 lg:my-16">
-                <p className="text-2xl font-bold border-l-4 border-red-600 pl-2">
-                  Related Products
-                </p>
-
-                <div className="mt-4">
-                  {/* <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-                  {[...Array(5)].map((Number, i) => (
-                    <ProductCard info={i} key={i} />
-                  ))}
-                </div> */}
-                </div>
-              </div>
+              <RelatedProducts title={title} tags={tags} />
             </CommonLayout>
           </section>
         </main>

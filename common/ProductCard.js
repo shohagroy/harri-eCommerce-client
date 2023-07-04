@@ -93,16 +93,17 @@ const ProductCard = ({ info }) => {
           <div className="flex">
             <button
               onClick={addToCartHandelar}
-              className="flex justify-center items-center m-1 w-full p-2 text-sm font-semibold text-center text-white transition duration-100 rounded-md md:text-lg font-nunito bg-gradient-to-r from-blue-600 to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:shadow-lg"
+              className="flex justify-center items-center w-full p-3 text-sm font-semibold text-center text-white transition duration-100  bg-black  hover:shadow-lg"
             >
               <span>
                 <AiOutlineShoppingCart size={20} />
               </span>{" "}
               {cartListed ? "Already added" : "Add to Cart"}
             </button>
+
             <button
               onClick={addToCartHandelar}
-              className="flex justify-center items-center m-1 w-full p-2 text-sm font-semibold text-center text-white transition duration-100 rounded-md md:text-lg font-nunito bg-gradient-to-r from-blue-400 to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:shadow-lg"
+              className="flex justify-center items-center w-full p-3 text-sm font-semibold text-center text-white transition duration-100  bg-red-600  hover:shadow-lg"
             >
               <span>
                 <AiOutlineShoppingCart size={20} />
