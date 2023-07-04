@@ -14,7 +14,7 @@ const CategoryContainer = () => {
           {categories?.data?.data?.map((category) => {
             const { name, icon, _id } = category || {};
             return (
-              <div>
+              <div key={_id}>
                 <Link href={`shop?searchCategory=${_id}`}>
                   <div
                     key={name}

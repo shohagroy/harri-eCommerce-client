@@ -5,11 +5,11 @@ const ProductLoading = () => {
   return (
     <CommonLayout>
       <div>
-        <div className="hidden lg:grid grid-cols-1 lg:grid-cols-4 gap-4 p-2">
+        <div className="hidden lg:grid grid-cols-4 gap-4 p-2">
           {[...Array(8)].map((num, i) => (
             <div
               key={i}
-              className="flex flex-col m-8 rounded shadow-md w-full animate-pulse h-96"
+              className="flex flex-col rounded shadow-md w-full animate-pulse h-96"
             >
               <div className="h-48 rounded-t bg-gray-500"></div>
               <div className="flex-1 px-4 py-8 space-y-4 sm:p-8 bg-gray-900">
@@ -21,11 +21,11 @@ const ProductLoading = () => {
           ))}
         </div>
 
-        <div className="grid lg:hidden grid-cols-1 lg:grid-cols-4 gap-4 p-2">
+        <div className="grid lg:hidden grid-cols-1 gap-4 p-2">
           {[...Array(3)].map((num, i) => (
             <div
               key={i}
-              className="flex flex-col m-8 rounded shadow-md w-full animate-pulse h-96"
+              className="flex flex-col rounded shadow-md w-full animate-pulse h-96"
             >
               <div className="h-48 rounded-t bg-gray-500"></div>
               <div className="flex-1 px-4 py-8 space-y-4 sm:p-8 bg-gray-900">

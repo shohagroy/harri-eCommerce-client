@@ -6,7 +6,7 @@ const ShopLoader = () => {
   return (
     <section>
       <CommonLayout>
-        <div className="flex flex-col m-8 rounded shadow-md w-full animate-pulse">
+        <div className="flex flex-col lg:m-8 rounded shadow-md w-full animate-pulse">
           <div className="h-[500px] rounded-t bg-gray-500"></div>
 
           <div className="flex justify-between items-center my-3">
