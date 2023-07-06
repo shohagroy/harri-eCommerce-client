@@ -1,38 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Harri Shop
+
+Welcome to Harri Shop, an immersive e-commerce web application that provides a seamless shopping experience for users. Browse through our wide range of products and enjoy a secure and convenient online shopping journey.
+
+## Live Link
+
+Visit the live version of Harri Shop [here](https://harri-e-commerce-client.vercel.app/) and start exploring the exciting world of online shopping!
+
+## Features
+
+- User Registration and Authentication: Create a personalized account to access exclusive features, track orders, and manage your profile.
+- Product Catalog: Explore our extensive catalog featuring various categories and discover high-quality products tailored to your preferences.
+- Advanced Search and Filtering: Easily find the items you're looking for with our intuitive search and smart filtering options.
+- Shopping Cart Functionality: Add products to your cart, modify quantities, and proceed to checkout with confidence.
+- Secure Online Payments: Experience worry-free transactions with our secure payment gateway, ensuring your personal and financial information is protected.
+- Order Tracking and History: Stay updated with the status of your orders and access your order history for easy reference.
+- Administrator Dashboard: Administrators can efficiently manage products, orders, and users through a dedicated dashboard, making inventory and customer management a breeze.
+
+## Technologies Used
+
+- Frontend: React.js, Next.js, Ant Design, Redux Toolkit, React Redux, React Hook Form, React Quill, React Image Magnify, Recharts, React Hot Toast, React Icons, React Responsive Carousel, Axios, CSS, Tailwind CSS
+- Deployment: Vercel
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository: `git clone https://github.com/shohagroy/harri-eCommerce-client.git`
+2. Install the dependencies: `npm install`
+3. Set up the environment variables.
+4. Start the development server: `npm run dev`
+5. Open your browser and visit: `http://localhost:3000`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Contributing
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Contributions are welcome! Please follow the [Contributing Guidelines](CONTRIBUTING.md).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## License
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Contact
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+For any questions or inquiries, please contact us at
 
-## Learn More
+- Email: [pkshohag240@gmail.com](mailto:pkshohag240@gmail.com).
+- Facebook: [facebook.com/shohagroy.7771](facebook.com/shohagroy.7771).
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Thank you for choosing Harri Shop! We hope you enjoy your shopping experience. Happy shopping!
